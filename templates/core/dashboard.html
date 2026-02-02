@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - {{ site_name }}{% endblock %}
+
+{% block main_class %}pt-5 bg-light{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'core:dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/quotes/quote/">
+                            <i class="fas fa-file-invoice me-2"></i>Cotizaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/invoices/invoice/">
+                            <i class="fas fa-file-invoice-dollar me-2"></i>Facturas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/clients/client/">
+                            <i class="fas fa-users me-2"></i>Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/services/service/">
+                            <i class="fas fa-cogs me-2"></i>Servicios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/">
+                            <i class="fas fa-cog me-2"></i>Administración
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Cards -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Cotizaciones
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_quotes }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-file-invoice fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Clientes
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_clients }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        Servicios
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_services }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Ingresos Mensuales
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{ monthly_revenue|floatformat:2 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row mb-4">
+                <!-- Quotes by Status -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cotizaciones por Estado</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                {% for status in quotes_by_status %}
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-{% if status.status == 'accepted' %}success{% elif status.status == 'sent' %}info{% elif status.status == 'rejected' %}danger{% else %}secondary{% endif %}">
+                                        {{ status.get_status_display }}
+                                    </span>
+                                    <span class="fw-bold">{{ status.count }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoices by Status -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Facturas por Estado</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                {% for status in invoices_by_status %}
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-{% if status.status == 'paid' %}success{% elif status.status == 'pending' %}warning{% elif status.status == 'overdue' %}danger{% else %}secondary{% endif %}">
+                                        {{ status.get_status_display }}
+                                    </span>
+                                    <span class="fw-bold">{{ status.count }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <!-- Recent Quotes -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cotizaciones Recientes</h6>
+                        </div>
+                        <div class="card-body">
+                            {% for quote in recent_quotes %}
+                            <div class="border-bottom pb-2 mb-2">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ quote.number }}</h6>
+                                        <p class="mb-1 text-muted small">{{ quote.client.name }}</p>
+                                        <span class="badge bg-{% if quote.status == 'accepted' %}success{% elif quote.status == 'sent' %}info{% elif quote.status == 'rejected' %}danger{% else %}secondary{% endif %}">
+                                            {{ quote.get_status_display }}
+                                        </span>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold">${{ quote.total|floatformat:2 }}</div>
+                                        <small class="text-muted">{{ quote.created_at|date:"d M Y" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No hay cotizaciones recientes.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Invoices -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Facturas Pendientes</h6>
+                        </div>
+                        <div class="card-body">
+                            {% for invoice in pending_invoices %}
+                            <div class="border-bottom pb-2 mb-2">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ invoice.number }}</h6>
+                                        <p class="mb-1 text-muted small">{{ invoice.client.name }}</p>
+                                        <span class="badge bg-warning">Pendiente</span>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-bold">${{ invoice.total|floatformat:2 }}</div>
+                                        <small class="text-muted">Vence: {{ invoice.due_date|date:"d M Y" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No hay facturas pendientes.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Services -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Servicios Más Solicitados</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for service in popular_services %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-cog fa-2x text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-0">{{ service.name }}</h6>
+                                            <small class="text-muted">{{ service.quote_count }} cotizaciones</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="col-12">
+                                    <p class="text-muted">No hay datos disponibles.</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
