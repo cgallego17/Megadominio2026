@@ -5,17 +5,24 @@
 {% block title %}Tienda - {{ site_name }} | Merch Oficial para Devs{% endblock %}
 
 {% block meta_description %}Tienda oficial de {{ site_name }}. Merch exclusivo para desarrolladores y diseñadores: camisetas, hoodies, tazas, stickers, mousepads y más.{% endblock %}
+{% block meta_keywords %}tienda {{ site_name }}, merch desarrolladores, camisetas programadores, accesorios devs, tienda online Colombia{% endblock %}
+{% block og_title %}Tienda - {{ site_name }} | Merch Oficial{% endblock %}
+{% block og_description %}Merch exclusivo para devs: camisetas, hoodies, tazas, stickers, mousepads y accesorios.{% endblock %}
+{% block twitter_title %}Tienda - {{ site_name }} | Merch Oficial{% endblock %}
+{% block twitter_description %}Merch exclusivo para devs: camisetas, hoodies, tazas, stickers y accesorios.{% endblock %}
 
 {% block extra_head %}
-<meta property="og:title" content="Tienda - {{ site_name }} | Merch Oficial">
-<meta property="og:description" content="Merch exclusivo para devs: camisetas, hoodies, tazas, stickers, mousepads y accesorios.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "Tienda {{ site_name }}",
-  "url": "{{ site_url }}/tienda/",
-  "description": "Tienda oficial de merch y accesorios para desarrolladores y diseñadores."
+  "url": "{{ site_url }}{% url 'core:store' %}",
+  "description": "Tienda oficial de merch y accesorios para desarrolladores y diseñadores.",
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ site_name }}"
+  }
 }
 </script>
 {% endblock %}

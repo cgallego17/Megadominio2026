@@ -3,6 +3,63 @@
 {% load humanize %}
 
 {% block title %}{{ product.name }} - Tienda {{ site_name }}{% endblock %}
+{% block meta_description %}Compra {{ product.name }} en la tienda oficial de {{ site_name }}. {{ product.description|truncatechars:130 }}{% endblock %}
+{% block meta_keywords %}{{ product.name }}, tienda {{ site_name }}, merch desarrolladores, {{ product.category.name|default:"productos" }}{% endblock %}
+
+{% block og_meta %}
+<meta property="og:title" content="{{ product.name }} - Tienda {{ site_name }}">
+<meta property="og:description" content="{{ product.description|truncatechars:200 }}">
+{% if product.image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ product.image.url }}">{% endif %}
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:site_name" content="{{ site_name }}">
+<meta property="og:locale" content="es_CO">
+<meta property="product:price:amount" content="{{ product.price }}">
+<meta property="product:price:currency" content="COP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ product.name }} - {{ site_name }}">
+<meta name="twitter:description" content="{{ product.description|truncatechars:200 }}">
+{% if product.image %}<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ product.image.url }}">{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.name|escapejs }}",
+  "description": "{{ product.description|escapejs|truncatechars:500 }}",
+  {% if product.image %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ product.image.url }}",{% endif %}
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ site_name }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "COP",
+    "price": "{{ product.price }}",
+    "availability": "{% if product.is_active %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "{{ site_name }}"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "{{ site_url }}"},
+    {"@type": "ListItem", "position": 2, "name": "Tienda", "item": "{{ site_url }}{% url 'core:store' %}"}{% if product.category %},
+    {"@type": "ListItem", "position": 3, "name": "{{ product.category.name|escapejs }}", "item": "{{ site_url }}{% url 'core:store' %}"}{% endif %},
+    {"@type": "ListItem", "position": {% if product.category %}4{% else %}3{% endif %}, "name": "{{ product.name|escapejs }}"}
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <!-- Breadcrumb -->

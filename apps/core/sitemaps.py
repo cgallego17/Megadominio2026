@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from apps.services.models import Service
+from apps.store.models import Product
 
 
 class StaticViewSitemap(Sitemap):
@@ -44,3 +45,20 @@ class ServiceSitemap(Sitemap):
 
     def location(self, obj):
         return obj.get_absolute_url()
+
+
+class ProductSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+    protocol = 'https'
+
+    def items(self):
+        return Product.objects.filter(is_active=True)
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+    def location(self, obj):
+        return reverse(
+            'core:product_detail', kwargs={'slug': obj.slug}
+        )

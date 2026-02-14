@@ -3,6 +3,9 @@ Allow: /
 Disallow: /admin/
 Disallow: /accounts/
 Disallow: /dashboard/
-Disallow: /static/
+Disallow: /mi-cuenta/
+Disallow: /api/
+Disallow: /webhooks/
+Disallow: /tienda/checkout/
 
 Sitemap: {{ site_url }}/sitemap.xml

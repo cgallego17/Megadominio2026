@@ -3,18 +3,14 @@
 
 {% block title %}Nosotros - {{ site_name }} | Agencia Digital en Colombia{% endblock %}
 
+{% block meta_description %}Conoce a {{ site_name }}, agencia digital líder en Colombia. Más de 10 años transformando negocios con desarrollo web, marketing digital, SEO y branding.{% endblock %}
+{% block meta_keywords %}agencia digital Colombia, desarrollo web Medellín, marketing digital, SEO Colombia, {{ site_name }}, nosotros{% endblock %}
+{% block og_title %}Nosotros - {{ site_name }}{% endblock %}
+{% block og_description %}Agencia digital líder en Colombia. Transformamos negocios con tecnología y estrategia digital.{% endblock %}
+{% block twitter_title %}Nosotros - {{ site_name }}{% endblock %}
+{% block twitter_description %}Agencia digital líder en Colombia. Transformamos negocios con tecnología y estrategia digital.{% endblock %}
+
 {% block extra_head %}
-<meta name="description" content="Conoce a Megadominio, agencia digital líder en Colombia. Más de 10 años transformando negocios con desarrollo web, marketing digital, SEO y branding.">
-<meta name="keywords" content="agencia digital Colombia, desarrollo web Medellín, marketing digital, SEO Colombia, Megadominio">
-<link rel="canonical" href="{{ request.build_absolute_uri }}">
-<meta property="og:title" content="Nosotros - {{ site_name }}">
-<meta property="og:description" content="Agencia digital líder en Colombia. Transformamos negocios con tecnología y estrategia digital.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:site_name" content="{{ site_name }}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nosotros - {{ site_name }}">
-<meta name="twitter:description" content="Agencia digital líder en Colombia. Transformamos negocios con tecnología y estrategia digital.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

@@ -5,25 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ site_name }} - Soluciones Digitales Profesionales en Colombia{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_name }} — Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO, branding y automatización de procesos.{% endblock %}">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="keywords" content="{% block meta_keywords %}agencia digital Colombia, desarrollo web, marketing digital, SEO, branding, Megadominio, diseño web Medellín{% endblock %}">
+    <meta name="robots" content="{% block meta_robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
     <meta name="author" content="{{ site_name }}">
     <meta name="theme-color" content="#111827">
     <meta name="format-detection" content="telephone=no">
     {% load static %}
     <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    <link rel="alternate" hreflang="es" href="{{ request.build_absolute_uri }}">
+    <link rel="alternate" hreflang="x-default" href="{{ request.build_absolute_uri }}">
     <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
 
     <!-- Open Graph defaults (overridable per page) -->
     {% block og_meta %}
     <meta property="og:title" content="{% block og_title %}{{ site_name }} - Soluciones Digitales{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO y branding.{% endblock %}">
-    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% block og_image %}{{ site_url }}{% static 'img/logo.png' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:site_name" content="{{ site_name }}">
     <meta property="og:locale" content="es_CO">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ site_name }} - Soluciones Digitales">
-    <meta name="twitter:description" content="Agencia digital líder en Colombia.">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site_name }} - Soluciones Digitales{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Agencia digital líder en Colombia.{% endblock %}">
+    <meta name="twitter:image" content="{{ site_url }}{% static 'img/logo.png' %}">
     {% endblock %}
 
     <!-- Preconnect for external resources -->
@@ -166,7 +173,7 @@
                 
                 <!-- Mobile menu button -->
                 <div class="lg:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-orange-100 focus:outline-none">
+                    <button id="mobile-menu-button" class="text-white hover:text-orange-100 focus:outline-none" aria-label="Abrir menú de navegación">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -185,7 +192,7 @@
             <a href="{% url 'core:home' %}">
                 <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-10">
             </a>
-            <button id="sidebar-close" class="text-gray-400 hover:text-white transition duration-200">
+            <button id="sidebar-close" class="text-gray-400 hover:text-white transition duration-200" aria-label="Cerrar menú">
                 <i class="fas fa-times text-2xl"></i>
             </button>
         </div>
@@ -284,7 +291,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
+    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden" role="contentinfo" aria-label="Pie de página">
         <!-- Subtle Parallax Background -->
         <div class="absolute top-0 left-0 w-64 h-64 bg-red-900 rounded-full opacity-5 blur-3xl" data-parallax-speed="0.1"></div>
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-orange-900 rounded-full opacity-5 blur-3xl" data-parallax-speed="0.15"></div>
@@ -297,16 +304,16 @@
                     </div>
                     <p class="text-gray-400">Tu partner estratégico en soluciones digitales profesionales.</p>
                     <div class="flex space-x-4 mt-4">
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300" aria-label="Facebook" rel="noopener noreferrer">
                             <i class="fab fa-facebook text-2xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300" aria-label="Twitter" rel="noopener noreferrer">
                             <i class="fab fa-twitter text-2xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300" aria-label="LinkedIn" rel="noopener noreferrer">
                             <i class="fab fa-linkedin text-2xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300" aria-label="Instagram" rel="noopener noreferrer">
                             <i class="fab fa-instagram text-2xl"></i>
                         </a>
                     </div>
@@ -317,7 +324,7 @@
                         <li><a href="{% url 'core:home' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Inicio</a></li>
                         <li><a href="{% url 'core:about' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Nosotros</a></li>
                         <li><a href="{% url 'core:contact' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Contacto</a></li>
-                        <li><a href="#services" class="text-gray-400 hover:text-orange-400 transition duration-300">Servicios</a></li>
+                        <li><a href="{% url 'core:services' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Servicios</a></li>
                     </ul>
                 </div>
                 <div>

@@ -23,12 +23,15 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from apps.core.auth_views import SecureLoginView
 from apps.core.signup_view import signup
-from apps.core.sitemaps import StaticViewSitemap, ServiceSitemap
+from apps.core.sitemaps import (
+    StaticViewSitemap, ServiceSitemap, ProductSitemap
+)
 from apps.store.views import wompi_webhook
 
 sitemaps = {
     'static': StaticViewSitemap,
     'services': ServiceSitemap,
+    'products': ProductSitemap,
 }
 
 urlpatterns = [
