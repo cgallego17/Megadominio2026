@@ -123,6 +123,16 @@ def contact(request):
     return render(request, 'core/contact.html')
 
 
+def terms(request):
+    """Términos y condiciones."""
+    return render(request, 'core/terms.html')
+
+
+def privacy(request):
+    """Política de privacidad."""
+    return render(request, 'core/privacy.html')
+
+
 def store(request):
     """
     Página de la tienda

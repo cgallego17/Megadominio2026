@@ -146,6 +146,16 @@ class Order(models.Model):
     customer_city = models.CharField(
         'Ciudad', max_length=100, blank=True
     )
+    DOC_TYPE_CHOICES = [
+        ('CC', 'Cédula de ciudadanía'),
+        ('CE', 'Cédula de extranjería'),
+        ('PA', 'Pasaporte'),
+        ('NIT', 'NIT'),
+    ]
+    customer_doc_type = models.CharField(
+        'Tipo de documento', max_length=5,
+        choices=DOC_TYPE_CHOICES, blank=True
+    )
     customer_document = models.CharField(
         'Documento de identidad', max_length=30, blank=True
     )

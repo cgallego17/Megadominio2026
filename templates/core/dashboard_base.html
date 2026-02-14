@@ -94,9 +94,12 @@
                 <a href="{% url 'core:home' %}" class="dash-link">
                     <i class="fas fa-globe"></i> Ver sitio
                 </a>
-                <a href="{% url 'logout' %}" class="dash-link text-red-400 hover:text-red-300">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-                </a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="dash-link text-red-400 hover:text-red-300 w-full text-left">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </button>
+                </form>
             </nav>
         </div>
 

@@ -20,6 +20,8 @@ urlpatterns = [
     path('tienda/', views.store, name='store'),
     path('tienda/<slug:slug>/', views.product_detail, name='product_detail'),
     path('coffee/', views.coffee, name='coffee'),
+    path('terminos/', views.terms, name='terms'),
+    path('privacidad/', views.privacy, name='privacy'),
 
     # ── Dashboard principal ──
     path('dashboard/', views.dashboard, name='dashboard'),

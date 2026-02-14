@@ -45,7 +45,7 @@ class ClientForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre completo'}),
             'email': forms.EmailInput(attrs={**_input, 'placeholder': 'correo@ejemplo.com'}),
-            'phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 300 123 4567'}),
+            'phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 324 4011967'}),
             'document_type': forms.Select(attrs=_select),
             'document_number': forms.TextInput(attrs={**_input, 'placeholder': '123456789'}),
             'company': forms.TextInput(attrs={**_input, 'placeholder': 'Empresa S.A.S'}),
@@ -233,7 +233,7 @@ class UserForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre'}),
             'last_name': forms.TextInput(attrs={**_input, 'placeholder': 'Apellido'}),
             'email': forms.EmailInput(attrs={**_input, 'placeholder': 'correo@ejemplo.com'}),
-            'phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 300 123 4567'}),
+            'phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 324 4011967'}),
             'role': forms.Select(attrs=_select),
             'is_active': forms.CheckboxInput(attrs=_checkbox),
             'is_verified': forms.CheckboxInput(attrs=_checkbox),
@@ -297,7 +297,7 @@ class QuoteRequestForm(forms.Form):
         label="Teléfono",
         widget=forms.TextInput(attrs={
             'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition',
-            'placeholder': '+57 300 123 4567'
+            'placeholder': '+57 324 4011967'
         })
     )
     
@@ -395,7 +395,7 @@ class OrderForm(forms.ModelForm):
             'number': forms.TextInput(attrs={**_input, 'placeholder': 'ORD-001'}),
             'customer_name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre del cliente'}),
             'customer_email': forms.EmailInput(attrs={**_input, 'placeholder': 'correo@ejemplo.com'}),
-            'customer_phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 300 123 4567'}),
+            'customer_phone': forms.TextInput(attrs={**_input, 'placeholder': '+57 324 4011967'}),
             'customer_address': forms.Textarea(attrs={**_textarea, 'placeholder': 'Dirección de envío...'}),
             'status': forms.Select(attrs=_select),
             'shipping_cost': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),
@@ -428,70 +428,166 @@ OrderItemFormSet = inlineformset_factory(
 
 class SignupForm(forms.Form):
     """Formulario de registro público."""
+    _input_cls = (
+        'w-full px-4 py-3 rounded-lg border border-gray-300 '
+        'focus:border-red-500 focus:ring-2 focus:ring-red-200 '
+        'transition text-gray-900 placeholder-gray-400'
+    )
+
+    # Honeypot — hidden field, bots fill it, humans don't
+    website_url = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(attrs={
+            'tabindex': '-1', 'autocomplete': 'off',
+        }),
+    )
+
     first_name = forms.CharField(
         max_length=30, label='Nombre',
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
+            'class': _input_cls,
             'placeholder': 'Tu nombre',
         }),
     )
     last_name = forms.CharField(
         max_length=30, label='Apellido',
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
+            'class': _input_cls,
             'placeholder': 'Tu apellido',
         }),
     )
     email = forms.EmailField(
-        label='Correo electrónico',
+        label='Correo electr\u00f3nico',
         widget=forms.EmailInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
+            'class': _input_cls,
             'placeholder': 'tu@email.com',
         }),
     )
     phone = forms.CharField(
-        max_length=20, label='Teléfono', required=False,
+        max_length=20, label='Tel\u00e9fono', required=False,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
-            'placeholder': '+57 300 123 4567',
+            'class': _input_cls,
+            'placeholder': '+57 324 4011967',
         }),
     )
     password1 = forms.CharField(
-        label='Contraseña',
+        label='Contrase\u00f1a',
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
-            'placeholder': 'Mínimo 8 caracteres',
+            'class': _input_cls,
+            'placeholder': 'M\u00ednimo 8 caracteres',
+            'id': 'id_password1',
         }),
     )
     password2 = forms.CharField(
-        label='Confirmar contraseña',
+        label='Confirmar contrase\u00f1a',
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400',
-            'placeholder': 'Repite tu contraseña',
+            'class': _input_cls,
+            'placeholder': 'Repite tu contrase\u00f1a',
         }),
     )
+    accept_terms = forms.BooleanField(
+        label='Acepto los t\u00e9rminos y condiciones',
+        error_messages={
+            'required': 'Debes aceptar los t\u00e9rminos para registrarte.',
+        },
+    )
+
+    def clean_website_url(self):
+        """Honeypot: reject if filled."""
+        if self.cleaned_data.get('website_url'):
+            raise forms.ValidationError('Bot detected.')
+        return ''
+
+    def clean_first_name(self):
+        import re
+        name = self.cleaned_data['first_name'].strip()
+        name = re.sub(r'[<>{}\[\]\\]', '', name)
+        if not name:
+            raise forms.ValidationError('Nombre inv\u00e1lido.')
+        return name
+
+    def clean_last_name(self):
+        import re
+        name = self.cleaned_data['last_name'].strip()
+        name = re.sub(r'[<>{}\[\]\\]', '', name)
+        if not name:
+            raise forms.ValidationError('Apellido inv\u00e1lido.')
+        return name
 
     def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
+        email = self.cleaned_data['email'].lower().strip()
+        if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
-                'Ya existe una cuenta con este correo electrónico.'
+                'Ya existe una cuenta con este correo electr\u00f3nico.'
+            )
+        disposable = [
+            'mailinator.com', 'guerrillamail.com', 'tempmail.com',
+            'throwaway.email', 'yopmail.com', 'sharklasers.com',
+            'guerrillamailblock.com', 'grr.la', 'dispostable.com',
+        ]
+        domain = email.split('@')[-1]
+        if domain in disposable:
+            raise forms.ValidationError(
+                'No se permiten correos temporales.'
             )
         return email
 
+    def clean_phone(self):
+        import re
+        phone = self.cleaned_data.get('phone', '').strip()
+        if phone:
+            phone = re.sub(r'[^\d+\- ]', '', phone)
+        return phone
+
     def clean(self):
+        import re
         cleaned = super().clean()
         p1 = cleaned.get('password1')
         p2 = cleaned.get('password2')
         if p1 and p2 and p1 != p2:
-            self.add_error('password2', 'Las contraseñas no coinciden.')
-        if p1 and len(p1) < 8:
-            self.add_error('password1', 'La contraseña debe tener al menos 8 caracteres.')
+            self.add_error('password2', 'Las contrase\u00f1as no coinciden.')
+        if p1:
+            if len(p1) < 8:
+                self.add_error(
+                    'password1',
+                    'La contrase\u00f1a debe tener al menos 8 caracteres.'
+                )
+            if not re.search(r'[A-Z]', p1):
+                self.add_error(
+                    'password1',
+                    'Debe contener al menos una letra may\u00fascula.'
+                )
+            if not re.search(r'[a-z]', p1):
+                self.add_error(
+                    'password1',
+                    'Debe contener al menos una letra min\u00fascula.'
+                )
+            if not re.search(r'\d', p1):
+                self.add_error(
+                    'password1',
+                    'Debe contener al menos un n\u00famero.'
+                )
+            if not re.search(r'[!@#$%^&*(),.?":{}|<>\-_=+]', p1):
+                self.add_error(
+                    'password1',
+                    'Debe contener al menos un car\u00e1cter especial.'
+                )
+            email = cleaned.get('email', '')
+            name = cleaned.get('first_name', '')
+            if email and p1.lower() in email.lower():
+                self.add_error(
+                    'password1',
+                    'La contrase\u00f1a no puede contener tu email.'
+                )
+            if name and len(name) > 2 and name.lower() in p1.lower():
+                self.add_error(
+                    'password1',
+                    'La contrase\u00f1a no puede contener tu nombre.'
+                )
         return cleaned
 
     def save(self):
         data = self.cleaned_data
-        # Generar username a partir del email
         base_username = data['email'].split('@')[0]
         username = base_username
         n = 1
@@ -542,7 +638,7 @@ class ProfileForm(forms.ModelForm):
                 **_profile_input, 'placeholder': 'tu@email.com',
             }),
             'phone': forms.TextInput(attrs={
-                **_profile_input, 'placeholder': '+57 300 123 4567',
+                **_profile_input, 'placeholder': '+57 324 4011967',
             }),
         }
         labels = {

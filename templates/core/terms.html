@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Términos y Condiciones - {{ site_name }}{% endblock %}
+{% block meta_description %}Términos y condiciones de uso de {{ site_name }}. Conoce las reglas y condiciones que rigen el uso de nuestros servicios y plataforma.{% endblock %}
+{% block meta_keywords %}términos y condiciones, {{ site_name }}, condiciones de uso, términos legales{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="inline-block px-4 py-1.5 bg-red-600/20 text-red-400 rounded-full text-sm font-semibold mb-4 tracking-wide">LEGAL</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Términos y Condiciones</h1>
+            <p class="text-gray-400">Última actualización: Febrero 2026</p>
+        </div>
+    </div>
+</section>
+
+<section class="bg-gray-950 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-invert prose-lg max-w-none space-y-8">
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-file-contract text-red-500"></i> 1. Aceptación de los Términos
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Al acceder y utilizar el sitio web de {{ site_name }} (en adelante, "la Plataforma"), usted acepta estar sujeto a estos Términos y Condiciones. Si no está de acuerdo con alguno de estos términos, le solicitamos que no utilice nuestros servicios.
+                </p>
+                <p class="text-gray-300 leading-relaxed mt-3">
+                    {{ site_name }} se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor desde su publicación en la Plataforma. El uso continuado de nuestros servicios después de dichas modificaciones constituye su aceptación de los nuevos términos.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-briefcase text-red-500"></i> 2. Servicios Ofrecidos
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    {{ site_name }} es una agencia digital que ofrece servicios de desarrollo web, marketing digital, SEO, branding, automatización y otros servicios tecnológicos. Además, operamos una tienda en línea con productos y merchandising.
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li>Desarrollo y diseño de sitios web y aplicaciones</li>
+                    <li>Marketing digital y gestión de redes sociales</li>
+                    <li>Optimización para motores de búsqueda (SEO)</li>
+                    <li>Branding y diseño gráfico</li>
+                    <li>Venta de productos a través de nuestra tienda en línea</li>
+                    <li>Consultoría y asesoría tecnológica</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-user-shield text-red-500"></i> 3. Registro y Cuenta de Usuario
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Para acceder a ciertas funcionalidades de la Plataforma, es necesario crear una cuenta de usuario. Al registrarse, usted se compromete a:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li>Proporcionar información veraz, completa y actualizada</li>
+                    <li>Mantener la confidencialidad de su contraseña</li>
+                    <li>Notificar inmediatamente cualquier uso no autorizado de su cuenta</li>
+                    <li>No crear cuentas con información falsa o suplantando a terceros</li>
+                </ul>
+                <p class="text-gray-300 leading-relaxed mt-3">
+                    {{ site_name }} se reserva el derecho de suspender o cancelar cuentas que violen estos términos o que muestren actividad sospechosa.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-shopping-cart text-red-500"></i> 4. Compras y Pagos
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Las compras realizadas a través de nuestra tienda en línea están sujetas a las siguientes condiciones:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li>Los precios están expresados en Pesos Colombianos (COP) e incluyen impuestos aplicables</li>
+                    <li>El costo de envío es de $12.000 COP para todos los pedidos a nivel nacional</li>
+                    <li>Los pagos se procesan de forma segura a través de Wompi, pasarela de pagos autorizada</li>
+                    <li>{{ site_name }} no almacena datos de tarjetas de crédito o débito</li>
+                    <li>Una vez confirmado el pago, recibirá una confirmación por correo electrónico</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-truck text-red-500"></i> 5. Envíos y Entregas
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Los tiempos de entrega varían según la ubicación del destinatario. {{ site_name }} se compromete a despachar los pedidos dentro de los 3 a 5 días hábiles posteriores a la confirmación del pago. Los tiempos de entrega estimados son:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li><strong>Principales ciudades:</strong> 3 a 5 días hábiles</li>
+                    <li><strong>Otras ciudades:</strong> 5 a 10 días hábiles</li>
+                    <li><strong>Zonas rurales:</strong> 10 a 15 días hábiles</li>
+                </ul>
+                <p class="text-gray-300 leading-relaxed mt-3">
+                    {{ site_name }} no se hace responsable por retrasos causados por la empresa transportadora, eventos de fuerza mayor o información de envío incorrecta proporcionada por el comprador.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-undo text-red-500"></i> 6. Devoluciones y Reembolsos
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    De acuerdo con la legislación colombiana (Ley 1480 de 2011 - Estatuto del Consumidor), usted tiene derecho a:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li>Retractarse de la compra dentro de los 5 días hábiles siguientes a la entrega del producto</li>
+                    <li>Solicitar cambio o devolución si el producto presenta defectos de fabricación</li>
+                    <li>Recibir un producto que corresponda a lo ofrecido en la Plataforma</li>
+                </ul>
+                <p class="text-gray-300 leading-relaxed mt-3">
+                    Para solicitar una devolución, comuníquese con nuestro equipo a través de <a href="mailto:info@megadominio.co" class="text-red-400 hover:underline">info@megadominio.co</a>. Los reembolsos se procesarán dentro de los 15 días hábiles siguientes a la recepción del producto devuelto.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-copyright text-red-500"></i> 7. Propiedad Intelectual
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Todo el contenido de la Plataforma, incluyendo pero no limitado a textos, gráficos, logotipos, iconos, imágenes, clips de audio, descargas digitales y compilaciones de datos, es propiedad de {{ site_name }} o de sus proveedores de contenido y está protegido por las leyes colombianas e internacionales de propiedad intelectual.
+                </p>
+                <p class="text-gray-300 leading-relaxed mt-3">
+                    Queda prohibida la reproducción, distribución, modificación o uso comercial del contenido sin autorización previa y por escrito de {{ site_name }}.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-ban text-red-500"></i> 8. Uso Prohibido
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Queda expresamente prohibido:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3 list-disc list-inside">
+                    <li>Usar la Plataforma para fines ilegales o no autorizados</li>
+                    <li>Intentar acceder a áreas restringidas del sistema</li>
+                    <li>Transmitir virus, malware o código malicioso</li>
+                    <li>Realizar scraping, minería de datos o extracción automatizada de contenido</li>
+                    <li>Suplantar la identidad de otra persona o entidad</li>
+                    <li>Interferir con el funcionamiento normal de la Plataforma</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle text-red-500"></i> 9. Limitación de Responsabilidad
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    {{ site_name }} no será responsable por daños indirectos, incidentales, especiales o consecuentes que resulten del uso o la imposibilidad de uso de la Plataforma. En ningún caso la responsabilidad total de {{ site_name }} excederá el monto pagado por el usuario en los últimos 12 meses.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-gavel text-red-500"></i> 10. Ley Aplicable y Jurisdicción
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Estos Términos y Condiciones se rigen por las leyes de la República de Colombia. Cualquier controversia derivada de estos términos será sometida a la jurisdicción de los tribunales competentes de la ciudad de Medellín, Colombia.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-headset text-red-500"></i> 11. Contacto
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Si tiene preguntas sobre estos Términos y Condiciones, puede contactarnos a través de:
+                </p>
+                <ul class="text-gray-300 space-y-2 mt-3">
+                    <li class="flex items-center gap-2"><i class="fas fa-envelope text-red-500 w-5"></i> <a href="mailto:info@megadominio.co" class="text-red-400 hover:underline">info@megadominio.co</a></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-phone text-red-500 w-5"></i> +57 324 4011967</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-red-500 w-5"></i> Medellín, Colombia</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

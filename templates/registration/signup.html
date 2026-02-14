@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Crear cuenta - {{ site_name }}{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
 {% block main_class %}pt-16{% endblock %}
 
 {% block content %}
@@ -27,8 +28,9 @@
             </div>
             {% endif %}
 
-            <form method="post" action="{% url 'signup' %}">
+            <form method="post" action="{% url 'signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" autocomplete="off">
                 {% csrf_token %}
+                {{ form.website_url }}
 
                 <!-- Nombre y Apellido -->
                 <div class="grid grid-cols-2 gap-4 mb-5">
@@ -75,24 +77,58 @@
                 </div>
 
                 <!-- Contraseña -->
-                <div class="mb-5">
+                <div class="mb-3">
                     <label for="id_password1" class="block text-sm font-semibold text-gray-700 mb-2">
                         <i class="fas fa-lock text-gray-400 mr-1"></i> Contraseña
                     </label>
                     {{ form.password1 }}
                     {% if form.password1.errors %}
-                    <p class="text-xs text-red-500 mt-1">{{ form.password1.errors.0 }}</p>
+                    {% for err in form.password1.errors %}
+                    <p class="text-xs text-red-500 mt-1">{{ err }}</p>
+                    {% endfor %}
                     {% endif %}
                 </div>
 
+                <!-- Password strength indicator -->
+                <div class="mb-5">
+                    <div class="flex gap-1 mb-1.5">
+                        <div id="str-1" class="h-1 flex-1 rounded-full bg-gray-200 transition-colors"></div>
+                        <div id="str-2" class="h-1 flex-1 rounded-full bg-gray-200 transition-colors"></div>
+                        <div id="str-3" class="h-1 flex-1 rounded-full bg-gray-200 transition-colors"></div>
+                        <div id="str-4" class="h-1 flex-1 rounded-full bg-gray-200 transition-colors"></div>
+                    </div>
+                    <p id="str-text" class="text-xs text-gray-400"></p>
+                    <ul class="mt-2 space-y-0.5 text-xs text-gray-400">
+                        <li id="req-len"><i class="fas fa-circle text-[6px] mr-1.5"></i>Mínimo 8 caracteres</li>
+                        <li id="req-upper"><i class="fas fa-circle text-[6px] mr-1.5"></i>Una letra mayúscula</li>
+                        <li id="req-lower"><i class="fas fa-circle text-[6px] mr-1.5"></i>Una letra minúscula</li>
+                        <li id="req-num"><i class="fas fa-circle text-[6px] mr-1.5"></i>Un número</li>
+                        <li id="req-special"><i class="fas fa-circle text-[6px] mr-1.5"></i>Un carácter especial</li>
+                    </ul>
+                </div>
+
                 <!-- Confirmar contraseña -->
-                <div class="mb-6">
+                <div class="mb-5">
                     <label for="id_password2" class="block text-sm font-semibold text-gray-700 mb-2">
                         <i class="fas fa-lock text-gray-400 mr-1"></i> Confirmar contraseña
                     </label>
                     {{ form.password2 }}
                     {% if form.password2.errors %}
                     <p class="text-xs text-red-500 mt-1">{{ form.password2.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Terms -->
+                <div class="mb-6">
+                    <label class="flex items-start gap-2 cursor-pointer">
+                        <input type="checkbox" name="accept_terms" class="mt-0.5 w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500" {% if form.accept_terms.value %}checked{% endif %}>
+                        <span class="text-xs text-gray-600">
+                            Acepto los <a href="{% url 'core:terms' %}" target="_blank" class="text-red-600 hover:underline">términos y condiciones</a>
+                            y la <a href="{% url 'core:privacy' %}" target="_blank" class="text-red-600 hover:underline">política de privacidad</a>
+                        </span>
+                    </label>
+                    {% if form.accept_terms.errors %}
+                    <p class="text-xs text-red-500 mt-1">{{ form.accept_terms.errors.0 }}</p>
                     {% endif %}
                 </div>
 
@@ -128,4 +164,73 @@
         </p>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    var pw = document.getElementById('id_password1');
+    if (!pw) return;
+
+    var bars = [
+        document.getElementById('str-1'),
+        document.getElementById('str-2'),
+        document.getElementById('str-3'),
+        document.getElementById('str-4')
+    ];
+    var strText = document.getElementById('str-text');
+    var reqs = {
+        len:     document.getElementById('req-len'),
+        upper:   document.getElementById('req-upper'),
+        lower:   document.getElementById('req-lower'),
+        num:     document.getElementById('req-num'),
+        special: document.getElementById('req-special')
+    };
+
+    var levels = [
+        { color: 'bg-red-500',    label: 'Muy débil' },
+        { color: 'bg-orange-400', label: 'Débil' },
+        { color: 'bg-yellow-400', label: 'Aceptable' },
+        { color: 'bg-green-500',  label: 'Fuerte' }
+    ];
+
+    function check(val) {
+        var score = 0;
+        var checks = {
+            len:     val.length >= 8,
+            upper:   /[A-Z]/.test(val),
+            lower:   /[a-z]/.test(val),
+            num:     /\d/.test(val),
+            special: /[!@#$%^&*(),.?":{}|<>\-_=+]/.test(val)
+        };
+
+        for (var k in checks) {
+            var el = reqs[k];
+            if (checks[k]) {
+                score++;
+                el.classList.remove('text-gray-400');
+                el.classList.add('text-green-600');
+                el.querySelector('i').classList.remove('fa-circle');
+                el.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                el.classList.remove('text-green-600');
+                el.classList.add('text-gray-400');
+                el.querySelector('i').classList.remove('fa-check-circle');
+                el.querySelector('i').classList.add('fa-circle');
+            }
+        }
+
+        var lvl = Math.min(Math.floor(score * 4 / 5), 3);
+        if (val.length === 0) lvl = -1;
+
+        for (var i = 0; i < 4; i++) {
+            bars[i].className = 'h-1 flex-1 rounded-full transition-colors ' +
+                (i <= lvl ? levels[lvl].color : 'bg-gray-200');
+        }
+        strText.textContent = lvl >= 0 ? levels[lvl].label : '';
+    }
+
+    pw.addEventListener('input', function() { check(this.value); });
+})();
+</script>
 {% endblock %}

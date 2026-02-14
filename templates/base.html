@@ -97,7 +97,7 @@
       },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+57-300-123-4567",
+        "telephone": "+57-324-4011967",
         "contactType": "sales",
         "availableLanguage": "Spanish"
       },
@@ -125,7 +125,6 @@
                     <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
                     <a href="{% url 'core:services' %}" class="nav-link">Servicios</a>
                     <a href="{% url 'core:store' %}" class="nav-link">Tienda</a>
-                    <a href="{% url 'core:coffee' %}" class="nav-link !text-amber-400 hover:!bg-amber-500/10"><i class="fas fa-mug-hot mr-1"></i>Coffee</a>
                     <a href="{% url 'core:about' %}" class="nav-link">Nosotros</a>
                     <a href="{% url 'core:contact' %}" class="nav-link">Contacto</a>
                 </div>
@@ -160,15 +159,23 @@
                                 </a>
                                 {% endif %}
                                 <div class="border-t border-gray-100 my-1"></div>
-                                <a href="{% url 'logout' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition">
-                                    <i class="fas fa-sign-out-alt w-4 text-center"></i> Cerrar sesión
-                                </a>
+                                <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition w-full text-left">
+                                        <i class="fas fa-sign-out-alt w-4 text-center"></i> Cerrar sesión
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     {% else %}
                         <a href="{% url 'login' %}" class="text-gray-300 hover:text-white text-sm font-medium transition">Iniciar sesión</a>
                         <a href="{% url 'signup' %}" class="bg-red-600 text-white hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-semibold transition shadow-sm shadow-red-600/20">Crear cuenta</a>
                     {% endif %}
+                    <a href="{% url 'core:coffee' %}" class="relative ml-1 flex items-center gap-1.5 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 px-3 py-2 rounded-lg text-sm font-semibold transition">
+                        <i class="fas fa-mug-hot"></i>
+                        <span>Coffee</span>
+                        <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none tracking-wide animate-pulse">NEW</span>
+                    </a>
                 </div>
                 
                 <!-- Mobile menu button -->
@@ -211,9 +218,10 @@
                 <i class="fas fa-store w-6 text-center text-red-500"></i>
                 <span>Tienda</span>
             </a>
-            <a href="{% url 'core:coffee' %}" class="sidebar-link">
+            <a href="{% url 'core:coffee' %}" class="sidebar-link relative">
                 <i class="fas fa-coffee w-6 text-center text-amber-400"></i>
                 <span class="text-amber-400">Mega Coffee</span>
+                <span class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none tracking-wide animate-pulse ml-auto">NEW</span>
             </a>
             <a href="{% url 'core:about' %}" class="sidebar-link">
                 <i class="fas fa-users w-6 text-center text-red-500"></i>
@@ -253,10 +261,13 @@
                 </a>
                 {% endif %}
                 <div class="border-t border-gray-700 my-4"></div>
-                <a href="{% url 'logout' %}" class="sidebar-link">
-                    <i class="fas fa-sign-out-alt w-6 text-center text-red-500"></i>
-                    <span>Cerrar sesión</span>
-                </a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-link w-full text-left">
+                        <i class="fas fa-sign-out-alt w-6 text-center text-red-500"></i>
+                        <span>Cerrar sesión</span>
+                    </button>
+                </form>
             {% else %}
                 <div class="border-t border-gray-700 my-4"></div>
                 <a href="{% url 'login' %}" class="sidebar-link">
@@ -325,6 +336,8 @@
                         <li><a href="{% url 'core:about' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Nosotros</a></li>
                         <li><a href="{% url 'core:contact' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Contacto</a></li>
                         <li><a href="{% url 'core:services' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Servicios</a></li>
+                        <li><a href="{% url 'core:terms' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Términos y Condiciones</a></li>
+                        <li><a href="{% url 'core:privacy' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Política de Privacidad</a></li>
                     </ul>
                 </div>
                 <div>
@@ -336,7 +349,7 @@
                         </p>
                         <p class="flex items-center">
                             <i class="fas fa-phone mr-2 text-red-500"></i>
-                            +57 300 123 4567
+                            +57 324 4011967
                         </p>
                         <p class="flex items-center">
                             <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>

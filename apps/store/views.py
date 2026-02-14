@@ -110,11 +110,12 @@ def checkout(request):
         country = customer.get('country', '').strip()
         state = customer.get('state', '').strip()
         city = customer.get('city', '').strip()
+        doc_type = customer.get('doc_type', '').strip()
         document = customer.get('document', '').strip()
 
-        if not name or not email or not phone:
+        if not name or not email or not phone or not document:
             return JsonResponse(
-                {'error': 'Nombre, email y teléfono son requeridos'},
+                {'error': 'Nombre, email, teléfono y documento son requeridos'},
                 status=400
             )
 
@@ -128,9 +129,11 @@ def checkout(request):
             customer_country=country,
             customer_state=state,
             customer_city=city,
+            customer_doc_type=doc_type,
             customer_document=document,
             status='pending',
             payment_status='pending',
+            shipping_cost=Decimal('12000'),
         )
         if request.user.is_authenticated:
             order.created_by = request.user
