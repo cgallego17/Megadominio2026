@@ -1,0 +1,668 @@
+{% extends 'base_coffee.html' %}
+{% load static %}
+
+{% block title %}Mega Coffee - Café 100% Colombiano para Programadores | {{ site_name }}{% endblock %}
+
+{% block meta_description %}Mega Coffee: café de especialidad 100% colombiano, tostado artesanalmente para programadores y diseñadores. Granos premium, accesorios y suscripciones. Fuel your code.{% endblock %}
+
+{% block extra_head %}
+<meta property="og:title" content="Mega Coffee - Café Premium para Developers">
+<meta property="og:description" content="Café 100% colombiano de especialidad. Tostado artesanal para mentes creativas. Fuel your code.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Mega Coffee",
+  "brand": {"@type": "Brand", "name": "Mega Coffee by {{ site_name }}"},
+  "description": "Café 100% colombiano de especialidad, tostado artesanalmente para programadores y diseñadores.",
+  "category": "Café de especialidad",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "12.99",
+    "highPrice": "49.99",
+    "availability": "https://schema.org/PreOrder"
+  }
+}
+</script>
+<style>
+    /* ── Mega Coffee Parallax Styles ─────────────────────────────── */
+    .coffee-hero {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a0e05 0%, #2d1810 30%, #1a0e05 60%, #0d0705 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .coffee-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 30% 50%, rgba(180, 120, 60, 0.15) 0%, transparent 60%),
+                    radial-gradient(ellipse at 70% 30%, rgba(255, 180, 50, 0.08) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .coffee-steam {
+        position: absolute;
+        width: 3px;
+        background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.08));
+        border-radius: 50%;
+        animation: steam-rise linear infinite;
+        pointer-events: none;
+    }
+    @keyframes steam-rise {
+        0%   { transform: translateY(0) scaleX(1); opacity: 0; }
+        15%  { opacity: 0.6; }
+        50%  { transform: translateY(-120px) scaleX(2.5); opacity: 0.3; }
+        100% { transform: translateY(-250px) scaleX(4); opacity: 0; }
+    }
+
+    .coffee-bean {
+        position: absolute;
+        font-size: 1.2rem;
+        opacity: 0.08;
+        pointer-events: none;
+        animation: bean-float linear infinite;
+    }
+    @keyframes bean-float {
+        0%   { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(-100vh) rotate(360deg); }
+    }
+
+    .coffee-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        pointer-events: none;
+        will-change: transform;
+    }
+
+    .coffee-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .coffee-divider {
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #b8860b, #d4a030, #b8860b, transparent);
+    }
+
+    .bean-card {
+        transition: transform 0.4s cubic-bezier(.03,.98,.52,.99), box-shadow 0.4s ease;
+    }
+    .bean-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 60px -12px rgba(180, 120, 40, 0.3);
+    }
+
+    .product-card {
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px -10px rgba(0,0,0,0.2);
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(212, 160, 48, 0.3); }
+        50%      { box-shadow: 0 0 40px rgba(212, 160, 48, 0.6); }
+    }
+
+    .code-typewriter {
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        border-right: 2px solid #d4a030;
+        white-space: nowrap;
+        animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    @keyframes typing {
+        from { width: 0; }
+        to   { width: 100%; }
+    }
+    @keyframes blink-caret {
+        from, to { border-color: transparent; }
+        50%      { border-color: #d4a030; }
+    }
+
+    .parallax-layer {
+        will-change: transform;
+        transition: transform 0.1s ease-out;
+    }
+</style>
+{% endblock %}
+
+{% block main_class %}{% endblock %}
+
+{% block content %}
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO — Full-screen immersive parallax
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="coffee-hero flex items-center justify-center" id="coffee-hero">
+    <!-- Parallax glow orbs -->
+    <div class="coffee-glow w-96 h-96 bg-amber-700/20 top-10 left-10 parallax-layer" data-coffee-speed="0.03"></div>
+    <div class="coffee-glow w-72 h-72 bg-yellow-600/15 bottom-20 right-20 parallax-layer" data-coffee-speed="0.05"></div>
+    <div class="coffee-glow w-64 h-64 bg-orange-800/10 top-1/2 left-1/2 parallax-layer" data-coffee-speed="0.02"></div>
+
+    <!-- Steam particles (generated by JS) -->
+    <div id="coffee-steam-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+    <!-- Floating beans (generated by JS) -->
+    <div id="coffee-beans-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+    <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div class="mb-8 parallax-layer" data-coffee-speed="0.06">
+            <i class="fas fa-mug-hot text-8xl md:text-9xl text-amber-500" role="img" aria-label="Taza de café"></i>
+        </div>
+
+        <div class="parallax-layer" data-coffee-speed="0.04">
+            <span class="inline-block px-5 py-2 bg-amber-600/20 text-amber-400 rounded-full text-sm font-bold tracking-widest mb-6 border border-amber-500/30">100% COLOMBIANO &bull; TOSTADO ARTESANAL</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-none parallax-layer" data-coffee-speed="0.03">
+            MEGA<br>
+            <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">COFFEE</span>
+        </h1>
+
+        <p class="text-xl md:text-2xl text-amber-100/80 mb-4 max-w-2xl mx-auto parallax-layer" data-coffee-speed="0.02">
+            El café que impulsa a quienes construyen el futuro digital.
+        </p>
+
+        <div class="inline-block bg-gray-900/60 rounded-lg px-6 py-3 mb-10 border border-amber-900/40 parallax-layer" data-coffee-speed="0.015">
+            <code class="text-amber-400 text-sm md:text-base font-mono">
+                <span class="text-gray-500">$</span> brew install mega-coffee <span class="text-green-400">--origin=colombia</span>
+            </code>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center parallax-layer" data-coffee-speed="0.01">
+            <a href="#productos" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold bg-gradient-to-r from-amber-500 to-yellow-600 text-gray-900 rounded-xl shadow-2xl hover:from-amber-400 hover:to-yellow-500 transition-all duration-300 transform hover:scale-105" style="animation: pulse-glow 2s ease-in-out infinite;">
+                <i class="fas fa-shopping-bag mr-3"></i> Ver productos
+            </a>
+            <a href="#historia" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold border-2 border-amber-500/50 text-amber-300 rounded-xl hover:bg-amber-500/10 transition-all duration-300">
+                <i class="fas fa-book-open mr-3"></i> Nuestra historia
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-amber-400/60 animate-bounce">
+        <i class="fas fa-chevron-down text-2xl"></i>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MANIFIESTO — Por qué Mega Coffee
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="coffee-divider"></div>
+
+<section class="coffee-section bg-gradient-to-b from-[#1a0e05] to-[#0f0a06] text-white py-24 lg:py-32" id="historia">
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 right-0 w-full h-full" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(180,120,40,0.03) 50px, rgba(180,120,40,0.03) 51px);"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="inline-block px-4 py-1.5 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-6 tracking-wide">NUESTRA HISTORIA</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">
+                    Código que sabe a <span class="text-amber-400">café colombiano</span>
+                </h2>
+                <div class="space-y-6 text-lg text-gray-300 leading-relaxed">
+                    <p>Nació de una obsesión: encontrar el café perfecto para las sesiones de código a las 3 AM. Ese café que no solo te despierta, sino que <strong class="text-amber-300">enciende tu creatividad</strong>.</p>
+                    <p>Seleccionamos granos de las montañas de <strong class="text-amber-300">Huila, Nariño y el Eje Cafetero</strong> colombiano. Cada lote es tostado artesanalmente en pequeñas cantidades para preservar sus notas únicas.</p>
+                    <p>Mega Coffee no es solo café. Es el <strong class="text-amber-300">ritual de los que crean</strong>: programadores, diseñadores, emprendedores digitales que necesitan claridad mental y sabor excepcional.</p>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="bg-gradient-to-br from-amber-900/40 to-amber-950/60 rounded-3xl p-10 border border-amber-800/30 backdrop-blur-sm">
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-amber-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-mountain text-amber-400 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-1">Origen único</h3>
+                                <p class="text-gray-400">Fincas de altura entre 1,600 y 2,000 msnm en Colombia.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-amber-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-fire text-amber-400 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-1">Tueste artesanal</h3>
+                                <p class="text-gray-400">Tostado en lotes pequeños, perfilado para notas de chocolate, caramelo y frutos rojos.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-amber-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-laptop-code text-amber-400 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-1">Hecho para devs</h3>
+                                <p class="text-gray-400">Energía sostenida sin crash. Perfecto para sprints, deploys y sesiones creativas.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-amber-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-leaf text-amber-400 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-1">Comercio justo</h3>
+                                <p class="text-gray-400">Pagamos precios premium directamente a los caficultores colombianos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PRODUCTOS — Granos de café
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="coffee-divider"></div>
+
+<section class="coffee-section bg-gradient-to-b from-[#0f0a06] to-[#1a0e05] py-24 lg:py-32" id="productos">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1.5 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4 tracking-wide">NUESTROS GRANOS</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Elige tu blend</h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Tres perfiles únicos para diferentes momentos de tu jornada creativa.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Producto 1: Deploy Dark -->
+            <div class="bean-card bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl overflow-hidden border border-amber-900/20">
+                <div class="bg-gradient-to-br from-amber-900/30 to-transparent p-8 text-center">
+                    <i class="fas fa-fire text-6xl text-red-500"></i>
+                    <span class="inline-block px-3 py-1 bg-red-600/20 text-red-400 rounded-full text-xs font-bold tracking-wider">TUESTE OSCURO</span>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-white mb-2">Deploy Dark</h3>
+                    <p class="text-amber-400 text-sm font-semibold mb-4">Huila, Colombia &bull; 1,800 msnm</p>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Intenso y con cuerpo. Notas de chocolate amargo, nuez y un final ahumado. Para las sesiones de debugging más largas.</p>
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <span class="text-3xl font-extrabold text-white">$18</span>
+                            <span class="text-gray-500 text-sm">.99 / 340g</span>
+                        </div>
+                        <div class="flex gap-1">
+                            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all duration-300 shadow-lg" data-id="deploy-dark" data-name="Deploy Dark" data-price="18.99" data-emoji="<i class='fas fa-fire'></i>">
+                        <i class="fas fa-cart-plus mr-2"></i>Agregar al carrito
+                    </button>
+                </div>
+            </div>
+
+            <!-- Producto 2: Sprint Medium -->
+            <div class="bean-card bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl overflow-hidden border border-amber-500/30 relative">
+                <div class="absolute top-4 right-4 z-10">
+                    <span class="px-3 py-1 bg-amber-500 text-gray-900 rounded-full text-xs font-black tracking-wider">POPULAR</span>
+                </div>
+                <div class="bg-gradient-to-br from-amber-700/30 to-transparent p-8 text-center">
+                    <i class="fas fa-mug-hot text-6xl text-amber-400"></i>
+                    <span class="inline-block px-3 py-1 bg-amber-600/20 text-amber-400 rounded-full text-xs font-bold tracking-wider">TUESTE MEDIO</span>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-white mb-2">Sprint Medium</h3>
+                    <p class="text-amber-400 text-sm font-semibold mb-4">Nariño, Colombia &bull; 2,000 msnm</p>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Equilibrado y aromático. Notas de caramelo, frutos rojos y cítricos. El balance perfecto para tu daily standup.</p>
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <span class="text-3xl font-extrabold text-white">$21</span>
+                            <span class="text-gray-500 text-sm">.99 / 340g</span>
+                        </div>
+                        <div class="flex gap-1">
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                            <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-gray-900 font-bold rounded-xl hover:from-amber-400 hover:to-yellow-500 transition-all duration-300 shadow-lg" data-id="sprint-medium" data-name="Sprint Medium" data-price="21.99" data-emoji="<i class='fas fa-mug-hot'></i>">
+                        <i class="fas fa-cart-plus mr-2"></i>Agregar al carrito
+                    </button>
+                </div>
+            </div>
+
+            <!-- Producto 3: Agile Light -->
+            <div class="bean-card bg-gradient-to-b from-gray-900 to-gray-950 rounded-2xl overflow-hidden border border-amber-900/20">
+                <div class="bg-gradient-to-br from-yellow-800/30 to-transparent p-8 text-center">
+                    <i class="fas fa-seedling text-6xl text-yellow-400"></i>
+                    <span class="inline-block px-3 py-1 bg-yellow-600/20 text-yellow-400 rounded-full text-xs font-bold tracking-wider">TUESTE CLARO</span>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-white mb-2">Agile Light</h3>
+                    <p class="text-amber-400 text-sm font-semibold mb-4">Eje Cafetero, Colombia &bull; 1,600 msnm</p>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Suave y floral. Notas de miel, jazmín y durazno. Ideal para brainstorming matutino y sesiones de diseño.</p>
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <span class="text-3xl font-extrabold text-white">$19</span>
+                            <span class="text-gray-500 text-sm">.99 / 340g</span>
+                        </div>
+                        <div class="flex gap-1">
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                            <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                            <span class="w-3 h-3 rounded-full bg-gray-700"></span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all duration-300 shadow-lg" data-id="agile-light" data-name="Agile Light" data-price="19.99" data-emoji="<i class='fas fa-seedling'></i>">
+                        <i class="fas fa-cart-plus mr-2"></i>Agregar al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ACCESORIOS — Productos para café
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="coffee-divider"></div>
+
+<section class="coffee-section bg-gradient-to-b from-[#1a0e05] to-[#0f0a06] py-24 lg:py-32" id="accesorios">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1.5 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4 tracking-wide">ACCESORIOS</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Equipa tu setup cafetero</h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Todo lo que necesitas para preparar el café perfecto en tu escritorio.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Accesorio 1 -->
+            <div class="product-card bg-gray-900/80 rounded-2xl p-6 border border-amber-900/20 text-center">
+                <div class="text-5xl mb-4 text-amber-400"><i class="fas fa-filter"></i></div>
+                <h3 class="text-lg font-bold text-white mb-2">V60 Dripper</h3>
+                <p class="text-gray-500 text-sm mb-4">Cerámica premium para pour-over perfecto.</p>
+                <div class="text-amber-400 font-extrabold text-xl mb-4">$24.99</div>
+                <button class="add-to-cart w-full py-3 bg-amber-600/20 text-amber-400 font-semibold rounded-lg hover:bg-amber-600/30 transition border border-amber-600/30" data-id="v60-dripper" data-name="V60 Dripper" data-price="24.99" data-emoji="<i class='fas fa-filter'></i>">
+                    <i class="fas fa-cart-plus mr-1"></i> Agregar
+                </button>
+            </div>
+
+            <!-- Accesorio 2 -->
+            <div class="product-card bg-gray-900/80 rounded-2xl p-6 border border-amber-900/20 text-center">
+                <div class="text-5xl mb-4 text-amber-400"><i class="fas fa-cog"></i></div>
+                <h3 class="text-lg font-bold text-white mb-2">Grinder Manual</h3>
+                <p class="text-gray-500 text-sm mb-4">Molinillo de acero con 15 niveles de molienda.</p>
+                <div class="text-amber-400 font-extrabold text-xl mb-4">$34.99</div>
+                <button class="add-to-cart w-full py-3 bg-amber-600/20 text-amber-400 font-semibold rounded-lg hover:bg-amber-600/30 transition border border-amber-600/30" data-id="grinder-manual" data-name="Grinder Manual" data-price="34.99" data-emoji="<i class='fas fa-cog'></i>">
+                    <i class="fas fa-cart-plus mr-1"></i> Agregar
+                </button>
+            </div>
+
+            <!-- Accesorio 3 -->
+            <div class="product-card bg-gray-900/80 rounded-2xl p-6 border border-amber-900/20 text-center">
+                <div class="text-5xl mb-4 text-amber-400"><i class="fas fa-tint"></i></div>
+                <h3 class="text-lg font-bold text-white mb-2">Kettle Gooseneck</h3>
+                <p class="text-gray-500 text-sm mb-4">Tetera cuello de ganso con termómetro integrado.</p>
+                <div class="text-amber-400 font-extrabold text-xl mb-4">$42.99</div>
+                <button class="add-to-cart w-full py-3 bg-amber-600/20 text-amber-400 font-semibold rounded-lg hover:bg-amber-600/30 transition border border-amber-600/30" data-id="kettle-gooseneck" data-name="Kettle Gooseneck" data-price="42.99" data-emoji="<i class='fas fa-tint'></i>">
+                    <i class="fas fa-cart-plus mr-1"></i> Agregar
+                </button>
+            </div>
+
+            <!-- Accesorio 4 -->
+            <div class="product-card bg-gray-900/80 rounded-2xl p-6 border border-amber-900/20 text-center">
+                <div class="text-5xl mb-4 text-amber-400"><i class="fas fa-coffee"></i></div>
+                <h3 class="text-lg font-bold text-white mb-2">Taza Mega Coffee</h3>
+                <p class="text-gray-500 text-sm mb-4">Cerámica 350ml con logo. "Fuel your code".</p>
+                <div class="text-amber-400 font-extrabold text-xl mb-4">$12.99</div>
+                <button class="add-to-cart w-full py-3 bg-amber-600/20 text-amber-400 font-semibold rounded-lg hover:bg-amber-600/30 transition border border-amber-600/30" data-id="taza-mega" data-name="Taza Mega Coffee" data-price="12.99" data-emoji="<i class='fas fa-coffee'></i>">
+                    <i class="fas fa-cart-plus mr-1"></i> Agregar
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SUSCRIPCIÓN — Recibe café cada mes
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="coffee-divider"></div>
+
+<section class="coffee-section bg-gradient-to-b from-[#0f0a06] to-[#1a0e05] py-24 lg:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1.5 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4 tracking-wide">SUSCRIPCIÓN</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Café fresco cada mes</h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Nunca te quedes sin café. Recibe granos recién tostados directo a tu puerta.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Plan Junior -->
+            <div class="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/20 text-center">
+                <h3 class="text-xl font-bold text-white mb-2">Junior Dev</h3>
+                <p class="text-gray-500 text-sm mb-6">Para el que está empezando</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-extrabold text-white">$14</span>
+                    <span class="text-gray-500">/mes</span>
+                </div>
+                <ul class="text-left space-y-3 mb-8 text-gray-400">
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> 250g de café mensual</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> 1 blend a elección</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Envío gratis</li>
+                    <li class="flex items-center gap-3 text-gray-600"><i class="fas fa-times text-gray-700"></i> Accesorios incluidos</li>
+                </ul>
+                <button class="w-full py-4 border-2 border-amber-600/50 text-amber-400 font-bold rounded-xl hover:bg-amber-600/10 transition-all duration-300">
+                    Suscribirme
+                </button>
+            </div>
+
+            <!-- Plan Senior -->
+            <div class="bg-gradient-to-b from-amber-900/30 to-gray-900/80 rounded-2xl p-8 border-2 border-amber-500/40 text-center relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span class="px-4 py-1 bg-amber-500 text-gray-900 rounded-full text-xs font-black tracking-wider">MEJOR VALOR</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Senior Dev</h3>
+                <p class="text-gray-500 text-sm mb-6">Para el cafetero serio</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-extrabold text-white">$24</span>
+                    <span class="text-gray-500">/mes</span>
+                </div>
+                <ul class="text-left space-y-3 mb-8 text-gray-400">
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> 500g de café mensual</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> 2 blends diferentes</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Envío gratis + express</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Stickers exclusivos</li>
+                </ul>
+                <button class="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-gray-900 font-bold rounded-xl hover:from-amber-400 hover:to-yellow-500 transition-all duration-300 shadow-lg">
+                    Suscribirme
+                </button>
+            </div>
+
+            <!-- Plan Lead -->
+            <div class="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/20 text-center">
+                <h3 class="text-xl font-bold text-white mb-2">Tech Lead</h3>
+                <p class="text-gray-500 text-sm mb-6">Para el equipo completo</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-extrabold text-white">$49</span>
+                    <span class="text-gray-500">/mes</span>
+                </div>
+                <ul class="text-left space-y-3 mb-8 text-gray-400">
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> 1kg de café mensual</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Los 3 blends</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Envío gratis + express</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-amber-500"></i> Taza Mega Coffee gratis</li>
+                </ul>
+                <button class="w-full py-4 border-2 border-amber-600/50 text-amber-400 font-bold rounded-xl hover:bg-amber-600/10 transition-all duration-300">
+                    Suscribirme
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TESTIMONIOS — Devs que toman Mega Coffee
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="coffee-divider"></div>
+
+<section class="coffee-section bg-gradient-to-b from-[#1a0e05] to-[#0f0a06] py-24 lg:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-1.5 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4 tracking-wide">TESTIMONIOS</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white">Lo que dicen los devs</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/20">
+                <div class="flex gap-1 text-amber-400 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 mb-6 italic leading-relaxed">"Deploy Dark me salvó durante un sprint de 72 horas. El mejor café que he probado para programar. Notas de chocolate increíbles."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-600/30 rounded-full flex items-center justify-center text-amber-400 font-bold">A</div>
+                    <div>
+                        <p class="text-white font-semibold text-sm">Andrés M.</p>
+                        <p class="text-gray-500 text-xs">Full-Stack Developer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/20">
+                <div class="flex gap-1 text-amber-400 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 mb-6 italic leading-relaxed">"Agile Light es perfecto para mis sesiones de diseño en Figma. Suave, aromático y me mantiene enfocada sin ansiedad."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-600/30 rounded-full flex items-center justify-center text-amber-400 font-bold">V</div>
+                    <div>
+                        <p class="text-white font-semibold text-sm">Valentina R.</p>
+                        <p class="text-gray-500 text-xs">UI/UX Designer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-900/60 rounded-2xl p-8 border border-amber-900/20">
+                <div class="flex gap-1 text-amber-400 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-gray-300 mb-6 italic leading-relaxed">"La suscripción Senior Dev es lo mejor que le ha pasado a nuestra oficina. Café fresco cada mes y los stickers son geniales."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-600/30 rounded-full flex items-center justify-center text-amber-400 font-bold">C</div>
+                    <div>
+                        <p class="text-white font-semibold text-sm">Carlos G.</p>
+                        <p class="text-gray-500 text-xs">CTO & Coffee Addict</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CTA FINAL
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="coffee-section bg-gradient-to-b from-[#0f0a06] to-[#1a0e05] py-24 lg:py-32 relative">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600 rounded-full blur-[200px]"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+        <i class="fas fa-mug-hot text-7xl text-amber-500 block mb-6"></i>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+            <code class="text-amber-400 font-mono">git commit -m</code> "mejor café de mi vida"
+        </h2>
+        <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Únete a cientos de programadores y diseñadores que ya eligieron Mega Coffee como su combustible creativo.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#productos" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold bg-gradient-to-r from-amber-500 to-yellow-600 text-gray-900 rounded-xl shadow-2xl hover:from-amber-400 hover:to-yellow-500 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-shopping-bag mr-3"></i> Comprar ahora
+            </a>
+            <a href="{% url 'core:store' %}" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold border-2 border-amber-500/50 text-amber-300 rounded-xl hover:bg-amber-500/10 transition-all duration-300">
+                <i class="fas fa-store mr-3"></i> Ir a la tienda
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    'use strict';
+
+    var hero = document.getElementById('coffee-hero');
+    if (!hero) return;
+
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Steam particles ──────────────────────────────────────────
+    if (!isMobile && !prefersReduced) {
+        var steamContainer = document.getElementById('coffee-steam-container');
+        if (steamContainer) {
+            for (var i = 0; i < 12; i++) {
+                var steam = document.createElement('div');
+                steam.className = 'coffee-steam';
+                steam.style.left = (20 + Math.random() * 60) + '%';
+                steam.style.bottom = '30%';
+                steam.style.height = (40 + Math.random() * 60) + 'px';
+                steam.style.animationDuration = (3 + Math.random() * 4) + 's';
+                steam.style.animationDelay = (Math.random() * 5) + 's';
+                steamContainer.appendChild(steam);
+            }
+        }
+
+        // ── Floating coffee beans ────────────────────────────────────
+        var beansContainer = document.getElementById('coffee-beans-container');
+        if (beansContainer) {
+            var beanEmojis = ['☕', '🫘', '✦'];
+            for (var j = 0; j < 15; j++) {
+                var bean = document.createElement('div');
+                bean.className = 'coffee-bean';
+                bean.textContent = beanEmojis[j % beanEmojis.length];
+                bean.style.left = (Math.random() * 100) + '%';
+                bean.style.top = (100 + Math.random() * 20) + '%';
+                bean.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+                bean.style.animationDuration = (15 + Math.random() * 25) + 's';
+                bean.style.animationDelay = (Math.random() * 20) + 's';
+                beansContainer.appendChild(bean);
+            }
+        }
+
+        // ── Parallax on scroll ───────────────────────────────────────
+        var parallaxLayers = document.querySelectorAll('.parallax-layer[data-coffee-speed]');
+        var ticking = false;
+
+        function updateParallax() {
+            var scrollY = window.pageYOffset;
+            parallaxLayers.forEach(function(layer) {
+                var speed = parseFloat(layer.getAttribute('data-coffee-speed')) || 0;
+                layer.style.transform = 'translateY(' + (scrollY * speed * -1) + 'px)';
+            });
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // ── Mouse parallax on hero ───────────────────────────────────
+        hero.addEventListener('mousemove', function(e) {
+            var rect = hero.getBoundingClientRect();
+            var x = (e.clientX - rect.left) / rect.width - 0.5;
+            var y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            var glows = hero.querySelectorAll('.coffee-glow');
+            glows.forEach(function(glow, idx) {
+                var intensity = 20 + idx * 10;
+                glow.style.transform = 'translate(' + (x * intensity) + 'px, ' + (y * intensity) + 'px)';
+            });
+        });
+    }
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'core/dashboard_base.html' %}
+{% load humanize %}
+
+{% block dashboard_title %}Servicio: {{ service.name }}{% endblock %}
+{% block dashboard_heading %}{{ service.name }}{% endblock %}
+{% block dashboard_desc %}Detalle del servicio{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_service_edit' service.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_service_delete' service.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-red-400 text-sm font-semibold rounded-lg hover:bg-red-500/10 transition">
+    <i class="fas fa-trash"></i> Eliminar
+</a>
+<a href="{% url 'core:dashboard_services' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Información del servicio</h3>
+        {% if service.is_active %}
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-green-500/10 text-green-400">Activo</span>
+        {% else %}
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-gray-700/50 text-gray-400">Inactivo</span>
+        {% endif %}
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+            <div class="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 text-center">
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Precio</p>
+                <p class="text-white text-2xl font-extrabold">{{ service.price|intcomma }}</p>
+            </div>
+            <div class="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 text-center">
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Facturación</p>
+                <p class="text-white text-sm font-bold">{{ service.get_billing_type_display }}</p>
+            </div>
+            <div class="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 text-center">
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Estado</p>
+                <p class="text-sm font-bold {% if service.is_active %}text-green-400{% else %}text-gray-400{% endif %}">{% if service.is_active %}Activo{% else %}Inactivo{% endif %}</p>
+            </div>
+        </div>
+        <div>
+            <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Descripción</p>
+            <p class="text-gray-300 text-sm leading-relaxed">{{ service.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

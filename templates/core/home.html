@@ -1,173 +1,363 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
-{% block title %}Inicio - {{ site_name }}{% endblock %}
+{% block title %}{{ site_name }} - Agencia Digital en Colombia | Desarrollo Web, Marketing, SEO{% endblock %}
 
-{% block main_class %}pt-5{% endblock %}
+{% block meta_description %}{{ site_name }}: Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO, branding y automatización. Más de 500 proyectos entregados. Cotiza gratis.{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site_name }}",
+  "url": "{{ site_url }}",
+  "description": "Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO y branding.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ site_url }}/servicios/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
 
 {% block content %}
+
 <!-- Hero Section -->
-<section class="hero-section bg-gradient-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center min-vh-100">
-            <div class="col-lg-6">
-                <div class="hero-content">
-                    <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInUp">
-                        Transformamos tus ideas en soluciones digitales poderosas
-                    </h1>
-                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
-                        Expertos en desarrollo web, aplicaciones móviles y estrategias digitales que impulsan tu negocio hacia el éxito.
-                    </p>
-                    <div class="d-flex gap-3 animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="#contact" class="btn btn-warning btn-lg fw-bold">
-                            <i class="fas fa-rocket me-2"></i>Cotiza ahora
-                        </a>
-                        <a href="#services" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-th-large me-2"></i>Ver servicios
-                        </a>
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden min-h-screen flex items-center" id="hero-section">
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-96 h-96 bg-red-500 rounded-full blur-3xl" data-parallax-speed="0.3"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-orange-500 rounded-full blur-3xl" data-parallax-speed="0.2"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <!-- Hero Content -->
+            <div class="space-y-8">
+                <div class="inline-block">
+                    <span class="bg-red-600/20 text-orange-400 px-4 py-2 rounded-full text-sm font-semibold border border-red-500/30">
+                        <i class="fas fa-cloud mr-2"></i>Soluciones Digitales Profesionales
+                    </span>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+                    Transformamos tus
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">ideas</span>
+                    en realidad digital
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-300 leading-relaxed">
+                    Desarrollo web, aplicaciones móviles y soluciones digitales que impulsan tu negocio hacia el éxito.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Cotiza ahora
+                </a>
+                    
+                    <a href="#services" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-gray-600 rounded-lg hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-th-large mr-2"></i>
+                        Ver servicios
+                    </a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-8 pt-8">
+                    <div>
+                        <div class="text-4xl font-bold text-white">500+</div>
+                        <div class="text-gray-400">Proyectos</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-white">10+</div>
+                        <div class="text-gray-400">Años</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-white">98%</div>
+                        <div class="text-gray-400">Satisfacción</div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-image text-center animate__animated animate__fadeInRight">
-                    <i class="fas fa-laptop-code display-1 opacity-75"></i>
+            
+            <!-- Hero Illustration -->
+            <div class="hidden lg:block relative h-[500px]">
+                <div class="absolute top-10 right-0 w-64 h-44 bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 border border-gray-700" data-parallax-card data-parallax-speed="0.22">
+                    <i class="fas fa-sync-alt text-4xl text-red-500 mb-3"></i>
+                    <h3 class="text-lg font-bold">Automatización</h3>
+                    <p class="text-sm text-gray-400">Procesos y flujos inteligentes</p>
+                </div>
+
+                <div class="absolute top-40 left-0 w-64 h-44 bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 border border-gray-700" data-parallax-card data-parallax-speed="0.3">
+                    <i class="fas fa-code text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="text-lg font-bold">Desarrollo Web</h3>
+                    <p class="text-sm text-gray-400">Sitios modernos</p>
+                </div>
+                
+                <div class="absolute bottom-10 right-10 w-64 h-44 bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-2xl p-6 border border-gray-700" data-parallax-card data-parallax-speed="0.25">
+                    <i class="fas fa-chart-line text-4xl text-red-500 mb-3"></i>
+                    <h3 class="text-lg font-bold">Marketing Digital</h3>
+                    <p class="text-sm text-gray-400">Estrategias efectivas</p>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Wave Divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#f9fafb"/>
+        </svg>
+    </div>
 </section>
 
 <!-- Services Section -->
-<section id="services" class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">Nuestros Servicios</h2>
-            <p class="lead text-muted">Soluciones integrales para tu transformación digital</p>
+<section id="services" class="py-20 bg-gray-50 relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute top-20 right-0 w-72 h-72 bg-red-100 rounded-full opacity-20 blur-3xl" data-parallax-speed="0.15"></div>
+    <div class="absolute bottom-20 left-0 w-72 h-72 bg-orange-100 rounded-full opacity-20 blur-3xl" data-parallax-speed="0.2"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fas fa-briefcase mr-2 text-red-600"></i>Nuestros Servicios
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Soluciones que <span class="text-red-600">impulsan</span> tu negocio
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Soluciones integrales diseñadas para llevar tu empresa al siguiente nivel
+            </p>
         </div>
         
-        <div class="row g-4">
-            {% for service in services %}
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 service-card border-0 shadow-sm hover-lift">
-                    <div class="card-body text-center p-4">
-                        <div class="service-icon mb-3">
-                            <i class="fas fa-code fa-3x text-primary"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">{{ service.name }}</h5>
-                        <p class="card-text text-muted">{{ service.description|truncatewords:15 }}</p>
-                        <div class="price-tag mb-3">
-                            <span class="badge bg-primary fs-6">
-                                {% if service.billing_type == 'unique' %}
-                                    Único: ${{ service.price }}
-                                {% elif service.billing_type == 'monthly' %}
-                                    Mensual: ${{ service.price }}/mes
-                                {% else %}
-                                    Anual: ${{ service.price }}/año
-                                {% endif %}
-                            </span>
-                        </div>
-                        <a href="#contact" class="btn btn-primary">
-                            <i class="fas fa-info-circle me-2"></i>Solicitar información
-                        </a>
+        <!-- Services Grid - Los más vendidos según mercado digital -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 1. Desarrollo Web -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.08">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-laptop-code text-3xl text-red-600"></i>
                     </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Desarrollo Web</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Sitios web corporativos, landing pages y e-commerce modernos que convierten visitantes en clientes.</p>
+                    <a href="{% if top_services.desarrollo_web %}{% url 'core:service_detail' top_services.desarrollo_web.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
-            {% empty %}
-            <div class="col-12 text-center">
-                <p class="text-muted">Próximamente disponibles nuestros servicios.</p>
+
+            <!-- 2. Marketing Digital -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.09">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-bullhorn text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Marketing Digital</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Campañas en Google Ads, Meta Ads y estrategias SEM/SMM con ROI medible para impulsar tus ventas.</p>
+                    <a href="{% if top_services.marketing_digital %}{% url 'core:service_detail' top_services.marketing_digital.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
             </div>
-            {% endfor %}
+
+            <!-- 3. SEO / Posicionamiento -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.10">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-search text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">SEO / Posicionamiento</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Optimización para motores de búsqueda que genera tráfico orgánico de calidad y visibilidad sostenible.</p>
+                    <a href="{% if top_services.seo %}{% url 'core:service_detail' top_services.seo.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Diseño Gráfico / Branding -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.08">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-palette text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Diseño Gráfico / Branding</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Identidad visual profesional, logos y materiales que diferencian tu marca en mercados competitivos.</p>
+                    <a href="{% if top_services.branding %}{% url 'core:service_detail' top_services.branding.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Automatización de Procesos -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.09">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-sync-alt text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Automatización de Procesos</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Integraciones, APIs y automatización con Zapier, CRM y RPA para eficiencia operativa máxima.</p>
+                    <a href="{% if top_services.automatizacion %}{% url 'core:service_detail' top_services.automatizacion.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Consultoría Digital -->
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.10">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-chart-line text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Consultoría Digital</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Estrategia digital integral, auditorías y roadmaps personalizados para transformación empresarial.</p>
+                    <a href="{% if top_services.consultoria %}{% url 'core:service_detail' top_services.consultoria.slug %}{% else %}{% url 'core:services' %}{% endif %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver el detalle</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Button Below Services -->
+        <div class="text-center mt-12">
+            <a href="{% url 'core:services' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-th mr-2"></i>
+                Ver todos los servicios
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
         </div>
     </div>
 </section>
 
 <!-- Benefits Section -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">¿Por qué elegirnos?</h2>
-            <p class="lead text-muted">Comprometidos con tu éxito digital</p>
+<section class="py-20 bg-white relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute top-10 left-10 w-80 h-80 bg-red-50 rounded-full opacity-30 blur-3xl" data-parallax-speed="0.2"></div>
+    <div class="absolute bottom-10 right-10 w-80 h-80 bg-orange-50 rounded-full opacity-25 blur-3xl" data-parallax-speed="0.15"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fas fa-star mr-2 text-red-600"></i>¿Por qué elegirnos?
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Tu éxito es <span class="text-red-600">nuestra misión</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Comprometidos con la excelencia en cada proyecto
+            </p>
         </div>
         
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <div class="benefit-icon mb-3">
-                        <i class="fas fa-shield-alt fa-3x text-success"></i>
-                    </div>
-                    <h5 class="fw-bold">Seguridad</h5>
-                    <p class="text-muted">Implementamos las mejores prácticas de seguridad para proteger tus datos y los de tus clientes.</p>
+        <!-- Benefits Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center p-6" data-parallax-card data-parallax-speed="0.08">
+                <div class="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-6 transform hover:scale-110 transition-all duration-300 hover:bg-red-50">
+                    <i class="fas fa-shield-alt text-4xl text-red-600"></i>
                 </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Seguridad Total</h3>
+                <p class="text-gray-600 leading-relaxed">Implementamos las mejores prácticas de seguridad para proteger tus datos.</p>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <div class="benefit-icon mb-3">
-                        <i class="fas fa-headset fa-3x text-info"></i>
-                    </div>
-                    <h5 class="fw-bold">Soporte 24/7</h5>
-                    <p class="text-muted">Equipo de soporte disponible siempre que lo necesites para resolver cualquier incidencia.</p>
+            
+            <div class="text-center p-6" data-parallax-card data-parallax-speed="0.10">
+                <div class="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-6 transform hover:scale-110 transition-all duration-300 hover:bg-red-50">
+                    <i class="fas fa-headset text-4xl text-red-600"></i>
                 </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Soporte 24/7</h3>
+                <p class="text-gray-600 leading-relaxed">Equipo disponible siempre para resolver cualquier incidencia.</p>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <div class="benefit-icon mb-3">
-                        <i class="fas fa-chart-line fa-3x text-warning"></i>
-                    </div>
-                    <h5 class="fw-bold">Escalabilidad</h5>
-                    <p class="text-muted">Soluciones que crecen contigo, adaptándose a las necesidades de tu negocio.</p>
+            
+            <div class="text-center p-6" data-parallax-card data-parallax-speed="0.09">
+                <div class="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-6 transform hover:scale-110 transition-all duration-300 hover:bg-red-50">
+                    <i class="fas fa-chart-line text-4xl text-red-600"></i>
                 </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Escalabilidad</h3>
+                <p class="text-gray-600 leading-relaxed">Soluciones que crecen contigo y se adaptan a tus necesidades.</p>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="text-center">
-                    <div class="benefit-icon mb-3">
-                        <i class="fas fa-award fa-3x text-danger"></i>
-                    </div>
-                    <h5 class="fw-bold">Experiencia</h5>
-                    <p class="text-muted">Más de 10 años de experiencia en proyectos digitales exitosos.</p>
+            
+            <div class="text-center p-6" data-parallax-card data-parallax-speed="0.11">
+                <div class="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-6 transform hover:scale-110 transition-all duration-300 hover:bg-red-50">
+                    <i class="fas fa-award text-4xl text-red-600"></i>
                 </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Experiencia</h3>
+                <p class="text-gray-600 leading-relaxed">Más de 10 años desarrollando proyectos digitales exitosos.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Process Section -->
-<section id="process" class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">Nuestro Proceso</h2>
-            <p class="lead text-muted">Metodología probada para garantizar resultados</p>
+<section id="process" class="py-20 bg-gray-50 relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute top-40 left-10 w-64 h-64 bg-red-50 rounded-full opacity-40 blur-3xl" data-parallax-speed="0.18"></div>
+    <div class="absolute bottom-40 right-10 w-64 h-64 bg-orange-50 rounded-full opacity-40 blur-3xl" data-parallax-speed="0.22"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <span class="bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-gray-200 inline-block mb-4">
+                <i class="fas fa-cogs mr-2 text-red-600"></i>Nuestro Proceso
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Metodología <span class="text-red-600">probada</span> para el éxito
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Un enfoque estructurado que garantiza resultados excepcionales
+            </p>
         </div>
         
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="process-timeline">
-                    <div class="process-step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h5 class="fw-bold">Descubrimiento</h5>
-                            <p class="text-muted">Analizamos tus necesidades y objetivos para definir la solución perfecta.</p>
-                        </div>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h5 class="fw-bold">Diseño</h5>
-                            <p class="text-muted">Creamos prototipos y diseños que reflejan tu marca y satisfacen a tus usuarios.</p>
-                        </div>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h5 class="fw-bold">Desarrollo</h5>
-                            <p class="text-muted">Implementamos la solución con las mejores tecnologías y prácticas del mercado.</p>
-                        </div>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h5 class="fw-bold">Lanzamiento</h5>
-                            <p class="text-muted">Desplegamos tu solución y te acompañamos en cada paso del proceso.</p>
-                        </div>
-                    </div>
+        <!-- Process Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center" data-parallax-card data-parallax-speed="0.08">
+                <div class="w-24 h-24 bg-white border-4 border-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <div class="text-red-600 text-3xl font-bold">1</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
+                    <i class="fas fa-search text-3xl text-red-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Descubrimiento</h3>
+                    <p class="text-gray-600 leading-relaxed">Analizamos tus necesidades y objetivos para diseñar la solución perfecta.</p>
+                </div>
+            </div>
+            
+            <div class="text-center" data-parallax-card data-parallax-speed="0.10">
+                <div class="w-24 h-24 bg-white border-4 border-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <div class="text-red-600 text-3xl font-bold">2</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
+                    <i class="fas fa-pencil-ruler text-3xl text-red-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Diseño</h3>
+                    <p class="text-gray-600 leading-relaxed">Creamos prototipos intuitivos que reflejan tu marca.</p>
+                </div>
+            </div>
+            
+            <div class="text-center" data-parallax-card data-parallax-speed="0.09">
+                <div class="w-24 h-24 bg-white border-4 border-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <div class="text-red-600 text-3xl font-bold">3</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
+                    <i class="fas fa-code text-3xl text-red-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Desarrollo</h3>
+                    <p class="text-gray-600 leading-relaxed">Implementamos con tecnologías de vanguardia.</p>
+                </div>
+            </div>
+            
+            <div class="text-center" data-parallax-card data-parallax-speed="0.11">
+                <div class="w-24 h-24 bg-white border-4 border-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <div class="text-red-600 text-3xl font-bold">4</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
+                    <i class="fas fa-rocket text-3xl text-red-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Lanzamiento</h3>
+                    <p class="text-gray-600 leading-relaxed">Desplegamos tu solución con acompañamiento continuo.</p>
                 </div>
             </div>
         </div>
@@ -175,65 +365,83 @@
 </section>
 
 <!-- Testimonials Section -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">Testimonios</h2>
-            <p class="lead text-muted">Lo que dicen nuestros clientes</p>
+<section class="py-20 bg-white relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-orange-50 rounded-full opacity-20 blur-3xl" data-parallax-speed="0.18"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-red-50 rounded-full opacity-20 blur-3xl" data-parallax-speed="0.22"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fas fa-quote-left mr-2 text-red-600"></i>Testimonios
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Lo que dicen <span class="text-red-600">nuestros clientes</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                La satisfacción de nuestros clientes es nuestro mejor respaldo
+            </p>
         </div>
         
-        <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="testimonial-rating mb-3">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                        </div>
-                        <p class="card-text italic">"Excelente equipo profesional. Transformaron completamente nuestra presencia digital."</p>
-                        <div class="testimonial-author">
-                            <h6 class="fw-bold mb-0">María González</h6>
-                            <small class="text-muted">CEO, Tech Solutions</small>
-                        </div>
+        <!-- Testimonials Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="testimonial-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.08">
+                <div class="flex space-x-1 mb-6">
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                </div>
+                <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                    "Excelente equipo profesional. Transformaron completamente nuestra presencia digital."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-xl mr-4">M</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">María González</h4>
+                        <p class="text-gray-600 text-sm">CEO, Tech Solutions</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="testimonial-rating mb-3">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                        </div>
-                        <p class="card-text italic">"El resultado superó nuestras expectativas. Totalmente recomendados."</p>
-                        <div class="testimonial-author">
-                            <h6 class="fw-bold mb-0">Carlos Rodríguez</h6>
-                            <small class="text-muted">Director, Innovate Corp</small>
-                        </div>
+            
+            <div class="testimonial-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.10">
+                <div class="flex space-x-1 mb-6">
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                </div>
+                <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                    "El resultado superó nuestras expectativas. Totalmente recomendados."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-xl mr-4">C</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Carlos Rodríguez</h4>
+                        <p class="text-gray-600 text-sm">Director, Innovate Corp</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="testimonial-rating mb-3">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                        </div>
-                        <p class="card-text italic">"Profesionalismo y calidad en cada detalle. Nuestro proyecto fue un éxito total."</p>
-                        <div class="testimonial-author">
-                            <h6 class="fw-bold mb-0">Ana Martínez</h6>
-                            <small class="text-muted">Gerente, Digital Store</small>
-                        </div>
+            
+            <div class="testimonial-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.09">
+                <div class="flex space-x-1 mb-6">
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                    <i class="fas fa-star text-red-500"></i>
+                </div>
+                <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                    "Profesionalismo y calidad en cada detalle. Un éxito total."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-xl mr-4">A</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Ana Martínez</h4>
+                        <p class="text-gray-600 text-sm">Gerente, Digital Store</p>
                     </div>
                 </div>
             </div>
@@ -242,22 +450,79 @@
 </section>
 
 <!-- CTA Section -->
-<section id="contact" class="py-5 bg-gradient-primary text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-                <h2 class="display-5 fw-bold mb-4">¿Listo para transformar tu negocio?</h2>
-                <p class="lead mb-4">Hablemos de tu proyecto y creemos la solución perfecta juntos.</p>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="mailto:info@{{ site_name|lower }}.com" class="btn btn-warning btn-lg fw-bold">
-                        <i class="fas fa-envelope me-2"></i>Contactar ahora
-                    </a>
-                    <a href="tel:+50412345678" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-phone me-2"></i>Llamar
-                    </a>
-                </div>
+<section id="contact" class="relative py-24 overflow-hidden bg-gray-900">
+    <!-- Background -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl" data-parallax-speed="0.15"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl" data-parallax-speed="0.2"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full">
+                <i class="fas fa-rocket text-4xl text-white"></i>
+            </div>
+        </div>
+        
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6">
+            ¿Listo para <span class="text-red-500">transformar</span> tu negocio?
+        </h2>
+        
+        <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+            Hablemos de tu proyecto. Juntos crearemos la solución perfecta.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a href="mailto:info@megadominio.co" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>
+                Contactar ahora
+            </a>
+            
+            <a href="tel:+573001234567" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-gray-600 rounded-lg hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-phone mr-2"></i>
+                Llamar ahora
+            </a>
+        </div>
+        
+        <!-- Contact Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300" data-parallax-card data-parallax-speed="0.08">
+                <i class="fas fa-envelope text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Email</p>
+                <p class="font-semibold">info@{{ site_name|lower }}.com</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300" data-parallax-card data-parallax-speed="0.10">
+                <i class="fas fa-phone text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Teléfono</p>
+                <p class="font-semibold">+57 300 123 4567</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300" data-parallax-card data-parallax-speed="0.09">
+                <i class="fas fa-map-marker-alt text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Ubicación</p>
+                <p class="font-semibold">Medellín, CO</p>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+@keyframes blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+.animate-blob {
+    animation: blob 7s infinite;
+}
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+</style>
+
 {% endblock %}

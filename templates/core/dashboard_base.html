@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block store_cart %}{% endblock %}
+
+{% block title %}{% block dashboard_title %}Dashboard{% endblock %} - {{ site_name }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .dash-sidebar { scrollbar-width: thin; scrollbar-color: #374151 #111827; }
+    .dash-sidebar::-webkit-scrollbar { width: 4px; }
+    .dash-sidebar::-webkit-scrollbar-track { background: #111827; }
+    .dash-sidebar::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    .dash-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; border-radius: 0.5rem; color: #9ca3af; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; }
+    .dash-link:hover { background: #1f2937; color: #f3f4f6; }
+    .dash-link.active { background: #dc2626; color: #fff; }
+    .dash-link i { width: 1.25rem; text-align: center; font-size: 0.9rem; }
+    .dash-section-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4b5563; padding: 1rem 1rem 0.4rem; }
+</style>
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<div class="flex min-h-[calc(100vh-64px)]">
+    <!-- Mobile sidebar toggle -->
+    <button id="dash-toggle" class="md:hidden fixed bottom-6 left-6 z-50 w-12 h-12 bg-red-600 text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-red-700 transition">
+        <i class="fas fa-bars text-lg"></i>
+    </button>
+
+    <!-- Overlay (mobile) -->
+    <div id="dash-overlay" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="dash-sidebar" class="dash-sidebar fixed md:sticky top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] bg-gray-900 border-r border-gray-800 flex-shrink-0 overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+        <div class="p-4">
+            <!-- Logo / Brand -->
+            <div class="flex items-center gap-3 mb-6 px-1">
+                <div class="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-pie text-white text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm leading-tight">Megadominio</p>
+                    <p class="text-gray-500 text-xs">Panel de control</p>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="space-y-1">
+                <p class="dash-section-title">Principal</p>
+                <a href="{% url 'core:dashboard' %}" class="dash-link {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+
+                <p class="dash-section-title mt-4">Ventas</p>
+                <a href="{% url 'core:dashboard_quotes' %}" class="dash-link {% if '/dashboard/cotizaciones' in request.path %}active{% endif %}">
+                    <i class="fas fa-file-invoice"></i> Cotizaciones
+                </a>
+                <a href="{% url 'core:dashboard_invoices' %}" class="dash-link {% if '/dashboard/facturas' in request.path %}active{% endif %}">
+                    <i class="fas fa-file-invoice-dollar"></i> Facturas
+                </a>
+                <a href="{% url 'core:dashboard_cuentas_cobro' %}" class="dash-link {% if '/dashboard/cuentas-cobro' in request.path %}active{% endif %}">
+                    <i class="fas fa-money-check-alt"></i> Cuentas de cobro
+                </a>
+
+                <p class="dash-section-title mt-4">Gestión</p>
+                <a href="{% url 'core:dashboard_clients' %}" class="dash-link {% if '/dashboard/clientes' in request.path %}active{% endif %}">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+                <a href="{% url 'core:dashboard_services' %}" class="dash-link {% if request.path == '/dashboard/servicios/' or '/dashboard/servicios/' in request.path and '/dashboard/servicios-clientes/' not in request.path %}active{% endif %}">
+                    <i class="fas fa-cogs"></i> Servicios
+                </a>
+                <a href="{% url 'core:dashboard_client_services' %}" class="dash-link {% if '/dashboard/servicios-clientes' in request.path %}active{% endif %}">
+                    <i class="fas fa-link"></i> Servicios de clientes
+                </a>
+
+                <p class="dash-section-title mt-4">Tienda</p>
+                <a href="{% url 'core:dashboard_products' %}" class="dash-link {% if '/dashboard/productos' in request.path and '/categorias' not in request.path %}active{% endif %}">
+                    <i class="fas fa-box-open"></i> Productos
+                </a>
+                <a href="{% url 'core:dashboard_product_categories' %}" class="dash-link {% if '/dashboard/productos/categorias' in request.path %}active{% endif %}">
+                    <i class="fas fa-tags"></i> Categorías
+                </a>
+                <a href="{% url 'core:dashboard_orders' %}" class="dash-link {% if '/dashboard/ordenes' in request.path %}active{% endif %}">
+                    <i class="fas fa-shopping-cart"></i> Órdenes
+                </a>
+
+                <p class="dash-section-title mt-4">Sistema</p>
+                <a href="{% url 'core:dashboard_users' %}" class="dash-link {% if '/dashboard/usuarios' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-shield"></i> Usuarios
+                </a>
+                <a href="{% url 'admin:index' %}" class="dash-link">
+                    <i class="fas fa-shield-alt"></i> Admin Django
+                </a>
+                <a href="{% url 'core:home' %}" class="dash-link">
+                    <i class="fas fa-globe"></i> Ver sitio
+                </a>
+                <a href="{% url 'logout' %}" class="dash-link text-red-400 hover:text-red-300">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </a>
+            </nav>
+        </div>
+
+        <!-- User info -->
+        <div class="mt-auto border-t border-gray-800 p-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user text-gray-400 text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-white text-sm font-semibold truncate">{{ request.user.get_full_name|default:request.user.username }}</p>
+                    <p class="text-gray-500 text-xs truncate">{{ request.user.get_role_display|default:"Admin" }}</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 bg-gray-950 min-w-0">
+        <!-- Top bar -->
+        <div class="sticky top-16 z-20 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-bold text-white">{% block dashboard_heading %}Dashboard{% endblock %}</h1>
+                    {% block dashboard_subtitle %}<p class="text-gray-500 text-sm mt-0.5">{% block dashboard_desc %}Panel de administración{% endblock %}</p>{% endblock %}
+                </div>
+                <div class="flex items-center gap-3">
+                    {% block dashboard_actions %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="p-6">
+            {% block dashboard_content %}{% endblock %}
+        </div>
+    </main>
+</div>
+
+<script>
+(function() {
+    var toggle = document.getElementById('dash-toggle');
+    var sidebar = document.getElementById('dash-sidebar');
+    var overlay = document.getElementById('dash-overlay');
+    if (!toggle || !sidebar) return;
+    function open() { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); }
+    function close() { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
+    toggle.addEventListener('click', function() {
+        sidebar.classList.contains('-translate-x-full') ? open() : close();
+    });
+    overlay.addEventListener('click', close);
+})();
+</script>
+{% endblock %}

@@ -39,12 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django.contrib.sitemaps',
     # Third party apps
     'rest_framework',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_extensions',
     'corsheaders',
+    'axes',
     # Local apps
     'apps.core',
     'apps.accounts',
@@ -52,9 +55,11 @@ INSTALLED_APPS = [
     'apps.quotes',
     'apps.invoices',
     'apps.clients',
+    'apps.store',
 ]
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -64,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'megadominio.urls'
@@ -108,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 10},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -117,13 +124,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication backends (axes must be first)
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-hn'
+LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'America/Tegucigalpa'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -138,6 +151,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+STATICFILES_STORAGE = (
+    'whitenoise.storage.CompressedManifestStaticFilesStorage'
+)
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -181,11 +198,69 @@ SITE_URL = config('SITE_URL', default='http://localhost:8000')
 SITE_NAME = config('SITE_NAME', default='Megadominio')
 
 # CORS Settings
+# Autenticación
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Sesión - mantener sesión activa al navegar
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 86400  # 24 horas
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_HTTPONLY = True
+
+# CSRF hardening
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_USE_SESSIONS = True
+
+# Security headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# django-axes: brute force protection
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 1  # 1 hora de bloqueo
+AXES_LOCKOUT_PARAMETERS = ['username', 'ip_address']
+AXES_RESET_ON_SUCCESS = True
+AXES_LOCKOUT_TEMPLATE = 'registration/account_locked.html'
+AXES_LOCKOUT_URL = None
+AXES_VERBOSE = True
+
+# Wompi Payment Gateway
+WOMPI_PUBLIC_KEY = config('WOMPI_PUBLIC_KEY', default='')
+WOMPI_PRIVATE_KEY = config('WOMPI_PRIVATE_KEY', default='')
+WOMPI_EVENTS_SECRET = config('WOMPI_EVENTS_SECRET', default='')
+WOMPI_SANDBOX = config('WOMPI_SANDBOX', default=True, cast=bool)
+WOMPI_CURRENCY = 'COP'
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Password hashing (strongest first)
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]

@@ -1,0 +1,58 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}{{ title }}{% endblock %}
+{% block dashboard_heading %}{{ title }}{% endblock %}
+{% block dashboard_desc %}{{ object_list|length }} factura{{ object_list|length|pluralize:"s" }}{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_invoice_create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-plus"></i> Nueva factura
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    {% if object_list %}
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="border-b border-gray-800">
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Número</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Cliente</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Vence</th>
+                    <th class="px-5 py-3"></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                {% for invoice in object_list %}
+                <tr class="hover:bg-gray-800/40 transition">
+                    <td class="px-5 py-3.5 text-sm text-white font-semibold">{{ invoice.number }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ invoice.client.name }}</td>
+                    <td class="px-5 py-3.5">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold {% if invoice.status == 'paid' %}bg-green-500/10 text-green-400{% elif invoice.status == 'pending' %}bg-amber-500/10 text-amber-400{% elif invoice.status == 'overdue' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                            {{ invoice.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">{{ invoice.total|floatformat:2 }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-400">{{ invoice.due_date|date:"d/m/Y" }}</td>
+                    <td class="px-5 py-3.5 text-right">
+                        <a href="{% url 'core:dashboard_invoice_detail' invoice.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-lg hover:bg-red-500/20 transition">
+                            <i class="fas fa-eye"></i> Ver
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-16">
+        <i class="fas fa-file-invoice-dollar text-gray-700 text-4xl mb-3"></i>
+        <p class="text-gray-500 font-semibold">No hay facturas</p>
+        <p class="text-gray-600 text-sm">Las facturas se generan desde cotizaciones aceptadas</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

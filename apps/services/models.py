@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Service(models.Model):
@@ -12,6 +13,10 @@ class Service(models.Model):
     ]
     
     name = models.CharField(max_length=200, verbose_name="Nombre del servicio")
+    slug = models.SlugField(
+        max_length=250, unique=True, blank=True,
+        verbose_name="Slug"
+    )
     description = models.TextField(verbose_name="Descripción")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
     billing_type = models.CharField(
@@ -31,6 +36,25 @@ class Service(models.Model):
     
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.name)
+            slug = base
+            n = 1
+            while Service.objects.filter(
+                slug=slug
+            ).exclude(pk=self.pk).exists():
+                slug = f'{base}-{n}'
+                n += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse(
+            'core:service_detail', kwargs={'slug': self.slug}
+        )
 
 
 class ClientService(models.Model):

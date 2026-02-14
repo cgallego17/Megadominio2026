@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ product.name }} - Tienda {{ site_name }}{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="pt-28 pb-4 bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{% url 'core:home' %}" class="hover:text-white transition">Inicio</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <a href="{% url 'core:store' %}" class="hover:text-white transition">Tienda</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            {% if product.category %}
+            <a href="{% url 'core:store' %}" class="hover:text-white transition">{{ product.category.name }}</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            {% endif %}
+            <span class="text-gray-400">{{ product.name }}</span>
+        </nav>
+    </div>
+</section>
+
+<!-- Product Detail -->
+<section class="py-8 bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+            <!-- Product Image -->
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
+                {% if product.image %}
+                <div class="bg-gray-800 p-6 flex items-center justify-center min-h-[400px]">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="max-w-full max-h-[500px] object-contain rounded-lg">
+                </div>
+                {% else %}
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 min-h-[400px] flex items-center justify-center">
+                    <i class="fas {{ product.icon }} text-9xl {{ product.icon_color }}"></i>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info -->
+            <div class="flex flex-col justify-center">
+                {% if product.badge %}
+                <span class="inline-block w-fit px-3 py-1 text-xs font-black rounded-full text-white {{ product.badge_color }} mb-4">{{ product.badge_label }}</span>
+                {% endif %}
+
+                {% if product.category %}
+                <p class="text-red-500 text-sm font-semibold tracking-wider mb-2">{{ product.category.name|upper }}</p>
+                {% endif %}
+
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-4">{{ product.name }}</h1>
+
+                {% if product.description %}
+                <p class="text-gray-400 text-lg leading-relaxed mb-6">{{ product.description }}</p>
+                {% endif %}
+
+                <!-- Price -->
+                <div class="flex items-baseline gap-3 mb-6">
+                    <span class="text-4xl font-extrabold text-white">{{ product.price|intcomma }}</span>
+                    {% if product.compare_price %}
+                    <span class="text-xl text-gray-500 line-through">{{ product.compare_price|intcomma }}</span>
+                    {% with discount=product.compare_price|add:0 %}
+                    <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-sm font-bold rounded-full">Ahorra</span>
+                    {% endwith %}
+                    {% endif %}
+                </div>
+
+                <!-- Stock -->
+                <div class="flex items-center gap-2 mb-6">
+                    {% if product.in_stock %}
+                    <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+                    <span class="text-green-400 text-sm font-semibold">En stock ({{ product.stock }} disponibles)</span>
+                    {% else %}
+                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                    <span class="text-red-400 text-sm font-semibold">Agotado</span>
+                    {% endif %}
+                </div>
+
+                <!-- Add to Cart -->
+                {% if product.in_stock %}
+                <button id="detail-add-to-cart" class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg rounded-xl hover:from-red-500 hover:to-red-600 transition-all duration-300 shadow-lg flex items-center justify-center gap-3 mb-4"
+                    data-id="{{ product.slug }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-icon="{{ product.icon }}" data-image="{% if product.image %}{{ product.image.url }}{% endif %}">
+                    <i class="fas fa-cart-plus text-xl"></i>
+                    <span id="add-btn-text">Agregar al carrito</span>
+                </button>
+                {% else %}
+                <button disabled class="w-full sm:w-auto px-10 py-4 bg-gray-800 text-gray-500 font-bold text-lg rounded-xl cursor-not-allowed flex items-center justify-center gap-3 mb-4">
+                    <i class="fas fa-ban text-xl"></i> Producto agotado
+                </button>
+                {% endif %}
+
+                <!-- Meta info -->
+                <div class="flex flex-wrap gap-4 text-gray-500 text-sm mt-2">
+                    <span><i class="fas fa-shield-alt mr-1"></i> Pago seguro</span>
+                    <span><i class="fas fa-truck mr-1"></i> Envío a todo el país</span>
+                    <span><i class="fas fa-undo mr-1"></i> Devoluciones</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+{% if related_products %}
+<section class="py-16 bg-gray-950 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl font-extrabold text-white mb-8">Productos relacionados</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for p in related_products %}
+            <a href="{% url 'core:product_detail' p.slug %}" class="group bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 hover:border-red-600/40 transition-all duration-300 hover:-translate-y-1">
+                <div class="relative h-48 overflow-hidden bg-gray-800">
+                    {% if p.image %}
+                    <img src="{{ p.image.url }}" alt="{{ p.name }}" class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-300">
+                    {% else %}
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 w-full h-full flex items-center justify-center">
+                        <i class="fas {{ p.icon }} text-5xl {{ p.icon_color }} group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    {% endif %}
+                    {% if p.badge %}
+                    <span class="absolute top-3 right-3 px-2 py-0.5 {{ p.badge_color }} text-white text-xs font-black rounded-full">{{ p.badge_label }}</span>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    {% if p.category %}
+                    <p class="text-gray-500 text-xs font-semibold tracking-wider mb-1">{{ p.category.name|upper }}</p>
+                    {% endif %}
+                    <h3 class="text-white font-bold mb-2 group-hover:text-red-400 transition">{{ p.name }}</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-xl font-extrabold text-white">{{ p.price|intcomma }}</span>
+                        {% if p.compare_price %}
+                        <span class="text-sm text-gray-500 line-through">{{ p.compare_price|intcomma }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Back to store -->
+<section class="py-8 bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+        <a href="{% url 'core:store' %}" class="inline-flex items-center gap-2 text-gray-400 hover:text-red-400 transition font-semibold">
+            <i class="fas fa-arrow-left"></i> Volver a la tienda
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    var btn = document.getElementById('detail-add-to-cart');
+    if (!btn || !window.storeCart) return;
+
+    btn.addEventListener('click', function() {
+        var d = this.dataset;
+        window.storeCart.addItem(d.id, d.name, d.price, d.icon, d.image);
+
+        var textEl = document.getElementById('add-btn-text');
+        var original = textEl.textContent;
+        textEl.textContent = '¡Agregado al carrito!';
+        btn.classList.add('scale-95');
+
+        // Bounce the FAB
+        var fab = document.getElementById('store-fab');
+        var badge = document.getElementById('store-fab-badge');
+        if (fab) {
+            fab.classList.remove('bounce');
+            fab.offsetHeight;
+            fab.classList.add('bounce');
+            setTimeout(function() { fab.classList.remove('bounce'); }, 700);
+        }
+        if (badge) {
+            badge.classList.remove('pop');
+            badge.offsetHeight;
+            badge.classList.add('pop');
+        }
+
+        setTimeout(function() {
+            textEl.textContent = original;
+            btn.classList.remove('scale-95');
+        }, 1500);
+    });
+})();
+</script>
+{% endblock %}

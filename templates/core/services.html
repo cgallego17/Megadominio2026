@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Servicios Digitales - {{ site_name }} | {{ total_services }} Soluciones Profesionales{% endblock %}
+
+{% block meta_description %}Explora nuestros {{ total_services }} servicios digitales: desarrollo web, marketing digital, SEO, branding, automatización y más. Cotiza gratis con {{ site_name }}.{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Servicios Digitales de {{ site_name }}",
+  "description": "Catálogo completo de servicios digitales profesionales",
+  "numberOfItems": {{ total_services }},
+  "itemListElement": [
+    {% for cat_name, cat_services in categories.items %}{% for service in cat_services %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.parentloop.counter }}{{ forloop.counter }},
+      "item": {
+        "@type": "Service",
+        "name": "{{ service.name }}",
+        "description": "{{ service.description|truncatechars:160 }}",
+        "url": "{{ site_url }}{{ service.get_absolute_url }}"
+      }
+    }{% if not forloop.last or not forloop.parentloop.last %},{% endif %}
+    {% endfor %}{% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-block mb-6">
+            <span class="bg-red-600/20 text-orange-400 px-4 py-2 rounded-full text-sm font-semibold border border-red-500/30">
+                <i class="fas fa-briefcase mr-2"></i>{{ total_services }} Servicios Disponibles
+            </span>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+            Nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">Servicios</span>
+        </h1>
+        
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            Soluciones digitales completas para impulsar tu negocio al siguiente nivel
+        </p>
+        
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Solicitar cotización
+                </a>
+    </div>
+</section>
+
+<!-- Services Categories -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {% for category_name, services in categories.items %}
+        {% if services %}
+        <!-- Category Section -->
+        <div class="mb-20 last:mb-0">
+            <div class="mb-10">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-3">
+                    <i class="fas fa-folder-open text-red-600 mr-3"></i>{{ category_name }}
+                </h2>
+                <div class="h-1 w-24 bg-red-600 rounded"></div>
+            </div>
+            
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for service in services %}
+                <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2">
+                    <div class="p-8">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                            {% if 'Landing' in service.name or 'Sitio' in service.name or 'Portal' in service.name %}
+                                <i class="fas fa-laptop-code text-3xl text-red-600"></i>
+                            {% elif 'commerce' in service.name %}
+                                <i class="fas fa-shopping-cart text-3xl text-red-600"></i>
+                            {% elif 'Blog' in service.name %}
+                                <i class="fas fa-blog text-3xl text-red-600"></i>
+                            {% elif 'Sistema' in service.name %}
+                                <i class="fas fa-cogs text-3xl text-red-600"></i>
+                            {% elif 'Hosting' in service.name %}
+                                <i class="fas fa-server text-3xl text-red-600"></i>
+                            {% elif 'Dominio' in service.name %}
+                                <i class="fas fa-globe text-3xl text-red-600"></i>
+                            {% elif 'Redes Sociales' in service.name %}
+                                <i class="fas fa-share-alt text-3xl text-red-600"></i>
+                            {% elif 'Google Ads' in service.name %}
+                                <i class="fab fa-google text-3xl text-red-600"></i>
+                            {% elif 'Facebook' in service.name or 'Instagram' in service.name %}
+                                <i class="fab fa-facebook text-3xl text-red-600"></i>
+                            {% elif 'SEO' in service.name %}
+                                <i class="fas fa-search text-3xl text-red-600"></i>
+                            {% elif 'Email Marketing' in service.name %}
+                                <i class="fas fa-envelope-open-text text-3xl text-red-600"></i>
+                            {% elif 'Estrategia' in service.name %}
+                                <i class="fas fa-bullseye text-3xl text-red-600"></i>
+                            {% elif 'Logo' in service.name %}
+                                <i class="fas fa-pencil-ruler text-3xl text-red-600"></i>
+                            {% elif 'Identidad' in service.name %}
+                                <i class="fas fa-palette text-3xl text-red-600"></i>
+                            {% elif 'Banner' in service.name %}
+                                <i class="fas fa-ad text-3xl text-red-600"></i>
+                            {% elif 'Material' in service.name %}
+                                <i class="fas fa-images text-3xl text-red-600"></i>
+                            {% elif 'Mantenimiento' in service.name %}
+                                <i class="fas fa-tools text-3xl text-red-600"></i>
+                            {% elif 'Soporte' in service.name %}
+                                <i class="fas fa-headset text-3xl text-red-600"></i>
+                            {% elif 'Email Corporativo' in service.name or 'Correo' in service.name %}
+                                <i class="fas fa-envelope text-3xl text-red-600"></i>
+                            {% elif 'Google Workspace' in service.name %}
+                                <i class="fab fa-google text-3xl text-red-600"></i>
+                            {% elif 'SSL' in service.name %}
+                                <i class="fas fa-lock text-3xl text-red-600"></i>
+                            {% elif 'Seguridad' in service.name %}
+                                <i class="fas fa-shield-alt text-3xl text-red-600"></i>
+                            {% elif 'Backup' in service.name %}
+                                <i class="fas fa-database text-3xl text-red-600"></i>
+                            {% elif 'Optimización' in service.name or 'Velocidad' in service.name %}
+                                <i class="fas fa-tachometer-alt text-3xl text-red-600"></i>
+                            {% elif 'Migración' in service.name %}
+                                <i class="fas fa-exchange-alt text-3xl text-red-600"></i>
+                            {% elif 'Auditoría' in service.name %}
+                                <i class="fas fa-clipboard-check text-3xl text-red-600"></i>
+                            {% else %}
+                                <i class="fas fa-code text-3xl text-red-600"></i>
+                            {% endif %}
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ service.name }}</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">{{ service.description|truncatewords:25 }}</p>
+                        
+                        <div class="mb-6">
+                            <div class="inline-flex items-center bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                                <i class="fas fa-tag text-red-600 mr-2"></i>
+                                <span class="font-semibold text-gray-700">Precio bajo solicitud</span>
+                            </div>
+                        </div>
+                        
+                        <a href="{% url 'core:service_detail' service.slug %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                            <span>Ver detalles</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="contact" class="relative py-24 overflow-hidden bg-gray-900">
+    <!-- Background -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full">
+                <i class="fas fa-rocket text-4xl text-white"></i>
+            </div>
+        </div>
+        
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6">
+            ¿Listo para <span class="text-red-500">transformar</span> tu negocio?
+        </h2>
+        
+        <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+            Contáctanos hoy y recibe una cotización personalizada sin compromiso
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a href="mailto:info@megadominio.co" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>
+                Contactar ahora
+            </a>
+            
+            <a href="tel:+573001234567" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-gray-600 rounded-lg hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-phone mr-2"></i>
+                Llamar ahora
+            </a>
+        </div>
+        
+        <!-- Contact Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300">
+                <i class="fas fa-envelope text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Email</p>
+                <p class="font-semibold">info@megadominio.co</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300">
+                <i class="fas fa-phone text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Teléfono</p>
+                <p class="font-semibold">+57 300 123 4567</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-xl p-6 text-white border border-gray-700 hover:bg-gray-750 transition-all duration-300">
+                <i class="fas fa-map-marker-alt text-3xl text-red-500 mb-3"></i>
+                <p class="text-sm text-gray-400 mb-1">Ubicación</p>
+                <p class="font-semibold">Bogotá, Colombia</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

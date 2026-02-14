@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Solicitar Cotización - {{ site_name }}{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-block mb-6">
+            <span class="bg-red-600/20 text-orange-400 px-4 py-2 rounded-full text-sm font-semibold border border-red-500/30">
+                <i class="fas fa-file-invoice mr-2"></i>Cotización Gratuita
+            </span>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+            Solicita tu <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">Cotización</span>
+        </h1>
+        
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+            Completa el formulario y recibe una cotización formal en tu correo electrónico
+        </p>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="mb-6 bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded-lg" role="alert">
+                <p class="font-bold">{{ message.tags|title }}</p>
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% if selected_service %}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border-l-4 border-red-600">
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-check text-xl text-red-600"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Servicio seleccionado:</p>
+                    <p class="text-xl font-bold text-gray-900">{{ selected_service.name }}</p>
+                    <p class="text-sm text-gray-600 italic">Precio a convenir según alcance</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Información Personal -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fas fa-user text-red-600 mr-2"></i>Información Personal
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.name.label }} <span class="text-red-600">*</span>
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.email.label }} <span class="text-red-600">*</span>
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.email.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.phone.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.phone.label }} <span class="text-red-600">*</span>
+                            </label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.phone.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.company.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.company.label }}
+                            </label>
+                            {{ form.company }}
+                            {% if form.company.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.company.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="border-gray-200">
+                
+                <!-- Información del Servicio -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        <i class="fas fa-briefcase text-red-600 mr-2"></i>Servicio de Interés
+                    </h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="{{ form.service.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.service.label }} <span class="text-red-600">*</span>
+                            </label>
+                            {{ form.service }}
+                            {% if form.service.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.service.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <label for="{{ form.message.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                {{ form.message.label }}
+                            </label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <p class="mt-1 text-sm text-red-600">{{ form.message.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="pt-6">
+                    <button type="submit" class="w-full inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Solicitar Cotización
+                    </button>
+                    
+                    <p class="text-center text-sm text-gray-600 mt-4">
+                        <i class="fas fa-lock mr-1"></i>
+                        Tu información está segura y protegida
+                    </p>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Benefits -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bolt text-2xl text-red-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Respuesta Rápida</h3>
+                <p class="text-gray-600 text-sm">Recibirás tu cotización en minutos</p>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-file-invoice-dollar text-2xl text-red-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Sin Compromiso</h3>
+                <p class="text-gray-600 text-sm">Cotización gratuita y sin obligación</p>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-award text-2xl text-red-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-900 mb-2">Profesional</h3>
+                <p class="text-gray-600 text-sm">Cotización detallada y formal</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

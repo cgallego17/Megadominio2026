@@ -1,0 +1,104 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}Cuenta de cobro {{ cuenta.number }}{% endblock %}
+{% block dashboard_heading %}{{ cuenta.number }}{% endblock %}
+{% block dashboard_desc %}Cuenta de cobro para {{ cuenta.client.name }}{% endblock %}
+
+{% block dashboard_actions %}
+{% if cuenta.status == 'pending' %}
+<form method="post" action="{% url 'core:dashboard_cuenta_mark_paid' cuenta.pk %}" class="inline">
+    {% csrf_token %}
+    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition">
+        <i class="fas fa-check"></i> Marcar pagada
+    </button>
+</form>
+{% endif %}
+<a href="{% url 'core:dashboard_cuenta_edit' cuenta.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_cuenta_delete' cuenta.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-red-400 text-sm font-semibold rounded-lg hover:bg-red-500/10 transition">
+    <i class="fas fa-trash"></i> Eliminar
+</a>
+<a href="{% url 'core:dashboard_cuentas_cobro' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<!-- Info Card -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden mb-6">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Información</h3>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold {% if cuenta.status == 'paid' %}bg-green-500/10 text-green-400{% elif cuenta.status == 'pending' %}bg-amber-500/10 text-amber-400{% elif cuenta.status == 'overdue' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+            {{ cuenta.get_status_display }}
+        </span>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Cliente</p>
+                    <a href="{% url 'core:dashboard_client_detail' cuenta.client.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cuenta.client.name }}</a>
+                </div>
+                {% if cuenta.quote %}
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Cotización</p>
+                    <a href="{% url 'core:dashboard_quote_detail' cuenta.quote.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cuenta.quote.number }}</a>
+                </div>
+                {% endif %}
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Fecha emisión</p>
+                    <p class="text-white text-sm">{{ cuenta.issue_date|date:"d/m/Y" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Fecha vencimiento</p>
+                    <p class="text-white text-sm">{{ cuenta.due_date|date:"d/m/Y" }}</p>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Subtotal</span><span class="text-gray-300 text-sm">{{ cuenta.subtotal|floatformat:2 }}</span></div>
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Descuento</span><span class="text-gray-300 text-sm">{{ cuenta.discount_amount|floatformat:2 }}</span></div>
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Impuesto</span><span class="text-gray-300 text-sm">{{ cuenta.tax_amount|floatformat:2 }}</span></div>
+                <div class="flex justify-between pt-2 border-t border-gray-800"><span class="text-white font-bold">Total</span><span class="text-white font-extrabold text-lg">{{ cuenta.total|floatformat:2 }}</span></div>
+            </div>
+        </div>
+        {% if cuenta.notes %}
+        <div class="mt-6 pt-6 border-t border-gray-800">
+            <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Notas</p>
+            <p class="text-gray-300 text-sm">{{ cuenta.notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Items Table -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Items</h3>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="border-b border-gray-800">
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Servicio</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Descripción</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Cant.</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Precio unit.</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                {% for item in cuenta.items.all %}
+                <tr class="hover:bg-gray-800/40 transition">
+                    <td class="px-5 py-3.5 text-sm text-white font-semibold">{{ item.service.name|default:"-" }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-400">{{ item.description }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ item.quantity }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ item.unit_price|floatformat:2 }}</td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">{{ item.subtotal|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Client(models.Model):
@@ -12,6 +12,14 @@ class Client(models.Model):
         ('other', 'Otro'),
     ]
     
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='client_profile',
+        verbose_name="Usuario vinculado"
+    )
     name = models.CharField(max_length=200, verbose_name="Nombre completo")
     email = models.EmailField(verbose_name="Correo electrónico")
     phone = models.CharField(
@@ -65,3 +73,8 @@ class Client(models.Model):
     def pending_invoices(self):
         """Retorna el número de facturas pendientes"""
         return self.invoices.filter(status='pending').count()
+    
+    @property
+    def pending_cuentas_de_cobro(self):
+        """Retorna el número de cuentas de cobro pendientes"""
+        return self.cuentas_de_cobro.filter(status='pending').count()

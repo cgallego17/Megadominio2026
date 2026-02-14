@@ -1,0 +1,81 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}{{ title }}{% endblock %}
+{% block dashboard_heading %}{{ title }}{% endblock %}
+{% block dashboard_desc %}{% if back_pk %}Editar orden{% else %}Crear nueva orden{% endif %}{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Cancelar
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+        <p class="text-red-400 font-semibold text-sm mb-2"><i class="fas fa-exclamation-circle mr-1"></i> Corrige los errores:</p>
+        <ul class="text-red-300 text-sm list-disc list-inside">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Order fields -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <h3 class="text-white font-bold text-lg mb-4">Datos de la orden</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for field in form %}
+            <div class="{% if field.name == 'customer_address' or field.name == 'notes' %}sm:col-span-2{% endif %}">
+                <label class="block text-gray-300 text-sm font-semibold mb-1.5">{{ field.label }}{% if field.field.required %} <span class="text-red-400">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.errors %}<p class="text-red-400 text-xs mt-1">{{ field.errors.0 }}</p>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Order items formset -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <h3 class="text-white font-bold text-lg mb-4">Items de la orden</h3>
+        {{ formset.management_form }}
+        <div class="space-y-4" id="formset-container">
+            {% for item_form in formset %}
+            <div class="formset-row bg-gray-800/50 rounded-lg p-4 border border-gray-700/30">
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                    {% for field in item_form %}
+                        {% if field.name != 'DELETE' and field.name != 'id' and field.name != 'order' %}
+                        <div>
+                            <label class="block text-gray-400 text-xs font-semibold mb-1">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}<p class="text-red-400 text-xs mt-1">{{ field.errors.0 }}</p>{% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% if item_form.DELETE %}
+                <div class="mt-2 flex items-center gap-2">
+                    {{ item_form.DELETE }}
+                    <label class="text-red-400 text-xs cursor-pointer" for="{{ item_form.DELETE.id_for_label }}">Eliminar item</label>
+                </div>
+                {% endif %}
+                {% for field in item_form.hidden_fields %}{{ field }}{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+            <i class="fas fa-save"></i> Guardar
+        </button>
+        <a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

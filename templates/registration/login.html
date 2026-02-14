@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión - {{ site_name }}{% endblock %}
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<section class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md">
+        <!-- Logo / Brand -->
+        <div class="text-center mb-8">
+            <a href="{% url 'core:home' %}" class="inline-block">
+                <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-600/30">
+                    <i class="fas fa-globe text-white text-2xl"></i>
+                </div>
+            </a>
+            <h1 class="text-3xl font-extrabold text-white">Bienvenido</h1>
+            <p class="text-gray-400 mt-2">Ingresa tus credenciales para acceder</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <!-- Error messages -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center text-sm">
+                <i class="fas fa-exclamation-circle mr-2 flex-shrink-0"></i>
+                <span>{{ form.non_field_errors.0 }}</span>
+            </div>
+            {% elif form.errors %}
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center text-sm">
+                <i class="fas fa-exclamation-circle mr-2 flex-shrink-0"></i>
+                <span>Usuario o contraseña incorrectos. Inténtalo de nuevo.</span>
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next|default:'/dashboard/' }}">
+
+                <!-- Honeypot anti-bot (hidden from humans via CSS) -->
+                <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true" tabindex="-1">
+                    <label for="website_url">Website</label>
+                    <input type="text" name="website_url" id="website_url" autocomplete="off" tabindex="-1">
+                </div>
+
+                <!-- Username -->
+                <div class="mb-5">
+                    <label for="id_username" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-user text-gray-400 mr-1"></i> Usuario
+                    </label>
+                    <input type="text" name="username" id="id_username"
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400"
+                           placeholder="Tu nombre de usuario" required autofocus
+                           value="{{ form.username.value|default:'' }}">
+                    {% if form.username.errors %}
+                    <p class="text-xs text-red-500 mt-1">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-2">
+                    <label for="id_password" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-lock text-gray-400 mr-1"></i> Contraseña
+                    </label>
+                    <div class="relative">
+                        <input type="password" name="password" id="id_password"
+                               class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900 placeholder-gray-400"
+                               placeholder="Tu contraseña" required>
+                        <button type="button" id="toggle-password"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition focus:outline-none"
+                                tabindex="-1">
+                            <i class="fas fa-eye" id="eye-icon"></i>
+                        </button>
+                    </div>
+                    {% if form.password.errors %}
+                    <p class="text-xs text-red-500 mt-1">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Forgot password -->
+                <div class="text-right mb-6">
+                    <a href="{% url 'password_reset' %}" class="text-sm text-red-600 hover:text-red-700 font-medium transition">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3.5 text-base font-bold text-white bg-red-600 rounded-lg shadow-lg shadow-red-600/30 hover:bg-red-700 transition-all duration-300 transform hover:scale-[1.02]">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+                <div class="flex-1 h-px bg-gray-200"></div>
+                <span class="px-4 text-xs text-gray-400 uppercase">o</span>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+            <!-- Links -->
+            <div class="flex items-center justify-center gap-6 text-sm">
+                <a href="{% url 'signup' %}" class="text-red-600 hover:text-red-700 transition font-medium">
+                    <i class="fas fa-user-plus mr-1"></i> Crear cuenta
+                </a>
+                <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-red-600 transition font-medium">
+                    <i class="fas fa-arrow-left mr-1"></i> Volver al inicio
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center text-gray-500 text-xs mt-6">
+            <i class="fas fa-shield-alt mr-1"></i>
+            Conexión segura y protegida
+        </p>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+    var toggle = document.getElementById('toggle-password');
+    var input = document.getElementById('id_password');
+    var icon = document.getElementById('eye-icon');
+    if (toggle && input && icon) {
+        toggle.addEventListener('click', function(){
+            var isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+    }
+})();
+</script>
+{% endblock %}

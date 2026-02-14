@@ -1,0 +1,54 @@
+{% extends 'core/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block dashboard_title %}{{ title }}{% endblock %}
+{% block dashboard_heading %}{{ title }}{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="p-6">
+        <form method="post">
+            {% csrf_token %}
+            <div class="dash-form">
+                {{ form|crispy }}
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800">
+                <h3 class="text-sm font-bold text-white mb-4"><i class="fas fa-list-ul mr-2 text-red-400"></i>Items de la cuenta de cobro</h3>
+                {{ formset.management_form }}
+                <div id="formset-container" class="space-y-3">
+                    {% for form in formset %}
+                    <div class="formset-row bg-gray-800/40 border border-gray-700/50 rounded-xl p-4 dash-form">
+                        {{ form|crispy }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-6 pt-6 border-t border-gray-800">
+                <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .dash-form label { color: #d1d5db; font-size: 0.875rem; font-weight: 600; }
+    .dash-form input, .dash-form select, .dash-form textarea {
+        background: #1f2937 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
+        border-radius: 0.5rem !important; padding: 0.6rem 0.75rem !important; font-size: 0.875rem !important;
+    }
+    .dash-form input:focus, .dash-form select:focus, .dash-form textarea:focus {
+        border-color: #dc2626 !important; box-shadow: 0 0 0 2px rgba(220,38,38,0.15) !important; outline: none !important;
+    }
+    .dash-form .form-check-input { accent-color: #dc2626; }
+    .dash-form .text-muted, .dash-form .form-text { color: #6b7280 !important; font-size: 0.75rem !important; }
+    .dash-form .asteriskField { color: #ef4444; }
+</style>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}Cliente: {{ client.name }}{% endblock %}
+{% block dashboard_heading %}{{ client.name }}{% endblock %}
+{% block dashboard_desc %}Detalle del cliente{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_client_edit' client.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_client_delete' client.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-red-400 text-sm font-semibold rounded-lg hover:bg-red-500/10 transition">
+    <i class="fas fa-trash"></i> Eliminar
+</a>
+<a href="{% url 'core:dashboard_clients' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<!-- Client Info -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden mb-6">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Información del cliente</h3>
+        {% if client.is_active %}
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-green-500/10 text-green-400">Activo</span>
+        {% else %}
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-gray-700/50 text-gray-400">Inactivo</span>
+        {% endif %}
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Nombre</p>
+                    <p class="text-white text-sm font-semibold">{{ client.name }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Email</p>
+                    <p class="text-gray-300 text-sm">{{ client.email }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Teléfono</p>
+                    <p class="text-gray-300 text-sm">{{ client.phone|default:"-" }}</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Empresa</p>
+                    <p class="text-gray-300 text-sm">{{ client.company|default:"-" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Documento</p>
+                    <p class="text-gray-300 text-sm">{{ client.get_document_type_display }} {{ client.document_number|default:"" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Dirección</p>
+                    <p class="text-gray-300 text-sm">{{ client.address|default:"-" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Client Services -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden mb-6">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Servicios asignados</h3>
+        <a href="{% url 'core:dashboard_client_service_create' %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-green-400 bg-green-500/10 rounded-lg hover:bg-green-500/20 transition">
+            <i class="fas fa-plus"></i> Asignar
+        </a>
+    </div>
+    <div class="divide-y divide-gray-800/50">
+        {% if client_services %}
+        {% for cs in client_services %}
+        <a href="{% url 'core:dashboard_client_service_detail' cs.pk %}" class="flex items-center justify-between px-6 py-3.5 hover:bg-gray-800/40 transition">
+            <div>
+                <span class="text-white text-sm font-semibold">{{ cs.service.name }}</span>
+                <span class="text-gray-500 text-xs ml-2">{{ cs.monthly_price|floatformat:2 }}/mes</span>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold {% if cs.status == 'active' %}bg-green-500/10 text-green-400{% elif cs.status == 'cancelled' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                {{ cs.get_status_display }}
+            </span>
+        </a>
+        {% endfor %}
+        {% else %}
+        <div class="px-6 py-6 text-center">
+            <p class="text-gray-500 text-sm">No hay servicios asignados</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Client Quotes -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Cotizaciones</h3>
+        <a href="{% url 'core:dashboard_quote_create' %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-green-400 bg-green-500/10 rounded-lg hover:bg-green-500/20 transition">
+            <i class="fas fa-plus"></i> Nueva
+        </a>
+    </div>
+    <div class="divide-y divide-gray-800/50">
+        {% if client.quotes.exists %}
+        {% for quote in client.quotes.all %}
+        <a href="{% url 'core:dashboard_quote_detail' quote.pk %}" class="flex items-center justify-between px-6 py-3.5 hover:bg-gray-800/40 transition">
+            <span class="text-white text-sm font-semibold">{{ quote.number }}</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold {% if quote.status == 'accepted' %}bg-green-500/10 text-green-400{% elif quote.status == 'sent' %}bg-blue-500/10 text-blue-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                {{ quote.get_status_display }}
+            </span>
+        </a>
+        {% endfor %}
+        {% else %}
+        <div class="px-6 py-6 text-center">
+            <p class="text-gray-500 text-sm">No hay cotizaciones para este cliente</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

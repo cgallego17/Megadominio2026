@@ -1,0 +1,113 @@
+{% extends 'core/dashboard_base.html' %}
+{% load humanize %}
+
+{% block dashboard_title %}{{ product.name }}{% endblock %}
+{% block dashboard_heading %}{{ product.name }}{% endblock %}
+{% block dashboard_desc %}Detalle del producto{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_product_edit' product.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_product_delete' product.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600/20 text-red-400 text-sm font-semibold rounded-lg hover:bg-red-600 hover:text-white transition">
+    <i class="fas fa-trash"></i> Eliminar
+</a>
+<a href="{% url 'core:dashboard_products' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Product preview -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+        {% if product.image %}
+        <div class="bg-gray-800 h-64">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain p-4">
+        </div>
+        {% else %}
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-12 flex items-center justify-center">
+            <i class="fas {{ product.icon }} text-7xl {{ product.icon_color }}"></i>
+        </div>
+        {% endif %}
+        <div class="p-5 text-center">
+            {% if product.badge %}
+            <span class="px-3 py-1 text-xs font-bold rounded-full text-white {{ product.badge_color }}">{{ product.badge_label }}</span>
+            {% endif %}
+            <p class="text-3xl font-extrabold text-white mt-3">{{ product.price|intcomma }}</p>
+            {% if product.compare_price %}
+            <p class="text-gray-500 line-through text-sm">{{ product.compare_price|intcomma }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Product info -->
+    <div class="lg:col-span-2 space-y-6">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+            <h3 class="text-white font-bold text-lg mb-4">Información general</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Nombre</p>
+                    <p class="text-white font-semibold">{{ product.name }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Categoría</p>
+                    <p class="text-white">{{ product.category.name|default:"Sin categoría" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Icono</p>
+                    <p class="text-white"><i class="fas {{ product.icon }} {{ product.icon_color }} mr-1"></i> {{ product.icon }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Color del icono</p>
+                    <p class="text-white">{{ product.icon_color }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Stock</p>
+                    {% if product.in_stock %}
+                    <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-green-500/20 text-green-400">{{ product.stock }} unidades</span>
+                    {% else %}
+                    <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-red-500/20 text-red-400">Agotado</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Estado</p>
+                    {% if product.is_active %}
+                    <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-green-500/20 text-green-400">Activo</span>
+                    {% else %}
+                    <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-gray-500/20 text-gray-400">Inactivo</span>
+                    {% endif %}
+                    {% if product.is_featured %}
+                    <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-yellow-500/20 text-yellow-400 ml-1"><i class="fas fa-star mr-1"></i>Destacado</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if product.description %}
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+            <h3 class="text-white font-bold text-lg mb-3">Descripción</h3>
+            <p class="text-gray-300 text-sm leading-relaxed">{{ product.description }}</p>
+        </div>
+        {% endif %}
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+            <h3 class="text-white font-bold text-lg mb-3">Metadata</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Slug</p>
+                    <p class="text-gray-400 font-mono text-xs">{{ product.slug }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Creado</p>
+                    <p class="text-gray-400">{{ product.created_at|date:"d/m/Y H:i" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Actualizado</p>
+                    <p class="text-gray-400">{{ product.updated_at|date:"d/m/Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

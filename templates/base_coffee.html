@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mega Coffee - Café 100% Colombiano{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Mega Coffee: café de especialidad 100% colombiano para programadores y diseñadores. Fuel your code.{% endblock %}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Mega Coffee by {{ site_name }}">
+    <meta name="theme-color" content="#1a0e05">
+    <meta name="format-detection" content="telephone=no">
+    {% load static %}
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+
+    {% block og_meta %}
+    <meta property="og:title" content="{% block og_title %}Mega Coffee - Café Premium para Developers{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Café 100% colombiano de especialidad. Tostado artesanal para mentes creativas.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="Mega Coffee by {{ site_name }}">
+    <meta property="og:locale" content="es_HN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mega Coffee - Café Premium para Developers">
+    <meta name="twitter:description" content="Café 100% colombiano de especialidad para programadores y diseñadores.">
+    {% endblock %}
+
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f0',
+                            100: '#ffe0de',
+                            200: '#ffc7c2',
+                            300: '#ffa198',
+                            400: '#ff6b5e',
+                            500: '#f7391d',
+                            600: '#e31e24',
+                            700: '#c91820',
+                            800: '#a5161f',
+                            900: '#881620',
+                        },
+                        secondary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"></noscript>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Coffee-specific overrides -->
+    <style>
+        .coffee-nav {
+            background: linear-gradient(90deg, #1a0e05 0%, #2d1810 100%);
+            border-bottom: 1px solid rgba(180, 134, 11, 0.2);
+        }
+        .coffee-nav.nav-scrolled {
+            background: rgba(26, 14, 5, 0.95) !important;
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .coffee-sidebar {
+            background: linear-gradient(180deg, #1a0e05 0%, #2d1810 100%) !important;
+        }
+        .coffee-sidebar .sidebar-link:hover,
+        .coffee-sidebar .sidebar-link:active {
+            background: rgba(180, 134, 11, 0.15);
+            color: #fbbf24;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #b8860b, #d4a030) !important;
+        }
+        ::selection { background: #b8860b; color: #fff; }
+        ::-moz-selection { background: #b8860b; color: #fff; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Mega Coffee by {{ site_name }}",
+      "url": "{{ site_url }}/coffee/",
+      "description": "Café 100% colombiano de especialidad para programadores y diseñadores."
+    }
+    </script>
+
+    {% block extra_css %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#0d0705]">
+    <!-- ═══ Coffee Navbar ═══ -->
+    <nav class="coffee-nav shadow-lg fixed w-full z-50" role="navigation" aria-label="Navegación Mega Coffee">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'core:coffee' %}" class="flex items-center gap-2 hover:opacity-90 transition duration-300">
+                        <i class="fas fa-mug-hot text-2xl text-amber-500"></i>
+                        <span class="text-xl font-black text-white tracking-tight">MEGA<span class="text-amber-400">COFFEE</span></span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#productos" class="text-amber-100/80 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Granos</a>
+                    <a href="#accesorios" class="text-amber-100/80 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Accesorios</a>
+                    <a href="#historia" class="text-amber-100/80 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Historia</a>
+                    <span class="text-amber-800/50 mx-1">|</span>
+                    <a href="{% url 'core:store' %}" class="text-amber-100/80 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                        <i class="fas fa-store mr-1"></i>Tienda
+                    </a>
+                    <a href="{% url 'core:home' %}" class="text-amber-100/60 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                        <i class="fas fa-arrow-left mr-1"></i>{{ site_name }}
+                    </a>
+                    <button id="cart-toggle-desktop" class="relative text-amber-100/80 hover:text-amber-400 hover:bg-amber-500/10 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ml-1" aria-label="Carrito de compras">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-badge-desktop" class="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-gray-900 text-xs font-black rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center gap-3">
+                    <button id="cart-toggle-mobile" class="relative text-amber-400 hover:text-amber-300 focus:outline-none" aria-label="Carrito">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cart-badge-mobile" class="absolute -top-2 -right-2 w-5 h-5 bg-amber-500 text-gray-900 text-xs font-black rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button id="mobile-menu-button" class="text-amber-400 hover:text-amber-300 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Mobile Sidebar (Coffee theme) -->
+    <aside id="mobile-sidebar" class="mobile-sidebar coffee-sidebar">
+        <!-- Sidebar Header -->
+        <div class="flex items-center justify-between p-5 border-b border-amber-900/30">
+            <a href="{% url 'core:coffee' %}" class="flex items-center gap-2">
+                <i class="fas fa-mug-hot text-2xl text-amber-500"></i>
+                <span class="text-lg font-black text-white tracking-tight">MEGA<span class="text-amber-400">COFFEE</span></span>
+            </a>
+            <button id="sidebar-close" class="text-gray-500 hover:text-amber-400 transition duration-200">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Nav -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="#productos" class="sidebar-link">
+                <i class="fas fa-seedling w-6 text-center text-amber-500"></i>
+                <span>Granos</span>
+            </a>
+            <a href="#accesorios" class="sidebar-link">
+                <i class="fas fa-mug-hot w-6 text-center text-amber-500"></i>
+                <span>Accesorios</span>
+            </a>
+            <a href="#historia" class="sidebar-link">
+                <i class="fas fa-book-open w-6 text-center text-amber-500"></i>
+                <span>Nuestra Historia</span>
+            </a>
+            <div class="border-t border-amber-900/30 my-4"></div>
+            <a href="{% url 'core:store' %}" class="sidebar-link">
+                <i class="fas fa-store w-6 text-center text-amber-500"></i>
+                <span>Tienda</span>
+            </a>
+            <a href="{% url 'core:home' %}" class="sidebar-link">
+                <i class="fas fa-arrow-left w-6 text-center text-amber-500"></i>
+                <span>Volver a {{ site_name }}</span>
+            </a>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="p-5 border-t border-amber-900/30">
+            <a href="#productos" class="flex items-center justify-center w-full px-4 py-3 text-gray-900 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-lg font-bold hover:from-amber-400 hover:to-yellow-500 transition duration-300">
+                <i class="fas fa-shopping-bag mr-2"></i>
+                Comprar ahora
+            </a>
+            <div class="flex justify-center space-x-5 mt-4">
+                <a href="#" class="text-gray-600 hover:text-amber-400 transition"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="#" class="text-gray-600 hover:text-amber-400 transition"><i class="fab fa-tiktok text-lg"></i></a>
+                <a href="#" class="text-gray-600 hover:text-amber-400 transition"><i class="fab fa-twitter text-lg"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="{% block main_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ═══ Coffee Footer ═══ -->
+    <footer class="bg-gradient-to-b from-[#1a0e05] to-[#0d0705] text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-amber-900 rounded-full opacity-5 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-yellow-900 rounded-full opacity-5 blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-mug-hot text-3xl text-amber-500"></i>
+                        <span class="text-xl font-black text-white tracking-tight">MEGA<span class="text-amber-400">COFFEE</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Café 100% colombiano de especialidad, tostado artesanalmente para mentes creativas.</p>
+                    <p class="text-amber-600/60 text-xs font-mono">// fuel your code</p>
+                </div>
+
+                <!-- Productos -->
+                <div>
+                    <h5 class="text-sm font-bold text-amber-400 uppercase tracking-wider mb-4">Productos</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#productos" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Deploy Dark</a></li>
+                        <li><a href="#productos" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Sprint Medium</a></li>
+                        <li><a href="#productos" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Agile Light</a></li>
+                        <li><a href="#accesorios" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Accesorios</a></li>
+                    </ul>
+                </div>
+
+                <!-- Empresa -->
+                <div>
+                    <h5 class="text-sm font-bold text-amber-400 uppercase tracking-wider mb-4">Empresa</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#historia" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Nuestra historia</a></li>
+                        <li><a href="{% url 'core:store' %}" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Tienda {{ site_name }}</a></li>
+                        <li><a href="{% url 'core:about' %}" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Sobre {{ site_name }}</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="text-gray-500 hover:text-amber-400 transition duration-300 text-sm">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacto -->
+                <div>
+                    <h5 class="text-sm font-bold text-amber-400 uppercase tracking-wider mb-4">Contacto</h5>
+                    <div class="space-y-3 text-sm">
+                        <p class="flex items-center text-gray-500">
+                            <i class="fas fa-envelope mr-2 text-amber-600/60"></i>
+                            coffee@megadominio.co
+                        </p>
+                        <p class="flex items-center text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2 text-amber-600/60"></i>
+                            Medellín, Colombia
+                        </p>
+                        <p class="flex items-center text-gray-500">
+                            <i class="fas fa-globe mr-2 text-amber-600/60"></i>
+                            Granos de Colombia
+                        </p>
+                    </div>
+                    <div class="flex space-x-4 mt-5">
+                        <a href="#" class="text-gray-600 hover:text-amber-400 transition duration-300"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-amber-400 transition duration-300"><i class="fab fa-tiktok text-xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-amber-400 transition duration-300"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-amber-400 transition duration-300"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-amber-900/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-sm">&copy; {% now "Y" %} Mega Coffee by {{ site_name }}. Todos los derechos reservados.</p>
+                <div class="flex items-center gap-2 text-gray-700 text-xs font-mono">
+                    <span>Hecho con</span>
+                    <i class="fas fa-mug-hot text-amber-500"></i>
+                    <span>y</span>
+                    <span class="text-red-500">&lt;/code&gt;</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script>
+        // Sidebar toggle
+        (function () {
+            var btn = document.getElementById('mobile-menu-button');
+            var sidebar = document.getElementById('mobile-sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            var closeBtn = document.getElementById('sidebar-close');
+            if (!btn || !sidebar || !overlay) return;
+
+            function openSidebar() {
+                sidebar.classList.add('open');
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                if (navigator.vibrate) navigator.vibrate(15);
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+
+            btn.addEventListener('click', openSidebar);
+            if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            sidebar.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        })();
+
+        // Coffee navbar scroll effect
+        (function () {
+            var nav = document.querySelector('.coffee-nav');
+            if (!nav) return;
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            }, { passive: true });
+        })();
+    </script>
+
+    <!-- ═══ Floating Cart Button (FAB) — Coffee Mug ═══ -->
+    <style>
+        #cart-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 997;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            outline: none;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 6px 20px rgba(180, 134, 11, 0.5));
+        }
+        #cart-fab:hover { transform: scale(1.1); filter: drop-shadow(0 8px 28px rgba(245, 158, 11, 0.6)); }
+        #cart-fab:active { transform: scale(0.93); }
+
+        /* Mug body */
+        .mug-body {
+            position: relative;
+            width: 56px;
+            height: 48px;
+            background: linear-gradient(180deg, #92400e 0%, #78350f 50%, #451a03 100%);
+            border-radius: 4px 4px 14px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        /* Coffee liquid fill */
+        .mug-body::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+            right: 3px;
+            height: 60%;
+            background: linear-gradient(180deg, #d97706, #b45309);
+            border-radius: 0 0 11px 11px;
+            transition: height 0.4s ease;
+        }
+        .mug-body .mug-icon {
+            position: relative;
+            z-index: 2;
+            color: #fef3c7;
+            font-size: 1.1rem;
+        }
+
+        /* Mug handle */
+        .mug-handle {
+            position: absolute;
+            right: -10px;
+            top: 10px;
+            width: 14px;
+            height: 24px;
+            border: 3px solid #78350f;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Steam wisps */
+        .mug-steam {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+        }
+        .mug-steam span {
+            display: block;
+            width: 2px;
+            background: linear-gradient(to top, transparent, rgba(251, 191, 36, 0.4));
+            border-radius: 99px;
+        }
+        .mug-steam span:nth-child(1) { height: 10px; animation: mug-steam-rise 2s ease-in-out infinite; }
+        .mug-steam span:nth-child(2) { height: 14px; animation: mug-steam-rise 2s ease-in-out 0.4s infinite; }
+        .mug-steam span:nth-child(3) { height: 10px; animation: mug-steam-rise 2s ease-in-out 0.8s infinite; }
+        #cart-fab:hover .mug-steam span { background: linear-gradient(to top, transparent, rgba(251, 191, 36, 0.7)); }
+
+        /* Saucer / base */
+        .mug-saucer {
+            width: 64px;
+            height: 6px;
+            background: linear-gradient(180deg, #78350f, #451a03);
+            border-radius: 0 0 6px 6px;
+            margin: 0 auto;
+            margin-top: -1px;
+        }
+
+        /* Badge */
+        #cart-badge-fab {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 5px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 900;
+            border-radius: 99px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+            z-index: 3;
+        }
+        #cart-badge-fab.show { display: flex; }
+
+        /* Mug bounce when item added */
+        @keyframes mug-bounce {
+            0%   { transform: scale(1); }
+            20%  { transform: scale(1.2) rotate(-5deg); }
+            40%  { transform: scale(0.9) rotate(3deg); }
+            60%  { transform: scale(1.1) rotate(-2deg); }
+            80%  { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        #cart-fab.bounce { animation: mug-bounce 0.6s ease; }
+
+        /* Badge pop */
+        @keyframes badge-pop {
+            0%   { transform: scale(0.5); }
+            50%  { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        #cart-badge-fab.pop { animation: badge-pop 0.35s ease; }
+
+        /* Flying element */
+        .fly-to-cart {
+            position: fixed;
+            z-index: 99999;
+            pointer-events: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fbbf24;
+            background: radial-gradient(circle, rgba(217,119,6,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.8));
+        }
+
+        @keyframes mug-steam-rise {
+            0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.3; }
+            50%      { transform: translateY(-6px) scaleY(1.4); opacity: 0.8; }
+        }
+    </style>
+    <button id="cart-fab" aria-label="Abrir carrito">
+        <div style="position:relative; display:inline-block;">
+            <div class="mug-steam">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="mug-body">
+                <i class="fas fa-shopping-cart mug-icon"></i>
+                <div class="mug-handle"></div>
+            </div>
+            <div class="mug-saucer"></div>
+            <span id="cart-badge-fab">0</span>
+        </div>
+    </button>
+
+    <!-- ═══ Cart Drawer ═══ -->
+    <div id="cart-overlay" class="fixed inset-0 z-[998] bg-black/0 backdrop-blur-0 pointer-events-none transition-all duration-400" style="transition: background 0.4s ease, backdrop-filter 0.4s ease;"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 w-[380px] max-w-[90vw] h-full z-[999] bg-gradient-to-b from-[#1a0e05] to-[#0f0a06] border-l border-amber-900/30 flex flex-col transform translate-x-full transition-transform duration-400 shadow-[-8px_0_30px_rgba(0,0,0,0.5)]" style="transition: transform 0.4s cubic-bezier(.22,1,.36,1);">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-5 border-b border-amber-900/30">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shopping-cart text-amber-400"></i>
+                <span class="text-lg font-bold text-white">Tu carrito</span>
+                <span id="cart-header-count" class="text-sm text-gray-500">(0)</span>
+            </div>
+            <button id="cart-close" class="text-gray-500 hover:text-amber-400 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Items -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Empty state -->
+            <div id="cart-empty" class="text-center py-16">
+                <i class="fas fa-mug-hot text-5xl text-amber-500 block mb-4"></i>
+                <p class="text-gray-500 font-semibold mb-2">Tu carrito está vacío</p>
+                <p class="text-gray-600 text-sm">Agrega café o accesorios para comenzar</p>
+            </div>
+        </div>
+
+        <!-- Footer / Totals -->
+        <div id="cart-footer" class="border-t border-amber-900/30 p-5 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-400 text-sm">Subtotal</span>
+                <span id="cart-subtotal" class="text-white font-bold text-lg">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-500 text-xs">Envío calculado al checkout</span>
+            </div>
+            <button id="cart-checkout" class="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-gray-900 font-bold rounded-xl hover:from-amber-400 hover:to-yellow-500 transition-all duration-300 shadow-lg text-base">
+                <i class="fas fa-lock mr-2"></i>Proceder al pago
+            </button>
+            <button id="cart-clear" class="w-full py-2 mt-2 text-gray-600 hover:text-red-400 text-xs font-medium transition">
+                <i class="fas fa-trash-alt mr-1"></i>Vaciar carrito
+            </button>
+        </div>
+    </aside>
+
+    <!-- ═══ Cart Toast ═══ -->
+    <div id="cart-toast" class="fixed bottom-24 right-6 z-[1000] bg-gradient-to-r from-amber-600 to-amber-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i class="fas fa-check-circle text-lg"></i>
+        <span id="cart-toast-text" class="font-semibold text-sm">Producto agregado</span>
+    </div>
+
+    <!-- ═══ Cart JavaScript ═══ -->
+    <script>
+    (function() {
+        'use strict';
+
+        var STORAGE_KEY = 'megacoffee_cart';
+
+        // ── State ────────────────────────────────────────────────────
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch(e) { return []; }
+        }
+        function saveCart(cart) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+        }
+
+        // ── DOM refs ─────────────────────────────────────────────────
+        var drawer = document.getElementById('cart-drawer');
+        var overlay = document.getElementById('cart-overlay');
+        var closeBtn = document.getElementById('cart-close');
+        var itemsContainer = document.getElementById('cart-items');
+        var emptyState = document.getElementById('cart-empty');
+        var footer = document.getElementById('cart-footer');
+        var subtotalEl = document.getElementById('cart-subtotal');
+        var headerCount = document.getElementById('cart-header-count');
+        var badgeDesktop = document.getElementById('cart-badge-desktop');
+        var badgeMobile = document.getElementById('cart-badge-mobile');
+        var fab = document.getElementById('cart-fab');
+        var badgeFab = document.getElementById('cart-badge-fab');
+        var toast = document.getElementById('cart-toast');
+        var toastText = document.getElementById('cart-toast-text');
+        var checkoutBtn = document.getElementById('cart-checkout');
+        var clearBtn = document.getElementById('cart-clear');
+
+        // ── Open / Close drawer ──────────────────────────────────────
+        function openCart() {
+            drawer.style.transform = 'translateX(0)';
+            overlay.style.background = 'rgba(0,0,0,0.55)';
+            overlay.style.backdropFilter = 'blur(4px)';
+            overlay.style.webkitBackdropFilter = 'blur(4px)';
+            overlay.style.pointerEvents = 'auto';
+            document.body.style.overflow = 'hidden';
+            if (fab) { fab.style.opacity = '0'; fab.style.pointerEvents = 'none'; }
+        }
+        function closeCart() {
+            drawer.style.transform = 'translateX(100%)';
+            overlay.style.background = 'rgba(0,0,0,0)';
+            overlay.style.backdropFilter = 'blur(0)';
+            overlay.style.webkitBackdropFilter = 'blur(0)';
+            overlay.style.pointerEvents = 'none';
+            document.body.style.overflow = '';
+            if (fab) { fab.style.opacity = '1'; fab.style.pointerEvents = 'auto'; }
+        }
+
+        // Toggle buttons
+        var toggleDesktop = document.getElementById('cart-toggle-desktop');
+        var toggleMobile = document.getElementById('cart-toggle-mobile');
+        if (toggleDesktop) toggleDesktop.addEventListener('click', openCart);
+        if (toggleMobile) toggleMobile.addEventListener('click', openCart);
+        if (fab) fab.addEventListener('click', openCart);
+        if (closeBtn) closeBtn.addEventListener('click', closeCart);
+        if (overlay) overlay.addEventListener('click', closeCart);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeCart();
+        });
+
+        // ── Render cart ──────────────────────────────────────────────
+        function renderCart() {
+            var cart = getCart();
+            var totalItems = 0;
+            var totalPrice = 0;
+
+            // Remove old item elements (keep empty state)
+            var oldItems = itemsContainer.querySelectorAll('.cart-item');
+            oldItems.forEach(function(el) { el.remove(); });
+
+            if (cart.length === 0) {
+                emptyState.classList.remove('hidden');
+                footer.classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                footer.classList.remove('hidden');
+
+                cart.forEach(function(item) {
+                    totalItems += item.qty;
+                    totalPrice += item.price * item.qty;
+
+                    var div = document.createElement('div');
+                    div.className = 'cart-item flex items-start gap-3 bg-gray-900/50 rounded-xl p-3 border border-amber-900/15';
+                    div.innerHTML =
+                        '<span class="text-2xl flex-shrink-0 mt-1">' + item.emoji + '</span>' +
+                        '<div class="flex-1 min-w-0">' +
+                            '<div class="flex justify-between items-start">' +
+                                '<h4 class="text-white font-semibold text-sm truncate">' + item.name + '</h4>' +
+                                '<button class="cart-remove text-gray-600 hover:text-red-400 transition ml-2 flex-shrink-0" data-id="' + item.id + '" aria-label="Eliminar">' +
+                                    '<i class="fas fa-times text-xs"></i>' +
+                                '</button>' +
+                            '</div>' +
+                            '<p class="text-amber-400 font-bold text-sm">$' + item.price.toFixed(2) + '</p>' +
+                            '<div class="flex items-center gap-2 mt-2">' +
+                                '<button class="cart-minus w-7 h-7 rounded-lg bg-amber-900/30 text-amber-400 hover:bg-amber-900/50 transition flex items-center justify-center text-xs font-bold" data-id="' + item.id + '">−</button>' +
+                                '<span class="text-white font-bold text-sm w-6 text-center">' + item.qty + '</span>' +
+                                '<button class="cart-plus w-7 h-7 rounded-lg bg-amber-900/30 text-amber-400 hover:bg-amber-900/50 transition flex items-center justify-center text-xs font-bold" data-id="' + item.id + '">+</button>' +
+                                '<span class="text-gray-500 text-xs ml-auto">$' + (item.price * item.qty).toFixed(2) + '</span>' +
+                            '</div>' +
+                        '</div>';
+                    itemsContainer.appendChild(div);
+                });
+            }
+
+            // Update totals
+            subtotalEl.textContent = '$' + totalPrice.toFixed(2);
+            headerCount.textContent = '(' + totalItems + ')';
+
+            // Update badges (desktop/mobile use 'hidden', fab uses 'show')
+            [badgeDesktop, badgeMobile].forEach(function(badge) {
+                if (!badge) return;
+                if (totalItems > 0) {
+                    badge.textContent = totalItems > 99 ? '99+' : totalItems;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            });
+            if (badgeFab) {
+                if (totalItems > 0) {
+                    badgeFab.textContent = totalItems > 99 ? '99+' : totalItems;
+                    badgeFab.classList.add('show');
+                } else {
+                    badgeFab.classList.remove('show');
+                }
+            }
+
+            // Bind item buttons
+            itemsContainer.querySelectorAll('.cart-remove').forEach(function(btn) {
+                btn.addEventListener('click', function() { removeItem(this.dataset.id); });
+            });
+            itemsContainer.querySelectorAll('.cart-minus').forEach(function(btn) {
+                btn.addEventListener('click', function() { changeQty(this.dataset.id, -1); });
+            });
+            itemsContainer.querySelectorAll('.cart-plus').forEach(function(btn) {
+                btn.addEventListener('click', function() { changeQty(this.dataset.id, 1); });
+            });
+        }
+
+        // ── Cart actions ─────────────────────────────────────────────
+        function addItem(id, name, price, emoji) {
+            var cart = getCart();
+            var existing = null;
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === id) { existing = cart[i]; break; }
+            }
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id: id, name: name, price: parseFloat(price), emoji: emoji, qty: 1 });
+            }
+            saveCart(cart);
+            renderCart();
+        }
+
+        function removeItem(id) {
+            var cart = getCart().filter(function(item) { return item.id !== id; });
+            saveCart(cart);
+            renderCart();
+        }
+
+        function changeQty(id, delta) {
+            var cart = getCart();
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === id) {
+                    cart[i].qty += delta;
+                    if (cart[i].qty <= 0) { cart.splice(i, 1); }
+                    break;
+                }
+            }
+            saveCart(cart);
+            renderCart();
+        }
+
+        function clearCart() {
+            saveCart([]);
+            renderCart();
+        }
+
+        // ── Toast notification ───────────────────────────────────────
+        var toastTimer;
+        function showToast(msg) {
+            if (!toast) return;
+            toastText.textContent = msg;
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function() {
+                toast.style.transform = 'translateY(20px)';
+                toast.style.opacity = '0';
+            }, 2500);
+        }
+
+        // ── Fly-to-cart animation ──────────────────────────────────
+        function flyToCart(btnEl) {
+            var fabEl = document.getElementById('cart-fab');
+            if (!fabEl) return;
+
+            var btnRect = btnEl.getBoundingClientRect();
+            var fabRect = fabEl.getBoundingClientRect();
+
+            // Start position (center of button)
+            var sx = btnRect.left + btnRect.width / 2 - 20;
+            var sy = btnRect.top + btnRect.height / 2 - 20;
+
+            // Delta to destination (center of FAB)
+            var dx = (fabRect.left + fabRect.width / 2 - 20) - sx;
+            var dy = (fabRect.top + fabRect.height / 2 - 20) - sy;
+
+            // Mid-point arc (goes up above both points)
+            var mx = dx * 0.5;
+            var my = Math.min(0, dy) - 100;
+
+            // Create flying element at start position
+            var fly = document.createElement('div');
+            fly.className = 'fly-to-cart';
+            fly.innerHTML = '<i class="fas fa-mug-hot"></i>';
+            fly.style.left = sx + 'px';
+            fly.style.top = sy + 'px';
+            document.body.appendChild(fly);
+
+            // Animate using transform:translate (GPU accelerated, reliable)
+            var duration = 1200;
+            fly.animate([
+                {
+                    transform: 'translate(0, 0) scale(1)',
+                    opacity: 1,
+                    offset: 0
+                },
+                {
+                    transform: 'translate(' + mx + 'px, ' + my + 'px) scale(1.4)',
+                    opacity: 1,
+                    offset: 0.35
+                },
+                {
+                    transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(0.15)',
+                    opacity: 0.2,
+                    offset: 1
+                }
+            ], {
+                duration: duration,
+                easing: 'cubic-bezier(.25,.1,.25,1)',
+                fill: 'forwards'
+            });
+
+            // Bounce the mug on arrival
+            setTimeout(function() {
+                fabEl.classList.remove('bounce');
+                fabEl.offsetHeight;
+                fabEl.classList.add('bounce');
+                fly.remove();
+            }, duration);
+
+            // Pop the badge
+            setTimeout(function() {
+                if (badgeFab) {
+                    badgeFab.classList.remove('pop');
+                    badgeFab.offsetHeight;
+                    badgeFab.classList.add('pop');
+                }
+            }, duration + 50);
+
+            // Clean bounce class
+            setTimeout(function() {
+                fabEl.classList.remove('bounce');
+            }, duration + 700);
+        }
+
+        // ── Bind "Add to cart" buttons ───────────────────────────────
+        document.querySelectorAll('.add-to-cart').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var d = this.dataset;
+                addItem(d.id, d.name, d.price, d.emoji);
+
+                // Fly-to-cart effect
+                flyToCart(this);
+
+                // Button feedback animation
+                var original = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check mr-2"></i>Agregado!';
+                this.classList.add('scale-95');
+                var self = this;
+                setTimeout(function() {
+                    self.innerHTML = original;
+                    self.classList.remove('scale-95');
+                }, 1200);
+            });
+        });
+
+        // ── Checkout ─────────────────────────────────────────────────
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                var cart = getCart();
+                if (cart.length === 0) return;
+                // Build WhatsApp message
+                var msg = '🛒 *Pedido Mega Coffee*\n\n';
+                var total = 0;
+                cart.forEach(function(item) {
+                    msg += item.emoji + ' ' + item.name + ' x' + item.qty + ' — $' + (item.price * item.qty).toFixed(2) + '\n';
+                    total += item.price * item.qty;
+                });
+                msg += '\n💰 *Total: $' + total.toFixed(2) + '*';
+                msg += '\n\n¡Hola! Me gustaría hacer este pedido.';
+                var url = 'https://wa.me/50412345678?text=' + encodeURIComponent(msg);
+                window.open(url, '_blank');
+            });
+        }
+
+        // ── Clear cart ───────────────────────────────────────────────
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function() {
+                if (confirm('¿Vaciar todo el carrito?')) {
+                    clearCart();
+                }
+            });
+        }
+
+        // ── Init ─────────────────────────────────────────────────────
+        renderCart();
+    })();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

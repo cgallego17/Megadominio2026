@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Tienda - {{ site_name }} | Merch Oficial para Devs{% endblock %}
+
+{% block meta_description %}Tienda oficial de {{ site_name }}. Merch exclusivo para desarrolladores y diseñadores: camisetas, hoodies, tazas, stickers, mousepads y más.{% endblock %}
+
+{% block extra_head %}
+<meta property="og:title" content="Tienda - {{ site_name }} | Merch Oficial">
+<meta property="og:description" content="Merch exclusivo para devs: camisetas, hoodies, tazas, stickers, mousepads y accesorios.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Tienda {{ site_name }}",
+  "url": "{{ site_url }}/tienda/",
+  "description": "Tienda oficial de merch y accesorios para desarrolladores y diseñadores."
+}
+</script>
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="relative bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden py-24 lg:py-32">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-96 h-96 bg-red-600 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-20 w-72 h-72 bg-red-500 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="inline-block px-4 py-1.5 bg-red-600/20 text-red-400 rounded-full text-sm font-semibold mb-6 tracking-wide">MERCH OFICIAL</span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+            Viste tu código con <span class="gradient-text">estilo</span>
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">Merch exclusivo de Megadominio para desarrolladores, diseñadores y amantes de la tecnología. Calidad premium, diseños únicos.</p>
+        <div class="flex flex-wrap justify-center gap-4 mt-10">
+            <a href="#productos" class="inline-flex items-center px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-red-600/30">
+                <i class="fas fa-shopping-bag mr-2"></i> Ver productos
+            </a>
+            <a href="{% url 'core:coffee' %}" class="inline-flex items-center px-8 py-4 border-2 border-amber-500/50 text-amber-400 font-bold rounded-xl hover:bg-amber-500/10 transition-all duration-300">
+                <i class="fas fa-mug-hot mr-2"></i> Mega Coffee
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Filter -->
+<section class="py-8 bg-gray-900 border-b border-gray-800 sticky top-16 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <button class="store-filter active px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 bg-red-600 text-white" data-filter="all">
+                <i class="fas fa-th mr-1.5"></i> Todos
+            </button>
+            {% for cat in categories %}
+            <button class="store-filter px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white" data-filter="{{ cat.slug }}">
+                <i class="fas {{ cat.icon }} mr-1.5"></i> {{ cat.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Products Grid -->
+<section class="py-16 bg-gray-950" id="productos">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="store-grid">
+
+            {% for product in products %}
+            <div class="store-product group bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 hover:border-red-600/40 transition-all duration-300 hover:-translate-y-1" data-category="{{ product.category.slug|default:'otros' }}">
+                <a href="{% url 'core:product_detail' product.slug %}" class="block relative h-56 overflow-hidden bg-gray-800">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-300">
+                    {% else %}
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 w-full h-full flex items-center justify-center">
+                        <i class="fas {{ product.icon }} text-7xl {{ product.icon_color }} group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    {% endif %}
+                    {% if product.badge %}
+                    <span class="absolute top-3 right-3 px-2.5 py-1 {{ product.badge_color }} text-white text-xs font-black rounded-full">{{ product.badge_label }}</span>
+                    {% endif %}
+                </a>
+                <div class="p-5">
+                    {% if product.category %}
+                    <p class="text-gray-500 text-xs font-semibold tracking-wider mb-1">{{ product.category.name|upper }}</p>
+                    {% endif %}
+                    <h3 class="text-lg font-bold text-white mb-2"><a href="{% url 'core:product_detail' product.slug %}" class="hover:text-red-400 transition">{{ product.name }}</a></h3>
+                    <p class="text-gray-500 text-sm mb-4">{{ product.description|truncatewords:15 }}</p>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            {% if product.compare_price %}
+                            <span class="text-sm text-gray-500 line-through mr-1">{{ product.compare_price|intcomma }}</span>
+                            {% endif %}
+                            <span class="text-2xl font-extrabold text-white">{{ product.price|intcomma }}</span>
+                        </div>
+                        {% if product.in_stock %}
+                        <button class="add-to-cart px-4 py-2 bg-red-600/20 text-red-400 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300 text-sm border border-red-600/30" data-id="{{ product.slug }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-icon="{{ product.icon }}" data-image="{% if product.image %}{{ product.image.url }}{% endif %}">
+                            <i class="fas fa-cart-plus mr-1"></i> Agregar
+                        </button>
+                        {% else %}
+                        <span class="px-4 py-2 bg-gray-800 text-gray-500 font-semibold rounded-lg text-sm">Agotado</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-16">
+                <i class="fas fa-box-open text-5xl text-gray-700 mb-4 block"></i>
+                <p class="text-gray-500 font-semibold text-lg">Próximamente nuevos productos</p>
+                <p class="text-gray-600 text-sm mt-2">Estamos preparando merch increíble para ti.</p>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<!-- Mega Coffee CTA -->
+<section class="py-20 bg-gradient-to-r from-amber-900 via-amber-800 to-yellow-900 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-orange-400 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+        <i class="fas fa-mug-hot text-7xl text-amber-400 block mb-6"></i>
+        <h2 class="text-3xl md:text-5xl font-extrabold mb-6">¿Ya probaste Mega Coffee?</h2>
+        <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">Café 100% colombiano de especialidad, tostado artesanalmente para mentes creativas.</p>
+        <a href="{% url 'core:coffee' %}" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold bg-white text-amber-900 rounded-xl shadow-xl hover:bg-amber-50 transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-coffee mr-3"></i> Descubre Mega Coffee
+        </a>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="py-16 bg-gray-950 border-t border-gray-800">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2 class="text-2xl font-extrabold text-white mb-4">Sé el primero en enterarte</h2>
+        <p class="text-gray-400 mb-8">Suscríbete para recibir notificaciones de nuevos productos y ofertas exclusivas.</p>
+        <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+            <input type="email" placeholder="tu@email.com" class="flex-1 px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition text-white placeholder-gray-500">
+            <button type="submit" class="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-all duration-300">
+                <i class="fas fa-bell mr-2"></i>Notificarme
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    // ── Category filter ──────────────────────────────────────────
+    var filters = document.querySelectorAll('.store-filter');
+    var products = document.querySelectorAll('.store-product');
+    filters.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var cat = this.dataset.filter;
+            filters.forEach(function(f) {
+                f.classList.remove('bg-red-600', 'text-white', 'active');
+                f.classList.add('bg-gray-800', 'text-gray-400');
+            });
+            this.classList.remove('bg-gray-800', 'text-gray-400');
+            this.classList.add('bg-red-600', 'text-white', 'active');
+            products.forEach(function(p) {
+                if (cat === 'all' || p.dataset.category === cat) {
+                    p.style.display = '';
+                    p.style.opacity = '0'; p.style.transform = 'translateY(20px)';
+                    requestAnimationFrame(function() {
+                        p.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                        p.style.opacity = '1'; p.style.transform = 'translateY(0)';
+                    });
+                } else {
+                    p.style.opacity = '0'; p.style.transform = 'translateY(20px)';
+                    setTimeout(function() { p.style.display = 'none'; }, 300);
+                }
+            });
+        });
+    });
+
+    // ── Fly-to-cart ──────────────────────────────────────────────
+    function flyToCart(btnEl, iconClass) {
+        var fab = document.getElementById('store-fab');
+        var badge = document.getElementById('store-fab-badge');
+        var btnRect = btnEl.getBoundingClientRect();
+        var fabRect = fab.getBoundingClientRect();
+        var sx = btnRect.left + btnRect.width / 2 - 18;
+        var sy = btnRect.top + btnRect.height / 2 - 18;
+        var dx = (fabRect.left + fabRect.width / 2 - 18) - sx;
+        var dy = (fabRect.top + fabRect.height / 2 - 18) - sy;
+        var mx = dx * 0.5, my = Math.min(0, dy) - 100;
+
+        var fly = document.createElement('div');
+        fly.className = 'store-fly';
+        fly.innerHTML = '<i class="fas ' + iconClass + '"></i>';
+        fly.style.left = sx + 'px'; fly.style.top = sy + 'px';
+        document.body.appendChild(fly);
+
+        fly.animate([
+            { transform: 'translate(0,0) scale(1)', opacity: 1, offset: 0 },
+            { transform: 'translate(' + mx + 'px,' + my + 'px) scale(1.4)', opacity: 1, offset: 0.35 },
+            { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(0.15)', opacity: 0.2, offset: 1 }
+        ], { duration: 1200, easing: 'cubic-bezier(.25,.1,.25,1)', fill: 'forwards' });
+
+        setTimeout(function() {
+            fab.classList.remove('bounce'); fab.offsetHeight; fab.classList.add('bounce');
+            fly.remove();
+        }, 1200);
+        setTimeout(function() {
+            if (badge) { badge.classList.remove('pop'); badge.offsetHeight; badge.classList.add('pop'); }
+        }, 1250);
+        setTimeout(function() { fab.classList.remove('bounce'); }, 1900);
+    }
+
+    // ── Bind add-to-cart (uses global window.storeCart) ───────────
+    document.querySelectorAll('.add-to-cart').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var d = this.dataset;
+            window.storeCart.addItem(d.id, d.name, d.price, d.icon, d.image);
+            flyToCart(this, d.icon);
+            var original = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check mr-1"></i> Agregado!';
+            this.classList.add('scale-95');
+            var self = this;
+            setTimeout(function() { self.innerHTML = original; self.classList.remove('scale-95'); }, 1200);
+        });
+    });
+})();
+</script>
+{% endblock %}

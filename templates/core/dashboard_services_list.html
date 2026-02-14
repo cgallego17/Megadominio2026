@@ -1,0 +1,80 @@
+{% extends 'core/dashboard_base.html' %}
+{% load humanize %}
+
+{% block dashboard_title %}Servicios{% endblock %}
+{% block dashboard_heading %}Servicios{% endblock %}
+{% block dashboard_desc %}{{ object_list|length }} servicio{{ object_list|length|pluralize:"s" }}{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_service_create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-plus"></i> Nuevo servicio
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    {% if object_list %}
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="border-b border-gray-800">
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nombre</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Precio</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Facturación</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-5 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                {% for service in object_list %}
+                <tr class="hover:bg-gray-800/40 transition">
+                    <td class="px-5 py-3.5">
+                        <a href="{% url 'core:dashboard_service_detail' service.pk %}" class="text-sm text-white font-semibold hover:text-red-400 transition">{{ service.name }}</a>
+                    </td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">${{ service.price|intcomma }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ service.get_billing_type_display }}</td>
+                    <td class="px-5 py-3.5">
+                        {% if service.is_active %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold bg-green-500/10 text-green-400">Activo</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold bg-gray-700/50 text-gray-400">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-3.5 text-right">
+                        <div class="inline-flex items-center gap-2">
+                            <a href="{% url 'core:dashboard_service_detail' service.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-400 bg-blue-500/10 rounded-lg hover:bg-blue-500/20 transition" title="Ver detalle">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'core:dashboard_service_edit' service.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-yellow-400 bg-yellow-500/10 rounded-lg hover:bg-yellow-500/20 transition" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form method="post" action="{% url 'core:dashboard_service_toggle' service.pk %}" class="inline">
+                                {% csrf_token %}
+                                {% if service.is_active %}
+                                <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-lg hover:bg-red-500/20 transition" title="Inactivar">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                {% else %}
+                                <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-green-400 bg-green-500/10 rounded-lg hover:bg-green-500/20 transition" title="Activar">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-16">
+        <i class="fas fa-concierge-bell text-gray-700 text-4xl mb-3"></i>
+        <p class="text-gray-500 font-semibold mb-1">No hay servicios registrados</p>
+        <a href="{% url 'core:dashboard_service_create' %}" class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+            <i class="fas fa-plus"></i> Crear el primero
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

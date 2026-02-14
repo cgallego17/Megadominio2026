@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización #{{ quote.number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: #f9fafb;
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+        }
+        .quote-number {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #dc2626;
+        }
+        .service-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .totals {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .totals table {
+            width: 100%;
+        }
+        .totals td {
+            padding: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .totals .total-row {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #dc2626;
+        }
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+        }
+        .button {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ site_name }}</h1>
+        <p>Cotización Formal</p>
+    </div>
+    
+    <div class="content">
+        <div class="quote-number">
+            <h2 style="margin: 0; color: #dc2626;">Cotización #{{ quote.number }}</h2>
+            <p style="margin: 5px 0 0 0; color: #6b7280;">Válida hasta: {{ quote.valid_until|date:"d/m/Y" }}</p>
+        </div>
+        
+        <p>Estimado/a <strong>{{ client.name }}</strong>,</p>
+        
+        <p>Gracias por tu interés en nuestros servicios. A continuación encontrarás los detalles de tu cotización:</p>
+        
+        {% if client.company %}
+        <p><strong>Empresa:</strong> {{ client.company }}</p>
+        {% endif %}
+        
+        <h3>Detalle de Servicios</h3>
+        
+        {% for item in quote.items.all %}
+        <div class="service-item">
+            <h4 style="margin: 0 0 10px 0; color: #dc2626;">{{ item.service.name }}</h4>
+            <p style="margin: 5px 0; color: #6b7280;">{{ item.description }}</p>
+            <p style="margin: 10px 0 0 0;">
+                <strong>Cantidad:</strong> {{ item.quantity }} | 
+                <strong>Precio Unit.:</strong> {{ item.unit_price|floatformat:0 }} | 
+                <strong>Subtotal:</strong> {{ item.subtotal|floatformat:0 }}
+            </p>
+        </div>
+        {% endfor %}
+        
+        <div class="totals">
+            <table>
+                <tr>
+                    <td>Subtotal:</td>
+                    <td style="text-align: right;">{{ quote.subtotal|floatformat:0 }}</td>
+                </tr>
+                {% if quote.discount_amount > 0 %}
+                <tr>
+                    <td>Descuento ({{ quote.discount_percentage }}%):</td>
+                    <td style="text-align: right; color: #16a34a;">-{{ quote.discount_amount|floatformat:0 }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>IVA ({{ quote.tax_percentage }}%):</td>
+                    <td style="text-align: right;">{{ quote.tax_amount|floatformat:0 }}</td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTAL:</td>
+                    <td style="text-align: right;">{{ quote.total|floatformat:0 }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        {% if quote.notes %}
+        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
+            <h4 style="margin: 0 0 10px 0;">Notas:</h4>
+            <p style="margin: 0;">{{ quote.notes }}</p>
+        </div>
+        {% endif %}
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="mailto:info@megadominio.co?subject=Aceptar Cotización #{{ quote.number }}" class="button">
+                Aceptar Cotización
+            </a>
+        </div>
+        
+        <p style="color: #6b7280; font-size: 0.9em; text-align: center;">
+            Si tienes alguna pregunta, no dudes en contactarnos.
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p style="margin: 0 0 10px 0;"><strong>{{ site_name }}</strong></p>
+        <p style="margin: 5px 0; font-size: 0.9em;">
+            📧 info@megadominio.co | 📱 +57 300 123 4567
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 0.8em; color: #9ca3af;">
+            Medellín, Colombia
+        </p>
+    </div>
+</body>
+</html>

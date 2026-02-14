@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block store_cart %}{% endblock %}
+
+{% block title %}{% block panel_title %}Mi Cuenta{% endblock %} - {{ site_name }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .panel-sidebar { scrollbar-width: thin; scrollbar-color: #374151 #111827; }
+    .panel-sidebar::-webkit-scrollbar { width: 4px; }
+    .panel-sidebar::-webkit-scrollbar-track { background: #111827; }
+    .panel-sidebar::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    .panel-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; border-radius: 0.5rem; color: #9ca3af; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; }
+    .panel-link:hover { background: #1f2937; color: #f3f4f6; }
+    .panel-link.active { background: #dc2626; color: #fff; }
+    .panel-link i { width: 1.25rem; text-align: center; font-size: 0.9rem; }
+    .panel-section-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4b5563; padding: 1rem 1rem 0.4rem; }
+</style>
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<div class="flex min-h-[calc(100vh-64px)]">
+    <!-- Mobile sidebar toggle -->
+    <button id="panel-toggle" class="md:hidden fixed bottom-6 left-6 z-50 w-12 h-12 bg-red-600 text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-red-700 transition">
+        <i class="fas fa-bars text-lg"></i>
+    </button>
+
+    <!-- Overlay (mobile) -->
+    <div id="panel-overlay" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="panel-sidebar" class="panel-sidebar fixed md:sticky top-16 left-0 z-40 w-64 h-[calc(100vh-64px)] bg-gray-900 border-r border-gray-800 flex-shrink-0 overflow-y-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+        <div class="p-4">
+            <!-- Brand -->
+            <div class="flex items-center gap-3 mb-6 px-1">
+                <div class="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-user text-white text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm leading-tight">Mi Cuenta</p>
+                    <p class="text-gray-500 text-xs">Panel de usuario</p>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="space-y-1">
+                <p class="panel-section-title">General</p>
+                <a href="{% url 'core:panel_home' %}" class="panel-link {% if request.path == '/mi-cuenta/' %}active{% endif %}">
+                    <i class="fas fa-home"></i> Resumen
+                </a>
+
+                <p class="panel-section-title mt-4">Mis Servicios</p>
+                <a href="{% url 'core:panel_servicios' %}" class="panel-link {% if '/mi-cuenta/servicios' in request.path %}active{% endif %}">
+                    <i class="fas fa-cogs"></i> Servicios contratados
+                </a>
+
+                <p class="panel-section-title mt-4">Mis Compras</p>
+                <a href="{% url 'core:panel_compras' %}" class="panel-link {% if '/mi-cuenta/compras' in request.path %}active{% endif %}">
+                    <i class="fas fa-shopping-bag"></i> Historial de compras
+                </a>
+
+                <p class="panel-section-title mt-4">Cuenta</p>
+                <a href="{% url 'core:panel_perfil' %}" class="panel-link {% if '/mi-cuenta/perfil' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-edit"></i> Mi Perfil
+                </a>
+                <a href="{% url 'core:panel_direcciones' %}" class="panel-link {% if '/mi-cuenta/direcciones' in request.path %}active{% endif %}">
+                    <i class="fas fa-map-marker-alt"></i> Mis Direcciones
+                </a>
+                <a href="{% url 'core:home' %}" class="panel-link">
+                    <i class="fas fa-globe"></i> Ir al sitio
+                </a>
+                <a href="{% url 'logout' %}" class="panel-link text-red-400 hover:text-red-300">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </a>
+            </nav>
+        </div>
+
+        <!-- User info -->
+        <div class="mt-auto border-t border-gray-800 p-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user text-gray-400 text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-white text-sm font-semibold truncate">{{ request.user.get_full_name|default:request.user.username }}</p>
+                    <p class="text-gray-500 text-xs truncate">{{ request.user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 bg-gray-950 min-w-0">
+        <!-- Top bar -->
+        <div class="sticky top-16 z-20 bg-gray-950/80 backdrop-blur-md border-b border-gray-800 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-bold text-white">{% block panel_heading %}Mi Cuenta{% endblock %}</h1>
+                    <p class="text-gray-500 text-sm mt-0.5">{% block panel_desc %}Panel de usuario{% endblock %}</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    {% block panel_actions %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="p-6">
+            {% block panel_content %}{% endblock %}
+        </div>
+    </main>
+</div>
+
+<script>
+(function() {
+    var toggle = document.getElementById('panel-toggle');
+    var sidebar = document.getElementById('panel-sidebar');
+    var overlay = document.getElementById('panel-overlay');
+    if (!toggle || !sidebar) return;
+    function open() { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); }
+    function close() { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
+    toggle.addEventListener('click', function() {
+        sidebar.classList.contains('-translate-x-full') ? open() : close();
+    });
+    overlay.addEventListener('click', close);
+})();
+</script>
+{% endblock %}

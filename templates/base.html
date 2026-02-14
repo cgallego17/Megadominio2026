@@ -3,72 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ site_name }} - Soluciones Digitales{% endblock %}</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <title>{% block title %}{{ site_name }} - Soluciones Digitales Profesionales en Colombia{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_name }} — Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO, branding y automatización de procesos.{% endblock %}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="{{ site_name }}">
+    <meta name="theme-color" content="#111827">
+    <meta name="format-detection" content="telephone=no">
     {% load static %}
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+
+    <!-- Open Graph defaults (overridable per page) -->
+    {% block og_meta %}
+    <meta property="og:title" content="{% block og_title %}{{ site_name }} - Soluciones Digitales{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Agencia digital líder en Colombia. Desarrollo web, marketing digital, SEO y branding.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:locale" content="es_CO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ site_name }} - Soluciones Digitales">
+    <meta name="twitter:description" content="Agencia digital líder en Colombia.">
+    {% endblock %}
+
+    <!-- Preconnect for external resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f0',
+                            100: '#ffe0de',
+                            200: '#ffc7c2',
+                            300: '#ffa198',
+                            400: '#ff6b5e',
+                            500: '#f7391d',
+                            600: '#e31e24',
+                            700: '#c91820',
+                            800: '#a5161f',
+                            900: '#881620',
+                        },
+                        secondary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome (deferred) -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"></noscript>
+    <!-- Custom CSS -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    
+
+    <!-- JSON-LD Organization (global) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ site_name }}",
+      "url": "{{ site_url }}",
+      "logo": "{{ site_url }}{% static 'img/logo.png' %}",
+      "description": "Agencia digital líder en Colombia especializada en desarrollo web, marketing digital, SEO y branding.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Medellín",
+        "addressCountry": "CO"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+57-300-123-4567",
+        "contactType": "sales",
+        "availableLanguage": "Spanish"
+      },
+      "sameAs": []
+    }
+    </script>
+
     {% block extra_css %}{% endblock %}
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
-                <i class="fas fa-globe me-2"></i>{{ site_name }}
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:home' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:about' %}">Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:contact' %}">Contacto</a>
-                    </li>
-                    
+    <nav class="bg-gray-900 shadow-lg fixed w-full z-50 border-b border-gray-800" role="navigation" aria-label="Navegación principal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'core:home' %}" class="hover:opacity-90 transition duration-300">
+                        {% load static %}
+                        <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-10">
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-0.5">
+                    <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
+                    <a href="{% url 'core:services' %}" class="nav-link">Servicios</a>
+                    <a href="{% url 'core:store' %}" class="nav-link">Tienda</a>
+                    <a href="{% url 'core:coffee' %}" class="nav-link !text-amber-400 hover:!bg-amber-500/10"><i class="fas fa-mug-hot mr-1"></i>Coffee</a>
+                    <a href="{% url 'core:about' %}" class="nav-link">Nosotros</a>
+                    <a href="{% url 'core:contact' %}" class="nav-link">Contacto</a>
+                </div>
+
+                <!-- Right side -->
+                <div class="hidden lg:flex items-center gap-2">
                     {% if user.is_authenticated %}
-                        {% if user.is_admin or user.is_advisor %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'core:dashboard' %}">
-                                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        <div class="relative" id="user-dropdown-wrap">
+                            <button id="user-dropdown-btn" class="flex items-center gap-2 text-white hover:bg-white/10 pl-2 pr-3 py-1.5 rounded-lg text-sm font-medium transition">
+                                <span class="w-7 h-7 bg-red-600 rounded-full flex items-center justify-center text-[10px] font-bold text-white uppercase tracking-tight">{{ user.first_name|make_list|first|default:"U" }}{{ user.last_name|make_list|first|default:"" }}</span>
+                                <span class="max-w-[100px] truncate">{{ user.first_name|default:user.username }}</span>
+                                <i class="fas fa-chevron-down text-[10px] text-gray-400 transition" id="user-dropdown-arrow"></i>
+                            </button>
+                            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50">
+                                <div class="px-4 py-2.5 border-b border-gray-100">
+                                    <p class="text-sm font-bold text-gray-900 truncate">{{ user.get_full_name|default:user.username }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+                                </div>
+                                <a href="{% url 'core:panel_home' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                                    <i class="fas fa-th-large w-4 text-center text-gray-400"></i> Mi Cuenta
                                 </a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-user me-1"></i>{{ user.get_full_name|default:user.username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/admin/">Administración</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
-                            </ul>
-                        </li>
+                                <a href="{% url 'core:panel_servicios' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                                    <i class="fas fa-cogs w-4 text-center text-gray-400"></i> Mis Servicios
+                                </a>
+                                <a href="{% url 'core:panel_compras' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                                    <i class="fas fa-shopping-bag w-4 text-center text-gray-400"></i> Mis Compras
+                                </a>
+                                {% if user.is_admin or user.is_advisor %}
+                                <div class="border-t border-gray-100 my-1"></div>
+                                <a href="{% url 'core:dashboard' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+                                    <i class="fas fa-tachometer-alt w-4 text-center text-gray-400"></i> Dashboard
+                                </a>
+                                {% endif %}
+                                <div class="border-t border-gray-100 my-1"></div>
+                                <a href="{% url 'logout' %}" class="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition">
+                                    <i class="fas fa-sign-out-alt w-4 text-center"></i> Cerrar sesión
+                                </a>
+                            </div>
+                        </div>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/">Iniciar sesión</a>
-                        </li>
+                        <a href="{% url 'login' %}" class="text-gray-300 hover:text-white text-sm font-medium transition">Iniciar sesión</a>
+                        <a href="{% url 'signup' %}" class="bg-red-600 text-white hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-semibold transition shadow-sm shadow-red-600/20">Crear cuenta</a>
                     {% endif %}
-                </ul>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-orange-100 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
+        
     </nav>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside id="mobile-sidebar" class="mobile-sidebar">
+        <!-- Sidebar Header -->
+        <div class="flex items-center justify-between p-5 border-b border-gray-700">
+            <a href="{% url 'core:home' %}">
+                <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-10">
+            </a>
+            <button id="sidebar-close" class="text-gray-400 hover:text-white transition duration-200">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Nav -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <a href="{% url 'core:home' %}" class="sidebar-link">
+                <i class="fas fa-home w-6 text-center text-red-500"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="{% url 'core:services' %}" class="sidebar-link">
+                <i class="fas fa-briefcase w-6 text-center text-red-500"></i>
+                <span>Servicios</span>
+            </a>
+            <a href="{% url 'core:store' %}" class="sidebar-link">
+                <i class="fas fa-store w-6 text-center text-red-500"></i>
+                <span>Tienda</span>
+            </a>
+            <a href="{% url 'core:coffee' %}" class="sidebar-link">
+                <i class="fas fa-coffee w-6 text-center text-amber-400"></i>
+                <span class="text-amber-400">Mega Coffee</span>
+            </a>
+            <a href="{% url 'core:about' %}" class="sidebar-link">
+                <i class="fas fa-users w-6 text-center text-red-500"></i>
+                <span>Nosotros</span>
+            </a>
+            <a href="{% url 'core:contact' %}" class="sidebar-link">
+                <i class="fas fa-envelope w-6 text-center text-red-500"></i>
+                <span>Contacto</span>
+            </a>
+
+            {% if user.is_authenticated %}
+                <div class="border-t border-gray-700 my-4"></div>
+                <div class="flex items-center gap-3 px-4 py-2 mb-2">
+                    <span class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-[11px] font-bold text-white uppercase tracking-tight flex-shrink-0">{{ user.first_name|make_list|first|default:"U" }}{{ user.last_name|make_list|first|default:"" }}</span>
+                    <div class="min-w-0">
+                        <p class="text-white text-sm font-semibold truncate">{{ user.get_full_name|default:user.username }}</p>
+                        <p class="text-gray-500 text-xs truncate">{{ user.email }}</p>
+                    </div>
+                </div>
+                <a href="{% url 'core:panel_home' %}" class="sidebar-link">
+                    <i class="fas fa-th-large w-6 text-center text-red-500"></i>
+                    <span>Mi Cuenta</span>
+                </a>
+                <a href="{% url 'core:panel_servicios' %}" class="sidebar-link">
+                    <i class="fas fa-cogs w-6 text-center text-red-500"></i>
+                    <span>Mis Servicios</span>
+                </a>
+                <a href="{% url 'core:panel_compras' %}" class="sidebar-link">
+                    <i class="fas fa-shopping-bag w-6 text-center text-red-500"></i>
+                    <span>Mis Compras</span>
+                </a>
+                {% if user.is_admin or user.is_advisor %}
+                <div class="border-t border-gray-700 my-4"></div>
+                <a href="{% url 'core:dashboard' %}" class="sidebar-link">
+                    <i class="fas fa-tachometer-alt w-6 text-center text-red-500"></i>
+                    <span>Dashboard</span>
+                </a>
+                {% endif %}
+                <div class="border-t border-gray-700 my-4"></div>
+                <a href="{% url 'logout' %}" class="sidebar-link">
+                    <i class="fas fa-sign-out-alt w-6 text-center text-red-500"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            {% else %}
+                <div class="border-t border-gray-700 my-4"></div>
+                <a href="{% url 'login' %}" class="sidebar-link">
+                    <i class="fas fa-sign-in-alt w-6 text-center text-red-500"></i>
+                    <span>Iniciar sesión</span>
+                </a>
+                <a href="{% url 'signup' %}" class="sidebar-link">
+                    <i class="fas fa-user-plus w-6 text-center text-red-500"></i>
+                    <span>Crear cuenta</span>
+                </a>
+            {% endif %}
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="p-5 border-t border-gray-700">
+            <a href="{% url 'core:quote_request' %}" class="flex items-center justify-center w-full px-4 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                <i class="fas fa-rocket mr-2"></i>
+                Cotiza ahora
+            </a>
+            <div class="flex justify-center space-x-5 mt-4">
+                <a href="#" class="text-gray-500 hover:text-red-500 transition"><i class="fab fa-facebook text-lg"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-500 transition"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-500 transition"><i class="fab fa-linkedin text-lg"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-500 transition"><i class="fab fa-twitter text-lg"></i></a>
+            </div>
+        </div>
+    </aside>
 
     <!-- Main Content -->
     <main class="{% block main_class %}{% endblock %}">
@@ -76,42 +284,541 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-globe me-2"></i>{{ site_name }}</h5>
-                    <p class="text-muted">Tu partner estratégico en soluciones digitales profesionales.</p>
+    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
+        <!-- Subtle Parallax Background -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-red-900 rounded-full opacity-5 blur-3xl" data-parallax-speed="0.1"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-orange-900 rounded-full opacity-5 blur-3xl" data-parallax-speed="0.15"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="mb-4">
+                        <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-10">
+                    </div>
+                    <p class="text-gray-400">Tu partner estratégico en soluciones digitales profesionales.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-facebook text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition duration-300">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h5>Enlaces rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'core:home' %}" class="text-light text-decoration-none">Inicio</a></li>
-                        <li><a href="{% url 'core:about' %}" class="text-light text-decoration-none">Nosotros</a></li>
-                        <li><a href="{% url 'core:contact' %}" class="text-light text-decoration-none">Contacto</a></li>
+                <div>
+                    <h5 class="text-xl font-bold mb-4">Enlaces rápidos</h5>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'core:home' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Inicio</a></li>
+                        <li><a href="{% url 'core:about' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Nosotros</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="text-gray-400 hover:text-orange-400 transition duration-300">Contacto</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-orange-400 transition duration-300">Servicios</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <h5>Contacto</h5>
-                    <p class="text-muted">
-                        <i class="fas fa-envelope me-2"></i>info@{{ site_name|lower }}.com<br>
-                        <i class="fas fa-phone me-2"></i>+504 1234-5678<br>
-                        <i class="fas fa-map-marker-alt me-2"></i>Tegucigalpa, Honduras
-                    </p>
+                <div>
+                    <h5 class="text-xl font-bold mb-4">Contacto</h5>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-red-500"></i>
+                            info@megadominio.co
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-red-500"></i>
+                            +57 300 123 4567
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                            Medellín, Colombia
+                        </p>
+                    </div>
                 </div>
             </div>
-            <hr class="bg-secondary">
-            <div class="text-center">
-                <p class="mb-0">&copy; {% now "Y" %} {{ site_name }}. Todos los derechos reservados.</p>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; {% now "Y" %} {{ site_name }}. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ═══ Floating Coffee Bean → /coffee/ ═══ -->
+    <style>
+        /* ── Intro: centered on screen ── */
+        #coffee-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            animation: coffee-intro-in 0.5s ease forwards;
+            transition: opacity 0.6s ease, backdrop-filter 0.6s ease;
+        }
+        #coffee-intro.fade-out {
+            opacity: 0;
+            backdrop-filter: blur(0);
+            -webkit-backdrop-filter: blur(0);
+        }
+        #coffee-intro .coffee-intro-icon {
+            font-size: 5rem;
+            color: #d97706;
+            filter: drop-shadow(0 4px 30px rgba(180, 134, 11, 0.7));
+            animation: coffee-intro-pulse 1.5s ease-in-out infinite;
+        }
+        #coffee-intro .coffee-intro-text {
+            margin-top: 20px;
+            color: #fbbf24;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: coffee-text-in 0.6s ease 0.5s forwards;
+        }
+        @keyframes coffee-intro-in {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes coffee-intro-pulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.1); }
+        }
+        @keyframes coffee-text-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Parked: right-middle of screen ── */
+        #coffee-parked {
+            position: fixed !important;
+            right: 0 !important;
+            top: 50% !important;
+            z-index: 99999 !important;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex !important;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            filter: drop-shadow(-2px 2px 10px rgba(180, 134, 11, 0.5));
+            /* Start off-screen to the right */
+            transform: translateY(-50%) translateX(100%);
+            transition: transform 0.6s cubic-bezier(.22,1,.36,1), filter 0.3s;
+        }
+        #coffee-parked.visible {
+            transform: translateY(-50%) translateX(0) !important;
+        }
+        #coffee-parked:hover {
+            filter: drop-shadow(-4px 4px 20px rgba(245, 158, 11, 0.7));
+        }
+        #coffee-parked:hover .parked-icon {
+            width: 52px;
+            height: 52px;
+            font-size: 1.5rem;
+        }
+        #coffee-parked:hover .parked-label {
+            max-width: 140px;
+            padding: 10px 14px 10px 10px;
+            opacity: 1;
+        }
+        #coffee-parked:active .parked-icon {
+            transform: scale(0.9);
+        }
+        #coffee-parked .parked-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #92400e, #451a03);
+            border-radius: 12px 0 0 12px;
+            color: #fbbf24;
+            font-size: 1.3rem;
+            transition: width 0.3s, height 0.3s, font-size 0.3s, transform 0.3s;
+            animation: parked-wobble 4s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        #coffee-parked .parked-label {
+            background: linear-gradient(90deg, #451a03, #1a0e05);
+            color: #fbbf24;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 10px 0;
+            max-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0;
+            transition: max-width 0.4s ease, padding 0.3s, opacity 0.3s;
+        }
+        @keyframes parked-wobble {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25%      { transform: scale(1) rotate(3deg); }
+            50%      { transform: scale(1.05) rotate(0deg); }
+            75%      { transform: scale(1) rotate(-3deg); }
+        }
+    </style>
+
+    <!-- Intro overlay (centered) -->
+    <div id="coffee-intro">
+        <i class="fas fa-mug-hot coffee-intro-icon"></i>
+        <span class="coffee-intro-text">Es hora de un café</span>
+    </div>
+
+    <!-- Parked icon (right-middle, hidden initially) -->
+    <a href="{% url 'core:coffee' %}" id="coffee-parked" aria-label="Mega Coffee">
+        <span class="parked-icon"><i class="fas fa-mug-hot"></i></span>
+        <span class="parked-label">Mega Coffee</span>
+    </a>
+
+    <script>
+    (function() {
+        var COOLDOWN = 5 * 60 * 1000; // 5 minutes
+        var DELAY    = 5000;           // 5 seconds before showing
+        var DISPLAY  = 3000;           // 3 seconds visible
+
+        var intro = document.getElementById('coffee-intro');
+        var parked = document.getElementById('coffee-parked');
+        if (!intro || !parked) return;
+
+        // Start hidden
+        intro.style.display = 'none';
+        intro.style.opacity = '0';
+
+        // Check cooldown
+        var lastShown = localStorage.getItem('coffee_intro_last');
+        var now = Date.now();
+        var cooldownPassed = !lastShown || (now - parseInt(lastShown, 10)) >= COOLDOWN;
+
+        if (!cooldownPassed) {
+            // Cooldown active: just show parked icon
+            parked.classList.add('visible');
+            // Schedule next intro after remaining cooldown
+            var remaining = COOLDOWN - (now - parseInt(lastShown, 10));
+            setTimeout(function() { showIntro(); }, remaining + DELAY);
+            return;
+        }
+
+        // First time or cooldown passed: delay then show intro
+        setTimeout(function() { showIntro(); }, DELAY);
+
+        function showIntro() {
+            // Reset intro state
+            intro.classList.remove('fade-out');
+            intro.style.display = 'flex';
+            // Force reflow
+            intro.offsetHeight;
+            intro.style.opacity = '1';
+
+            // Hide parked while intro is showing
+            parked.classList.remove('visible');
+
+            // After DISPLAY time, fade out and park
+            setTimeout(function() {
+                intro.classList.add('fade-out');
+                setTimeout(function() {
+                    intro.style.display = 'none';
+                    parked.classList.add('visible');
+                    localStorage.setItem('coffee_intro_last', Date.now().toString());
+                }, 600);
+            }, DISPLAY);
+
+            // Schedule next show in 5 min + delay
+            setTimeout(function() { showIntro(); }, COOLDOWN + DELAY);
+        }
+    })();
+    </script>
+
     <!-- Custom JS -->
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script>
+        // Sidebar toggle
+        (function () {
+            var btn = document.getElementById('mobile-menu-button');
+            var sidebar = document.getElementById('mobile-sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            var closeBtn = document.getElementById('sidebar-close');
+            if (!btn || !sidebar || !overlay) return;
+
+            function openSidebar() {
+                sidebar.classList.add('open');
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                if (navigator.vibrate) navigator.vibrate(15);
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+
+            btn.addEventListener('click', openSidebar);
+            if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            // Close on link click
+            sidebar.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        })();
+
+        // User dropdown toggle
+        (function () {
+            var btn = document.getElementById('user-dropdown-btn');
+            var menu = document.getElementById('user-dropdown-menu');
+            var arrow = document.getElementById('user-dropdown-arrow');
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+                if (arrow) arrow.classList.toggle('rotate-180');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!menu.classList.contains('hidden') && !menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                    if (arrow) arrow.classList.remove('rotate-180');
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                    if (arrow) arrow.classList.remove('rotate-180');
+                }
+            });
+        })();
+    </script>
     
+    {% block store_cart %}
+    <style>
+        #store-fab {
+            position: fixed; bottom: 24px; right: 24px; z-index: 997;
+            width: 60px; height: 60px; border-radius: 16px; border: none; cursor: pointer;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; box-shadow: 0 8px 30px rgba(220, 38, 38, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        #store-fab:hover { transform: scale(1.1); box-shadow: 0 10px 35px rgba(220, 38, 38, 0.5); }
+        #store-fab:active { transform: scale(0.93); }
+        @keyframes store-fab-bounce {
+            0%   { transform: scale(1); }
+            20%  { transform: scale(1.2) rotate(-5deg); }
+            40%  { transform: scale(0.9) rotate(3deg); }
+            60%  { transform: scale(1.1); }
+            80%  { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        #store-fab.bounce { animation: store-fab-bounce 0.6s ease; }
+        #store-fab-badge {
+            position: absolute; top: -6px; right: -6px; min-width: 22px; height: 22px;
+            padding: 0 5px; background: #fbbf24; color: #000; font-size: 0.7rem;
+            font-weight: 900; border-radius: 99px; display: none;
+            align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+        }
+        #store-fab-badge.show { display: flex; }
+        @keyframes badge-pop { 0%{transform:scale(.5)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
+        #store-fab-badge.pop { animation: badge-pop 0.35s ease; }
+        .store-fly { position:fixed; z-index:99999; pointer-events:none; width:36px; height:36px;
+            display:flex; align-items:center; justify-content:center; font-size:1.2rem;
+            color:#ef4444; filter:drop-shadow(0 0 10px rgba(239,68,68,0.7)); border-radius:50%;
+            background:radial-gradient(circle, rgba(239,68,68,0.2) 0%, transparent 70%); }
+    </style>
+
+    <button id="store-fab" aria-label="Abrir carrito">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="store-fab-badge">0</span>
+    </button>
+
+    <!-- ═══ Store Cart Drawer ═══ -->
+    <div id="store-overlay" class="fixed inset-0 z-[998] bg-black/0 backdrop-blur-0 pointer-events-none" style="transition: background 0.4s ease, backdrop-filter 0.4s ease;"></div>
+    <aside id="store-drawer" class="fixed top-0 right-0 w-[380px] max-w-[90vw] h-full z-[999] bg-gradient-to-b from-gray-900 to-gray-950 border-l border-gray-800 flex flex-col transform translate-x-full shadow-[-8px_0_30px_rgba(0,0,0,0.5)]" style="transition: transform 0.4s cubic-bezier(.22,1,.36,1);">
+        <div class="flex items-center justify-between p-5 border-b border-gray-800">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-red-500"></i>
+                <span class="text-lg font-bold text-white">Tu carrito</span>
+                <span id="store-header-count" class="text-sm text-gray-500">(0)</span>
+            </div>
+            <button id="store-close" class="text-gray-500 hover:text-red-400 transition"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div id="store-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <div id="store-empty" class="text-center py-16">
+                <i class="fas fa-shopping-bag text-5xl text-red-500/30 block mb-4"></i>
+                <p class="text-gray-500 font-semibold mb-2">Tu carrito está vacío</p>
+                <p class="text-gray-600 text-sm mb-6">Agrega productos para comenzar</p>
+                <a href="/tienda/" class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300">
+                    <i class="fas fa-store"></i> Ir a la tienda
+                </a>
+            </div>
+        </div>
+        <div id="store-footer" class="border-t border-gray-800 p-5 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-400 text-sm">Subtotal</span>
+                <span id="store-subtotal" class="text-white font-bold text-lg">0</span>
+            </div>
+            <p class="text-gray-600 text-xs mb-4">Envío calculado al finalizar</p>
+            <a href="/tienda/" class="block w-full py-3 text-center bg-gray-800 text-gray-300 font-semibold rounded-xl hover:bg-gray-700 transition-all duration-300 mb-2">
+                <i class="fas fa-store mr-2"></i>Ir a la tienda
+            </a>
+            <button id="store-checkout" class="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-500 hover:to-red-600 transition-all duration-300 shadow-lg mb-2">
+                <i class="fas fa-credit-card mr-2"></i>Pagar ahora
+            </button>
+            <button id="store-clear" class="w-full py-2 text-gray-500 text-sm hover:text-red-400 transition">Vaciar carrito</button>
+        </div>
+    </aside>
+
+    <script>
+    // ═══ Global Store Cart System ═══
+    (function() {
+        var CART_KEY = 'megadominio_store_cart';
+        var fab = document.getElementById('store-fab');
+        var badge = document.getElementById('store-fab-badge');
+        var drawer = document.getElementById('store-drawer');
+        var overlay = document.getElementById('store-overlay');
+        var closeBtn = document.getElementById('store-close');
+        var itemsEl = document.getElementById('store-items');
+        var emptyEl = document.getElementById('store-empty');
+        var footerEl = document.getElementById('store-footer');
+        var subtotalEl = document.getElementById('store-subtotal');
+        var headerCount = document.getElementById('store-header-count');
+        var checkoutBtn = document.getElementById('store-checkout');
+        var clearBtn = document.getElementById('store-clear');
+
+        function getCart() { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e) { return []; } }
+        function saveCart(c) { localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+
+        function openCart() {
+            drawer.style.transform = 'translateX(0)';
+            overlay.style.background = 'rgba(0,0,0,0.55)';
+            overlay.style.backdropFilter = 'blur(4px)';
+            overlay.style.pointerEvents = 'auto';
+            document.body.style.overflow = 'hidden';
+            fab.style.opacity = '0'; fab.style.pointerEvents = 'none';
+        }
+        function closeCart() {
+            drawer.style.transform = 'translateX(100%)';
+            overlay.style.background = 'rgba(0,0,0,0)';
+            overlay.style.backdropFilter = 'blur(0)';
+            overlay.style.pointerEvents = 'none';
+            document.body.style.overflow = '';
+            fab.style.opacity = '1'; fab.style.pointerEvents = 'auto';
+        }
+
+        fab.addEventListener('click', openCart);
+        closeBtn.addEventListener('click', closeCart);
+        overlay.addEventListener('click', closeCart);
+
+        function renderCart() {
+            var cart = getCart();
+            var totalItems = 0, totalPrice = 0;
+            var items = itemsEl.querySelectorAll('.cart-item');
+            items.forEach(function(el) { el.remove(); });
+
+            if (cart.length === 0) {
+                emptyEl.style.display = '';
+                footerEl.classList.add('hidden');
+            } else {
+                emptyEl.style.display = 'none';
+                footerEl.classList.remove('hidden');
+                cart.forEach(function(item) {
+                    totalItems += item.qty;
+                    totalPrice += item.price * item.qty;
+                    var div = document.createElement('div');
+                    div.className = 'cart-item flex items-start gap-3 bg-gray-800/50 rounded-xl p-3 border border-gray-700/30';
+                    var thumb = item.image
+                        ? '<img src="' + item.image + '" alt="' + item.name + '" class="w-20 h-20 rounded-xl object-contain bg-gray-700 flex-shrink-0 p-1.5">'
+                        : '<span class="w-20 h-20 rounded-xl bg-gray-700 flex items-center justify-center flex-shrink-0 text-red-400 text-2xl"><i class="fas ' + item.icon + '"></i></span>';
+                    div.innerHTML =
+                        thumb +
+                        '<div class="flex-1 min-w-0">' +
+                            '<div class="flex justify-between items-start">' +
+                                '<h4 class="text-white font-semibold text-sm truncate">' + item.name + '</h4>' +
+                                '<button class="cart-remove text-gray-600 hover:text-red-400 ml-2 transition" data-id="' + item.id + '"><i class="fas fa-trash-alt text-xs"></i></button>' +
+                            '</div>' +
+                            '<p class="text-red-400 font-bold text-sm">' + item.price.toLocaleString() + '</p>' +
+                            '<div class="flex items-center gap-2 mt-2">' +
+                                '<button class="cart-minus w-7 h-7 rounded-md bg-gray-700 text-white text-xs flex items-center justify-center hover:bg-gray-600 transition" data-id="' + item.id + '">−</button>' +
+                                '<span class="text-white font-bold text-sm w-6 text-center">' + item.qty + '</span>' +
+                                '<button class="cart-plus w-7 h-7 rounded-md bg-gray-700 text-white text-xs flex items-center justify-center hover:bg-gray-600 transition" data-id="' + item.id + '">+</button>' +
+                                '<span class="text-gray-500 text-xs ml-auto">' + (item.price * item.qty).toLocaleString() + '</span>' +
+                            '</div>' +
+                        '</div>';
+                    itemsEl.appendChild(div);
+                });
+            }
+            subtotalEl.textContent = totalPrice.toLocaleString();
+            headerCount.textContent = '(' + totalItems + ')';
+            if (badge) {
+                if (totalItems > 0) {
+                    badge.textContent = totalItems > 99 ? '99+' : totalItems;
+                    badge.classList.add('show');
+                } else {
+                    badge.classList.remove('show');
+                }
+            }
+            itemsEl.querySelectorAll('.cart-remove').forEach(function(b) { b.addEventListener('click', function() { removeItem(this.dataset.id); }); });
+            itemsEl.querySelectorAll('.cart-minus').forEach(function(b) { b.addEventListener('click', function() { changeQty(this.dataset.id, -1); }); });
+            itemsEl.querySelectorAll('.cart-plus').forEach(function(b) { b.addEventListener('click', function() { changeQty(this.dataset.id, 1); }); });
+        }
+
+        function addItem(id, name, price, icon, image) {
+            var cart = getCart();
+            var existing = null;
+            for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { existing = cart[i]; break; } }
+            if (existing) { existing.qty += 1; }
+            else { cart.push({ id: id, name: name, price: parseFloat(price), icon: icon, image: image || '', qty: 1 }); }
+            saveCart(cart);
+            renderCart();
+        }
+        function removeItem(id) { saveCart(getCart().filter(function(i) { return i.id !== id; })); renderCart(); }
+        function changeQty(id, delta) {
+            var cart = getCart();
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === id) { cart[i].qty += delta; if (cart[i].qty <= 0) cart.splice(i, 1); break; }
+            }
+            saveCart(cart); renderCart();
+        }
+        if (clearBtn) clearBtn.addEventListener('click', function() { saveCart([]); renderCart(); });
+
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                var cart = getCart();
+                if (cart.length === 0) return;
+                window.location.href = '/tienda/checkout/';
+            });
+        }
+
+        // Expose globally for store page add-to-cart
+        window.storeCart = {
+            addItem: addItem,
+            renderCart: renderCart,
+            getCart: getCart,
+            openCart: openCart,
+        };
+
+        renderCart();
+    })();
+    </script>
+    {% endblock store_cart %}
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

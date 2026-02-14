@@ -1,0 +1,68 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}Usuario: {{ u.username }}{% endblock %}
+{% block dashboard_heading %}{{ u.get_full_name|default:u.username }}{% endblock %}
+{% block dashboard_desc %}Detalle del usuario{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_user_edit' u.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_users' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Información del usuario</h3>
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold {% if u.role == 'admin' %}bg-red-500/10 text-red-400{% elif u.role == 'advisor' %}bg-blue-500/10 text-blue-400{% elif u.role == 'seller' %}bg-amber-500/10 text-amber-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                {{ u.get_role_display }}
+            </span>
+            {% if u.is_active %}
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-green-500/10 text-green-400">Activo</span>
+            {% else %}
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-gray-700/50 text-gray-400">Inactivo</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Username</p>
+                    <p class="text-white text-sm font-semibold">{{ u.username }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Nombre completo</p>
+                    <p class="text-white text-sm">{{ u.get_full_name|default:"-" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Email</p>
+                    <p class="text-gray-300 text-sm">{{ u.email|default:"-" }}</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Teléfono</p>
+                    <p class="text-gray-300 text-sm">{{ u.phone|default:"-" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Verificado</p>
+                    <p class="text-sm font-bold {% if u.is_verified %}text-green-400{% else %}text-gray-400{% endif %}">{% if u.is_verified %}Sí{% else %}No{% endif %}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Fecha de registro</p>
+                    <p class="text-gray-300 text-sm">{{ u.date_joined|date:"d/m/Y H:i" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Último acceso</p>
+                    <p class="text-gray-300 text-sm">{{ u.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

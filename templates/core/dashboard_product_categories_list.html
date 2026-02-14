@@ -1,0 +1,66 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}Categorías de productos{% endblock %}
+{% block dashboard_heading %}Categorías de productos{% endblock %}
+{% block dashboard_desc %}Gestión de categorías para la tienda{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_products' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Productos
+</a>
+<a href="{% url 'core:dashboard_product_category_create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-plus"></i> Nueva categoría
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    {% if object_list %}
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
+                    <th class="text-left px-5 py-3">Categoría</th>
+                    <th class="text-center px-5 py-3">Icono</th>
+                    <th class="text-center px-5 py-3">Productos</th>
+                    <th class="text-center px-5 py-3">Orden</th>
+                    <th class="text-center px-5 py-3">Estado</th>
+                    <th class="text-right px-5 py-3">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                {% for cat in object_list %}
+                <tr class="hover:bg-gray-800/30 transition">
+                    <td class="px-5 py-3 text-white font-semibold">{{ cat.name }}</td>
+                    <td class="px-5 py-3 text-center text-gray-400"><i class="fas {{ cat.icon }}"></i> <span class="text-xs text-gray-500">{{ cat.icon }}</span></td>
+                    <td class="px-5 py-3 text-center">
+                        <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-blue-500/20 text-blue-400">{{ cat.product_count }}</span>
+                    </td>
+                    <td class="px-5 py-3 text-center text-gray-400">{{ cat.order }}</td>
+                    <td class="px-5 py-3 text-center">
+                        {% if cat.is_active %}
+                        <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-green-500/20 text-green-400">Activa</span>
+                        {% else %}
+                        <span class="px-2 py-0.5 text-xs font-bold rounded-full bg-gray-500/20 text-gray-400">Inactiva</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-3 text-right">
+                        <a href="{% url 'core:dashboard_product_category_edit' cat.pk %}" class="text-gray-400 hover:text-white transition mr-2" title="Editar"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'core:dashboard_product_category_delete' cat.pk %}" class="text-gray-400 hover:text-red-400 transition" title="Eliminar"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-16">
+        <i class="fas fa-tags text-5xl text-gray-700 mb-4 block"></i>
+        <p class="text-gray-500 font-semibold">No hay categorías registradas</p>
+        <a href="{% url 'core:dashboard_product_category_create' %}" class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+            <i class="fas fa-plus"></i> Crear primera categoría
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

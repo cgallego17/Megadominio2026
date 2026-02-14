@@ -1,0 +1,62 @@
+{% extends 'core/dashboard_base.html' %}
+
+{% block dashboard_title %}{{ cs.client.name }} - {{ cs.service.name }}{% endblock %}
+{% block dashboard_heading %}{{ cs.client.name }}{% endblock %}
+{% block dashboard_desc %}Servicio asignado: {{ cs.service.name }}{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% url 'core:dashboard_client_service_edit' cs.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+    <i class="fas fa-edit"></i> Editar
+</a>
+<a href="{% url 'core:dashboard_client_service_delete' cs.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-red-400 text-sm font-semibold rounded-lg hover:bg-red-500/10 transition">
+    <i class="fas fa-trash"></i> Eliminar
+</a>
+<a href="{% url 'core:dashboard_client_services' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Detalle de asignación</h3>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold {% if cs.status == 'active' %}bg-green-500/10 text-green-400{% elif cs.status == 'cancelled' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+            {{ cs.get_status_display }}
+        </span>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Cliente</p>
+                    <a href="{% url 'core:dashboard_client_detail' cs.client.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cs.client.name }}</a>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Servicio</p>
+                    <a href="{% url 'core:dashboard_service_detail' cs.service.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cs.service.name }}</a>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Precio mensual</p>
+                    <p class="text-white text-lg font-extrabold">{{ cs.monthly_price|floatformat:2 }}</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Fecha inicio</p>
+                    <p class="text-white text-sm">{{ cs.start_date|date:"d/m/Y" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Fecha fin</p>
+                    <p class="text-white text-sm">{{ cs.end_date|date:"d/m/Y"|default:"Sin fecha de fin" }}</p>
+                </div>
+            </div>
+        </div>
+        {% if cs.notes %}
+        <div class="mt-6 pt-6 border-t border-gray-800">
+            <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Notas</p>
+            <p class="text-gray-300 text-sm">{{ cs.notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,579 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ service.name }} - {{ site_name }}{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="{{ service.description|truncatechars:160 }}">
+<meta property="og:title" content="{{ service.name }} - {{ site_name }}">
+<meta property="og:description" content="{{ service.description|truncatechars:200 }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:site_name" content="{{ site_name }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ service.name }} - {{ site_name }}">
+<meta name="twitter:description" content="{{ service.description|truncatechars:200 }}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+            <ol class="flex items-center space-x-2 text-sm">
+                <li><a href="{% url 'core:home' %}" class="text-gray-400 hover:text-white transition">Inicio</a></li>
+                <li><span class="text-gray-600">/</span></li>
+                <li><a href="{% url 'core:services' %}" class="text-gray-400 hover:text-white transition">Servicios</a></li>
+                <li><span class="text-gray-600">/</span></li>
+                <li class="text-white">{{ service.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Service Info -->
+            <div>
+                <div class="inline-block mb-6">
+                    <span class="bg-red-600/20 text-orange-400 px-4 py-2 rounded-full text-sm font-semibold border border-red-500/30">
+                        <i class="fas fa-star mr-2"></i>Servicio Premium
+                    </span>
+                </div>
+
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+                    {{ service.name }}
+                </h1>
+
+                <!-- Price (hidden) -->
+                <div class="mb-8">
+                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm px-6 py-4 rounded-xl border border-white/20">
+                        <i class="fas fa-tag text-red-500 text-2xl mr-3"></i>
+                        <div>
+                            <p class="text-sm text-gray-400">Precio</p>
+                            <p class="text-lg font-semibold text-white opacity-80">Solicita tu cotización</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="openQuoteModal()" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Solicitar cotización
+                    </button>
+                    <a href="{% url 'core:services' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-gray-600 rounded-lg hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Ver más servicios
+                    </a>
+                </div>
+            </div>
+
+            <!-- Icon/Visual -->
+            <div class="hidden lg:flex items-center justify-center">
+                <div class="w-80 h-80 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl">
+                    {% if 'Landing' in service.name or 'Sitio' in service.name or 'Portal' in service.name or 'Web' in service.name %}
+                        <i class="fas fa-laptop-code text-9xl text-red-500"></i>
+                    {% elif 'commerce' in service.name %}
+                        <i class="fas fa-shopping-cart text-9xl text-red-500"></i>
+                    {% elif 'Marketing' in service.name or 'Ads' in service.name %}
+                        <i class="fas fa-bullhorn text-9xl text-red-500"></i>
+                    {% elif 'SEO' in service.name or 'Posicionamiento' in service.name %}
+                        <i class="fas fa-search text-9xl text-red-500"></i>
+                    {% elif 'Branding' in service.name or 'Diseño' in service.name or 'Logo' in service.name %}
+                        <i class="fas fa-palette text-9xl text-red-500"></i>
+                    {% elif 'Automatización' in service.name or 'Automatizacion' in service.name %}
+                        <i class="fas fa-sync-alt text-9xl text-red-500"></i>
+                    {% elif 'Consultoría' in service.name or 'Consultoria' in service.name %}
+                        <i class="fas fa-chart-line text-9xl text-red-500"></i>
+                    {% elif 'Hosting' in service.name %}
+                        <i class="fas fa-server text-9xl text-red-500"></i>
+                    {% elif 'Dominio' in service.name %}
+                        <i class="fas fa-globe text-9xl text-red-500"></i>
+                    {% elif 'Redes Sociales' in service.name %}
+                        <i class="fas fa-share-alt text-9xl text-red-500"></i>
+                    {% elif 'Mantenimiento' in service.name %}
+                        <i class="fas fa-tools text-9xl text-red-500"></i>
+                    {% elif 'Soporte' in service.name %}
+                        <i class="fas fa-headset text-9xl text-red-500"></i>
+                    {% elif 'SSL' in service.name or 'Seguridad' in service.name %}
+                        <i class="fas fa-shield-alt text-9xl text-red-500"></i>
+                    {% elif 'Backup' in service.name %}
+                        <i class="fas fa-database text-9xl text-red-500"></i>
+                    {% else %}
+                        <i class="fas fa-code text-9xl text-red-500"></i>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Description -->
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-6">
+                <i class="fas fa-info-circle text-red-600 mr-3"></i>Descripción del Servicio
+            </h2>
+            <div class="h-1 w-24 bg-red-600 rounded mb-8"></div>
+            <p class="text-xl text-gray-700 leading-relaxed whitespace-pre-line">{{ service.description }}</p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-check text-xl text-red-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Calidad Garantizada</h3>
+                        <p class="text-gray-600">Trabajo profesional con los más altos estándares de calidad</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-clock text-xl text-red-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Entrega Puntual</h3>
+                        <p class="text-gray-600">Cumplimos con los tiempos acordados en cada proyecto</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-headset text-xl text-red-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Soporte Continuo</h3>
+                        <p class="text-gray-600">Acompañamiento permanente antes, durante y después</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-dollar-sign text-xl text-red-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Mejor Precio</h3>
+                        <p class="text-gray-600">Precios competitivos sin comprometer la calidad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deliverables -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
+                <i class="fas fa-box-open text-red-600 mr-3"></i>Entregables
+            </h2>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <li class="flex items-start bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <i class="fas fa-file-alt text-red-600 mt-1 mr-3"></i>
+                    <span class="text-gray-700">Documentación funcional y técnica del servicio implementado</span>
+                </li>
+                <li class="flex items-start bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <i class="fas fa-code-branch text-red-600 mt-1 mr-3"></i>
+                    <span class="text-gray-700">Código versionado y pipeline de despliegue (si aplica)</span>
+                </li>
+                <li class="flex items-start bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <i class="fas fa-sitemap text-red-600 mt-1 mr-3"></i>
+                    <span class="text-gray-700">Estructura SEO on-page: títulos, metadatos y Sitemap (si aplica)</span>
+                </li>
+                <li class="flex items-start bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <i class="fas fa-shield-alt text-red-600 mt-1 mr-3"></i>
+                    <span class="text-gray-700">Medidas de seguridad básicas y checklist de revisión</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Process -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
+                <i class="fas fa-project-diagram text-red-600 mr-3"></i>Proceso de trabajo
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200 text-center">
+                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-red-600 text-sm">1</div>
+                    <h3 class="font-semibold text-sm mb-1">Descubrimiento</h3>
+                    <p class="text-xs text-gray-500">Objetivos y métricas</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200 text-center">
+                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-red-600 text-sm">2</div>
+                    <h3 class="font-semibold text-sm mb-1">Diseño</h3>
+                    <p class="text-xs text-gray-500">Arquitectura y plan</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200 text-center">
+                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-red-600 text-sm">3</div>
+                    <h3 class="font-semibold text-sm mb-1">Implementación</h3>
+                    <p class="text-xs text-gray-500">Desarrollo y pruebas</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200 text-center">
+                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-red-600 text-sm">4</div>
+                    <h3 class="font-semibold text-sm mb-1">Lanzamiento</h3>
+                    <p class="text-xs text-gray-500">Despliegue y soporte</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQs (Acordeón) -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-question-circle text-red-600 mr-2"></i>Preguntas frecuentes
+            </h2>
+            <div id="faq-list" class="divide-y divide-gray-200 border border-gray-200 rounded-lg overflow-hidden">
+                <div class="p-4 hover:bg-gray-50 transition">
+                    <button class="w-full text-left flex items-center justify-between faq-toggle">
+                        <span class="font-medium text-gray-900 text-sm">¿Cómo se define el alcance del servicio?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-answer hidden pt-2 text-gray-600 text-sm">Realizamos una sesión de levantamiento para acordar objetivos, entregables y tiempos. Con esto generamos una propuesta clara y medible.</div>
+                </div>
+                <div class="p-4 hover:bg-gray-50 transition">
+                    <button class="w-full text-left flex items-center justify-between faq-toggle">
+                        <span class="font-medium text-gray-900 text-sm">¿Cómo es la facturación?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-answer hidden pt-2 text-gray-600 text-sm">Trabajamos con pago único, mensual o anual según el tipo de servicio. Los valores exactos se cotizan según el alcance.</div>
+                </div>
+                <div class="p-4 hover:bg-gray-50 transition">
+                    <button class="w-full text-left flex items-center justify-between faq-toggle">
+                        <span class="font-medium text-gray-900 text-sm">¿Brindan soporte y garantías?</span>
+                        <i class="fas fa-chevron-down text-gray-400 text-xs transition-transform"></i>
+                    </button>
+                    <div class="faq-answer hidden pt-2 text-gray-600 text-sm">Sí. Incluimos soporte post‑implementación y garantías según la naturaleza del servicio, con tiempos de respuesta definidos.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Billing Info -->
+        <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-credit-card text-xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900">Información de Facturación</h3>
+            </div>
+            <p class="text-lg text-gray-700">
+                {% if service.billing_type == 'unique' %}
+                    Este servicio se ofrece con <strong>pago único</strong>. Solicita tu cotización personalizada.
+                {% elif service.billing_type == 'monthly' %}
+                    Este servicio se ofrece con <strong>facturación mensual</strong>. Solicita tu cotización personalizada.
+                {% else %}
+                    Este servicio se ofrece con <strong>facturación anual</strong>. Solicita tu cotización personalizada.
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Related Services -->
+{% if related_services %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
+                Servicios <span class="text-red-600">Relacionados</span>
+            </h2>
+            <p class="text-xl text-gray-600">Otros servicios que podrían interesarte</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for related in related_services %}
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2">
+                <div class="p-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 group-hover:bg-red-50">
+                        <i class="fas fa-code text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ related.name }}</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">{{ related.description|truncatewords:15 }}</p>
+                    <div class="mb-6">
+                        <div class="inline-flex items-center bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                            <i class="fas fa-tag text-red-600 mr-2"></i>
+                            <span class="font-semibold text-gray-700">Precio bajo solicitud</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'core:service_detail' related.slug %}" class="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300">
+                        <span>Ver detalles</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- JSON-LD (Service & FAQ) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ service.name|escapejs }}",
+  "description": "{{ service.description|truncatechars:300|escapejs }}",
+  "provider": {
+    "@type": "Organization",
+    "name": "{{ site_name|escapejs }}"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo se define el alcance del servicio?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sesión de levantamiento para acordar objetivos, entregables y tiempos; luego una propuesta clara y medible."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo es la facturación?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Pago único, mensual o anual según el tipo de servicio. Los valores se cotizan según alcance."}
+    },
+    {
+      "@type": "Question",
+      "name": "¿Brindan soporte y garantías?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Incluimos soporte post‑implementación y garantías con tiempos de respuesta definidos."}
+    }
+  ]
+}
+</script>
+
+<!-- CTA Section -->
+<section id="contact" class="relative py-24 overflow-hidden bg-gray-900">
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+            ¿Interesado en <span class="text-red-500">{{ service.name }}</span>?
+        </h2>
+        <p class="text-xl text-gray-300 mb-12 leading-relaxed">
+            Contáctanos ahora y recibe una cotización personalizada sin compromiso
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <button onclick="openQuoteModal()" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-red-600 rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>
+                Solicitar cotización
+            </button>
+            <a href="tel:+573001234567" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-gray-600 rounded-lg hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-phone mr-2"></i>
+                Llamar ahora
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Modal -->
+<div id="quote-modal" class="fixed inset-0 z-50 hidden">
+    <!-- Overlay -->
+    <div id="quote-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+    <!-- Modal Content -->
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div id="quote-modal-inner" class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform transition-all scale-95 opacity-0">
+            <!-- Header -->
+            <div class="sticky top-0 bg-white rounded-t-2xl border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900">Solicitar Cotización</h3>
+                    <p class="text-sm text-gray-500">{{ service.name }}</p>
+                </div>
+                <button onclick="closeQuoteModal()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Form -->
+            <form id="quote-form" class="p-6 space-y-4">
+                {% csrf_token %}
+                <!-- Success message (hidden by default) -->
+                <div id="quote-success" class="hidden text-center py-8">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">¡Cotización enviada!</h4>
+                    <p class="text-gray-600" id="quote-success-msg">Revisa tu correo electrónico.</p>
+                </div>
+                <!-- Form fields -->
+                <div id="quote-fields">
+                    <!-- Selected service -->
+                    <div class="bg-red-50 border border-red-100 rounded-lg px-4 py-3 mb-4 flex items-center">
+                        <i class="fas fa-concierge-bell text-red-600 mr-3"></i>
+                        <div>
+                            <p class="text-xs text-gray-500">Servicio solicitado</p>
+                            <p class="font-semibold text-gray-900 text-sm">{{ service.name }}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre completo <span class="text-red-500">*</span></label>
+                            {{ form.name }}
+                            <p class="text-xs text-red-500 mt-1 hidden" data-error="name"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Correo electrónico <span class="text-red-500">*</span></label>
+                            {{ form.email }}
+                            <p class="text-xs text-red-500 mt-1 hidden" data-error="email"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Teléfono <span class="text-red-500">*</span></label>
+                            {{ form.phone }}
+                            <p class="text-xs text-red-500 mt-1 hidden" data-error="phone"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Empresa</label>
+                            {{ form.company }}
+                            <p class="text-xs text-red-500 mt-1 hidden" data-error="company"></p>
+                        </div>
+                    </div>
+                    <!-- Service (hidden, pre-selected) -->
+                    <div class="hidden">{{ form.service }}</div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Cuéntanos sobre tu proyecto</label>
+                        {{ form.message }}
+                        <p class="text-xs text-red-500 mt-1 hidden" data-error="message"></p>
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" id="quote-submit" class="w-full inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white bg-red-600 rounded-lg shadow-lg hover:bg-red-700 transition-all duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            <span>Enviar solicitud</span>
+                        </button>
+                        <p class="text-center text-xs text-gray-400 mt-3">
+                            <i class="fas fa-lock mr-1"></i>Tu información está segura y protegida
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+    /* ---- FAQ accordion ---- */
+    document.querySelectorAll('.faq-toggle').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var answer = btn.parentElement.querySelector('.faq-answer');
+            if (!answer) return;
+            answer.classList.toggle('hidden');
+            var icon = btn.querySelector('i');
+            if (icon) icon.classList.toggle('rotate-180');
+            if (navigator.vibrate) navigator.vibrate(8);
+        });
+    });
+
+    /* ---- Quote Modal ---- */
+    var modal = document.getElementById('quote-modal');
+    var inner = document.getElementById('quote-modal-inner');
+    var overlay = document.getElementById('quote-overlay');
+    var form = document.getElementById('quote-form');
+    var fields = document.getElementById('quote-fields');
+    var successDiv = document.getElementById('quote-success');
+    var submitBtn = document.getElementById('quote-submit');
+
+    window.openQuoteModal = function() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function(){
+            inner.classList.remove('scale-95','opacity-0');
+            inner.classList.add('scale-100','opacity-100');
+        }, 10);
+        if (navigator.vibrate) navigator.vibrate(10);
+    };
+
+    window.closeQuoteModal = function() {
+        inner.classList.remove('scale-100','opacity-100');
+        inner.classList.add('scale-95','opacity-0');
+        setTimeout(function(){
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            // Reset form state
+            fields.classList.remove('hidden');
+            successDiv.classList.add('hidden');
+            form.reset();
+            // Clear errors
+            document.querySelectorAll('[data-error]').forEach(function(el){
+                el.classList.add('hidden');
+                el.textContent = '';
+            });
+        }, 200);
+    };
+
+    // Close on overlay click
+    if (overlay) overlay.addEventListener('click', window.closeQuoteModal);
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            window.closeQuoteModal();
+        }
+    });
+
+    // Form submit via AJAX
+    if (form) {
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+
+            // Clear previous errors
+            document.querySelectorAll('[data-error]').forEach(function(el){
+                el.classList.add('hidden');
+                el.textContent = '';
+            });
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.querySelector('span').textContent = 'Enviando...';
+
+            var formData = new FormData(form);
+
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                if (data.success) {
+                    fields.classList.add('hidden');
+                    successDiv.classList.remove('hidden');
+                    if (data.message) {
+                        document.getElementById('quote-success-msg').textContent = data.message;
+                    }
+                    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+                } else if (data.errors) {
+                    Object.keys(data.errors).forEach(function(key){
+                        var el = document.querySelector('[data-error="'+key+'"]');
+                        if (el) {
+                            el.textContent = data.errors[key];
+                            el.classList.remove('hidden');
+                        }
+                    });
+                    if (navigator.vibrate) navigator.vibrate(100);
+                }
+            })
+            .catch(function(){
+                alert('Error de conexión. Intenta de nuevo.');
+            })
+            .finally(function(){
+                submitBtn.disabled = false;
+                submitBtn.querySelector('span').textContent = 'Enviar solicitud';
+            });
+        });
+    }
+})();
+</script>
+{% endblock %}
