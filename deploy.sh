@@ -8,7 +8,7 @@ set -e
 
 PROJECT_DIR="/var/www/Megadominio2026"
 VENV="$PROJECT_DIR/venv/bin/activate"
-BRANCH="main"
+BRANCH="master"
 
 echo "========================================="
 echo "  Megadominio - Deploy"
