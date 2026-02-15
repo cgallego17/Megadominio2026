@@ -14,7 +14,7 @@
     <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
     <link rel="alternate" hreflang="es" href="{{ request.build_absolute_uri }}">
     <link rel="alternate" hreflang="x-default" href="{{ request.build_absolute_uri }}">
-    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}">
 
     <!-- Open Graph defaults (overridable per page) -->
     {% block og_meta %}
@@ -116,7 +116,7 @@
                 <div class="flex items-center">
                     <a href="{% url 'core:home' %}" class="hover:opacity-90 transition duration-300">
                         {% load static %}
-                        <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-10">
+                        <img src="{% static 'img/logo.png' %}" alt="{{ site_name }}" class="h-8">
                     </a>
                 </div>
                 
@@ -124,7 +124,10 @@
                 <div class="hidden lg:flex items-center space-x-0.5">
                     <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
                     <a href="{% url 'core:services' %}" class="nav-link">Servicios</a>
-                    <a href="{% url 'core:store' %}" class="nav-link">Tienda</a>
+                    <a href="{% url 'core:store' %}" class="nav-link flex items-center gap-1.5">
+                        Tienda
+                        <span class="inline-flex items-center gap-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full leading-none animate-pulse"><i class="fas fa-fire text-[7px]"></i>HOT</span>
+                    </a>
                     <a href="{% url 'core:about' %}" class="nav-link">Nosotros</a>
                     <a href="{% url 'core:contact' %}" class="nav-link">Contacto</a>
                 </div>
@@ -217,6 +220,7 @@
             <a href="{% url 'core:store' %}" class="sidebar-link">
                 <i class="fas fa-store w-6 text-center text-red-500"></i>
                 <span>Tienda</span>
+                <span class="flex items-center gap-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none ml-auto shadow-lg shadow-orange-500/40 animate-pulse"><i class="fas fa-fire text-[8px]"></i>HOT</span>
             </a>
             <a href="{% url 'core:coffee' %}" class="sidebar-link relative">
                 <i class="fas fa-coffee w-6 text-center text-amber-400"></i>
