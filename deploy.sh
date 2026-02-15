@@ -44,7 +44,7 @@ python manage.py collectstatic --noinput --clear
 # 6. Reiniciar Gunicorn
 echo ""
 echo "[6/6] Reiniciando servicio..."
-sudo systemctl restart gunicorn
+sudo systemctl restart megadominio
 
 echo ""
 echo "========================================="
