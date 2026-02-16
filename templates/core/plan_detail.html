@@ -17,12 +17,20 @@
 
     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-7 shadow-xl">
       <div class="flex items-start gap-5 mb-6">
-        <div class="w-16 h-16 rounded-xl bg-red-600/20 text-red-400 flex items-center justify-center flex-shrink-0">
+        <div class="w-16 h-16 rounded-xl bg-red-600/20 text-red-400 flex items-center justify-center overflow-hidden flex-shrink-0">
+          {% if plan.image %}
+          <img src="{{ plan.image }}" alt="{{ plan.title }}" class="w-full h-full object-cover" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/static/img/icon.png';">
+          {% else %}
           <i class="fas {{ plan.icon|default:'fa-tag' }} text-2xl"></i>
+          {% endif %}
         </div>
         <div class="flex-1 min-w-0">
           <h1 class="text-3xl md:text-4xl font-extrabold mb-1">{{ plan.title }}</h1>
+          {% if plan.description %}
+          <p class="text-gray-400 text-sm">{{ plan.description }}</p>
+          {% else %}
           <p class="text-gray-400 text-sm">Plan digital de {{ site_name }}</p>
+          {% endif %}
         </div>
       </div>
 
@@ -56,6 +64,61 @@
           </div>
           <p class="text-xs text-gray-500 mt-3">Este es un producto digital. Envío: $0</p>
         </aside>
+      </div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-7 flex items-center justify-center h-56">
+        <div class="relative w-40 h-40">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-red-600/30 via-red-400/20 to-pink-500/20 blur-2xl"></div>
+          <div class="relative w-full h-full rounded-2xl bg-gray-800/60 border border-gray-700 flex items-center justify-center overflow-hidden">
+            {% if plan.image %}
+            <img src="{{ plan.image }}" alt="{{ plan.title }}" class="w-32 h-32 object-contain" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/static/img/icon.png';">
+            {% else %}
+            <i class="fas {{ plan.icon|default:'fa-tag' }} text-6xl text-red-400"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="md:col-span-2 bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <h2 class="text-xl font-bold mb-3">Preguntas frecuentes</h2>
+        <div class="space-y-3">
+          <details class="group bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <summary class="cursor-pointer text-white font-semibold flex items-center justify-between">
+              <span>¿Cuál es el tiempo de entrega estimado?</span>
+              <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-3 text-gray-300 text-sm">Depende del alcance: una landing suele tardar 3–7 días, un sitio corporativo 1–2 semanas y un e‑commerce 2–4 semanas. Si ya tienes contenidos listos, podemos acelerar.</div>
+          </details>
+          <details class="group bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <summary class="cursor-pointer text-white font-semibold flex items-center justify-between">
+              <span>¿Puedo escalar o cambiar de plan más adelante?</span>
+              <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-3 text-gray-300 text-sm">Sí. Puedes actualizar o migrar entre planes cuando lo necesites. Hacemos prorrateos justos y cuidamos la continuidad operativa.</div>
+          </details>
+          <details class="group bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <summary class="cursor-pointer text-white font-semibold flex items-center justify-between">
+              <span>¿Incluye dominio, hosting y SSL?</span>
+              <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-3 text-gray-300 text-sm">Según el plan: si en “¿Qué incluye?” ves dominio/hosting/SSL, están cubiertos. En caso contrario, podemos añadirlos como adicionales.</div>
+          </details>
+          <details class="group bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <summary class="cursor-pointer text-white font-semibold flex items-center justify-between">
+              <span>¿Cómo funciona el soporte y las garantías?</span>
+              <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-3 text-gray-300 text-sm">Incluimos soporte por email y WhatsApp. Mantenemos una ventana de correcciones post‑entrega y ofrecemos planes de soporte mensual opcionales.</div>
+          </details>
+          <details class="group bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <summary class="cursor-pointer text-white font-semibold flex items-center justify-between">
+              <span>¿Qué métodos de pago aceptan?</span>
+              <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="mt-3 text-gray-300 text-sm">Pagas de forma segura con Wompi (tarjetas, PSE, Nequi y más). La facturación puede ser anual o mensual según el plan.</div>
+          </details>
+        </div>
       </div>
     </div>
   </div>

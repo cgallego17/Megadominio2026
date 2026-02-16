@@ -6,7 +6,7 @@
 
 {% block content %}
 <section class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center py-12 px-4">
-    <div class="w-full max-w-md">
+    <div class="w-full max-w-2xl">
         <!-- Logo / Brand -->
         <div class="text-center mb-8">
             <a href="{% url 'core:home' %}" class="inline-block">
@@ -54,26 +54,90 @@
                     </div>
                 </div>
 
-                <!-- Email -->
-                <div class="mb-5">
-                    <label for="id_email" class="block text-sm font-semibold text-gray-700 mb-2">
-                        <i class="fas fa-envelope text-gray-400 mr-1"></i> Correo electrónico
-                    </label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                    <p class="text-xs text-red-500 mt-1">{{ form.email.errors.0 }}</p>
-                    {% endif %}
+                <!-- Email & Teléfono -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label for="id_email" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-envelope text-gray-400 mr-1"></i> Correo electrónico
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_phone" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-phone text-gray-400 mr-1"></i> Teléfono <span class="text-gray-400 font-normal">(opcional)</span>
+                        </label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.phone.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
 
-                <!-- Teléfono -->
                 <div class="mb-5">
-                    <label for="id_phone" class="block text-sm font-semibold text-gray-700 mb-2">
-                        <i class="fas fa-phone text-gray-400 mr-1"></i> Teléfono <span class="text-gray-400 font-normal">(opcional)</span>
+                    <label for="id_address" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i> Dirección
                     </label>
-                    {{ form.phone }}
-                    {% if form.phone.errors %}
-                    <p class="text-xs text-red-500 mt-1">{{ form.phone.errors.0 }}</p>
+                    {{ form.address }}
+                    {% if form.address.errors %}
+                    <p class="text-xs text-red-500 mt-1">{{ form.address.errors.0 }}</p>
                     {% endif %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                    <div>
+                        <label for="id_country" class="block text-sm font-semibold text-gray-700 mb-2">País</label>
+                        {{ form.country }}
+                        {% if form.country.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.country.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_state" class="block text-sm font-semibold text-gray-700 mb-2">Departamento</label>
+                        {{ form.state }}
+                        {% if form.state.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.state.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_city" class="block text-sm font-semibold text-gray-700 mb-2">Ciudad</label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.city.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Tipo de cliente -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                    <div>
+                        <label for="id_customer_type" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-user-tag text-gray-400 mr-1"></i> Tipo de cliente
+                        </label>
+                        {{ form.customer_type }}
+                        {% if form.customer_type.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.customer_type.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_document_type" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-id-card text-gray-400 mr-1"></i> Tipo de documento
+                        </label>
+                        {{ form.document_type }}
+                        {% if form.document_type.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.document_type.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_document_number" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-hashtag text-gray-400 mr-1"></i> Número de documento
+                        </label>
+                        {{ form.document_number }}
+                        {% if form.document_number.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.document_number.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
 
                 <!-- Contraseña -->
@@ -118,25 +182,27 @@
                     {% endif %}
                 </div>
 
-                <!-- Terms -->
-                <div class="mb-6">
-                    <label class="flex items-start gap-2 cursor-pointer">
-                        <input type="checkbox" name="accept_terms" class="mt-0.5 w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500" {% if form.accept_terms.value %}checked{% endif %}>
-                        <span class="text-xs text-gray-600">
-                            Acepto los <a href="{% url 'core:terms' %}" target="_blank" class="text-red-600 hover:underline">términos y condiciones</a>
-                            y la <a href="{% url 'core:privacy' %}" target="_blank" class="text-red-600 hover:underline">política de privacidad</a>
-                        </span>
-                    </label>
-                    {% if form.accept_terms.errors %}
-                    <p class="text-xs text-red-500 mt-1">{{ form.accept_terms.errors.0 }}</p>
-                    {% endif %}
+                <!-- Terms + Submit aligned -->
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-4 mb-2">
+                    <div>
+                        <label class="flex items-start gap-2 cursor-pointer">
+                            <input type="checkbox" name="accept_terms" class="mt-0.5 w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500" {% if form.accept_terms.value %}checked{% endif %}>
+                            <span class="text-xs text-gray-600">
+                                Acepto los <a href="{% url 'core:terms' %}" target="_blank" class="text-red-600 hover:underline">términos y condiciones</a>
+                                y la <a href="{% url 'core:privacy' %}" target="_blank" class="text-red-600 hover:underline">política de privacidad</a>
+                            </span>
+                        </label>
+                        {% if form.accept_terms.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.accept_terms.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="md:flex md:justify-end">
+                        <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center px-6 py-3.5 text-base font-bold text-white bg-red-600 rounded-lg shadow-lg shadow-red-600/30 hover:bg-red-700 transition-all duration-300 transform hover:scale-[1.02]">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Crear mi cuenta
+                        </button>
+                    </div>
                 </div>
-
-                <!-- Submit -->
-                <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3.5 text-base font-bold text-white bg-red-600 rounded-lg shadow-lg shadow-red-600/30 hover:bg-red-700 transition-all duration-300 transform hover:scale-[1.02]">
-                    <i class="fas fa-user-plus mr-2"></i>
-                    Crear mi cuenta
-                </button>
             </form>
 
             <!-- Divider -->
@@ -231,6 +297,63 @@
     }
 
     pw.addEventListener('input', function() { check(this.value); });
+})();
+
+(function(){
+  var ct = document.getElementById('id_customer_type');
+  var dt = document.getElementById('id_document_type');
+  if (!ct || !dt) return;
+  function update(){
+    var v = ct.value;
+    var opts = dt.options;
+    for (var i = 0; i < opts.length; i++) {
+      var o = opts[i];
+      var val = o.value;
+      var show = true;
+      if (v === 'company') { show = (val === 'nit'); }
+      else if (v === 'person') { show = (val === 'cc' || val === 'ce' || val === 'passport'); }
+      o.disabled = !show;
+      o.hidden = !show;
+    }
+    if (v === 'company') { dt.value = 'nit'; }
+    else if (v === 'person') { dt.value = 'cc'; }
+  }
+  ct.addEventListener('change', update);
+  update();
+})();
+
+(function(){
+  var country = document.getElementById('id_country');
+  var state = document.getElementById('id_state');
+  var city = document.getElementById('id_city');
+  if (!country || !state || !city) return;
+
+  function opt(value, label){ var o = document.createElement('option'); o.value = value; o.textContent = label; return o; }
+  function clearSel(sel, ph){ sel.innerHTML=''; if (ph) sel.appendChild(opt('', ph)); }
+
+  function populate(sel, items, ph){
+    clearSel(sel, ph);
+    for (var i=0;i<items.length;i++){ sel.appendChild(opt(items[i].id, items[i].name)); }
+  }
+
+  function fetchStates(cid){
+    if (!cid) { clearSel(state, '— Selecciona departamento —'); clearSel(city, '— Selecciona ciudad —'); return; }
+    fetch('/api/states/?country_id=' + encodeURIComponent(cid))
+      .then(function(r){ return r.json(); })
+      .then(function(data){ var arr = Array.isArray(data) ? data : (data.results || []); populate(state, arr, '— Selecciona departamento —'); clearSel(city, '— Selecciona ciudad —'); })
+      .catch(function(){ clearSel(state, '— Selecciona departamento —'); clearSel(city, '— Selecciona ciudad —'); });
+  }
+
+  function fetchCities(sid){
+    if (!sid) { clearSel(city, '— Selecciona ciudad —'); return; }
+    fetch('/api/cities/?state_id=' + encodeURIComponent(sid))
+      .then(function(r){ return r.json(); })
+      .then(function(data){ var arr = Array.isArray(data) ? data : (data.results || []); populate(city, arr, '— Selecciona ciudad —'); })
+      .catch(function(){ clearSel(city, '— Selecciona ciudad —'); });
+  }
+
+  country.addEventListener('change', function(){ fetchStates(this.value); });
+  state.addEventListener('change', function(){ fetchCities(this.value); });
 })();
 </script>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.contrib.auth import get_user_model
+from apps.accounts.models import Country, State, City, UserAddress
 from apps.clients.models import Client
 from apps.services.models import Service, ClientService
 from apps.quotes.models import Quote, QuoteItem
@@ -492,6 +493,71 @@ class SignupForm(forms.Form):
         },
     )
 
+    CUSTOMER_TYPE_CHOICES = (
+        ('person', 'Persona natural'),
+        ('company', 'Empresa'),
+    )
+    DOCUMENT_TYPE_CHOICES = (
+        ('nit', 'NIT'),
+        ('cc', 'Cédula de ciudadanía'),
+        ('ce', 'Cédula de extranjería'),
+        ('passport', 'Pasaporte'),
+    )
+    customer_type = forms.ChoiceField(
+        label='Tipo de cliente', choices=CUSTOMER_TYPE_CHOICES,
+        widget=forms.Select(attrs={'class': _input_cls}),
+    )
+    document_type = forms.ChoiceField(
+        label='Tipo de documento', choices=DOCUMENT_TYPE_CHOICES,
+        widget=forms.Select(attrs={'class': _input_cls, 'id': 'id_document_type'}),
+    )
+    document_number = forms.CharField(
+        max_length=50, label='Número de documento',
+        widget=forms.TextInput(attrs={'class': _input_cls, 'placeholder': 'Número identificaci\u00f3n'}),
+    )
+
+    address = forms.CharField(
+        label='Dirección', max_length=255,
+        widget=forms.TextInput(attrs={'class': _input_cls, 'placeholder': 'Calle, número, barrio…'}),
+    )
+    country = forms.ModelChoiceField(
+        label='País', queryset=Country.objects.none(),
+        widget=forms.Select(attrs={'class': _input_cls, 'id': 'id_country'}),
+    )
+    state = forms.ModelChoiceField(
+        label='Departamento', queryset=State.objects.none(),
+        widget=forms.Select(attrs={'class': _input_cls, 'id': 'id_state'}),
+    )
+    city = forms.ModelChoiceField(
+        label='Ciudad', queryset=City.objects.none(),
+        widget=forms.Select(attrs={'class': _input_cls, 'id': 'id_city'}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['country'].queryset = Country.objects.all()
+        # Prefer posted data; otherwise set default to Colombia
+        if 'country' in self.data:
+            try:
+                cid = int(self.data.get('country') or 0)
+                self.fields['state'].queryset = State.objects.filter(country_id=cid)
+            except (TypeError, ValueError):
+                self.fields['state'].queryset = State.objects.none()
+        else:
+            try:
+                co = Country.objects.filter(iso2__iexact='CO').first() or Country.objects.filter(name__iexact='Colombia').first()
+                if co:
+                    self.fields['country'].initial = co.pk
+                    self.fields['state'].queryset = State.objects.filter(country=co)
+            except Exception:
+                pass
+        if 'state' in self.data:
+            try:
+                sid = int(self.data.get('state') or 0)
+                self.fields['city'].queryset = City.objects.filter(state_id=sid)
+            except (TypeError, ValueError):
+                self.fields['city'].queryset = City.objects.none()
+
     def clean_website_url(self):
         """Honeypot: reject if filled."""
         if self.cleaned_data.get('website_url'):
@@ -584,6 +650,13 @@ class SignupForm(forms.Form):
                     'password1',
                     'La contrase\u00f1a no puede contener tu nombre.'
                 )
+        ct = cleaned.get('customer_type')
+        dt = cleaned.get('document_type')
+        if ct and dt:
+            if ct == 'company' and dt != 'nit':
+                self.add_error('document_type', 'Para empresa el documento debe ser NIT.')
+            if ct == 'person' and dt not in {'cc', 'ce', 'passport'}:
+                self.add_error('document_type', 'Selecciona un documento válido para persona.')
         return cleaned
 
     def save(self):
@@ -606,6 +679,37 @@ class SignupForm(forms.Form):
         if data.get('phone'):
             user.phone = data['phone']
             user.save(update_fields=['phone'])
+        try:
+            ct = data.get('customer_type')
+            dt = data.get('document_type')
+            dn = data.get('document_number', '').strip()
+            map_dt = {'nit': 'rtn', 'cc': 'dni', 'ce': 'other', 'passport': 'passport'}
+            client = Client.objects.create(
+                user=user,
+                name=(data['first_name'] + ' ' + data['last_name']).strip(),
+                email=data['email'],
+                phone=data.get('phone', ''),
+                document_type=map_dt.get(dt, 'other'),
+                document_number=dn,
+                company='' if ct == 'person' else '',
+                address=data.get('address', ''),
+                is_active=True,
+            )
+            try:
+                ua = UserAddress(
+                    user=user,
+                    label='Principal',
+                    address=data.get('address', ''),
+                    country=data.get('country'),
+                    state=data.get('state'),
+                    city=data.get('city'),
+                    is_default=True,
+                )
+                ua.save()
+            except Exception:
+                pass
+        except Exception:
+            pass
         return user
 
 

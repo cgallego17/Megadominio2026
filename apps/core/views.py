@@ -157,6 +157,12 @@ def plan_detail(request, slug):
         # Web
         'presencia-web': {
             'title': 'Presencia Web', 'price': 350000, 'period': 'año', 'icon': 'fa-file-alt',
+            'image': 'https://source.unsplash.com/640x640/?website,landing,ui,ux&sig=1',
+            'description': (
+                'Construye una landing page moderna enfocada en conversión, con '
+                'diseño responsive, SEO base y tiempos de carga optimizados para '
+                'validar tu propuesta y captar contactos desde el primer día.'
+            ),
             'features': [
                 'Landing page de 1 página', 'Hosting 5 GB SSD', 'Dominio .com incluido',
                 'Certificado SSL', '2 cuentas de correo', 'Diseño responsive'
@@ -164,6 +170,12 @@ def plan_detail(request, slug):
         },
         'corporativo': {
             'title': 'Corporativo', 'price': 750000, 'period': 'año', 'icon': 'fa-building',
+            'image': 'https://source.unsplash.com/640x640/?corporate,office,business&sig=2',
+            'description': (
+                'Sitio corporativo con arquitectura clara, múltiples secciones, '
+                'formularios inteligentes, analítica integrada y base SEO; '
+                'escalable y fácil de administrar para crecer con tu negocio.'
+            ),
             'features': [
                 'Hasta 5 secciones', 'Hosting 20 GB SSD', 'Dominio .com incluido',
                 'SSL gratis', '10 correos corporativos', 'SEO básico + Analytics', 'Formulario de contacto'
@@ -171,6 +183,12 @@ def plan_detail(request, slug):
         },
         'e-commerce': {
             'title': 'E-Commerce', 'price': 1200000, 'period': 'año', 'icon': 'fa-shopping-cart',
+            'image': 'https://source.unsplash.com/640x640/?ecommerce,shopping,cart,online-store&sig=3',
+            'description': (
+                'Tienda en línea lista para vender con catálogo administrable, '
+                'pasarela de pagos, seguridad, SEO base y checkout optimizado '
+                'para mejorar conversión.'
+            ),
             'features': [
                 'Hasta 50 productos', 'Hosting 40 GB SSD', 'Dominio .com incluido',
                 'SSL gratis', '20 correos', 'Pasarela de pagos', 'SEO avanzado + Analytics'
@@ -178,6 +196,12 @@ def plan_detail(request, slug):
         },
         'empresarial': {
             'title': 'Empresarial', 'price': 2500000, 'period': 'año', 'icon': 'fa-city',
+            'image': 'https://source.unsplash.com/640x640/?enterprise,city,skyscraper,headquarters&sig=4',
+            'description': (
+                'Proyecto a medida con integraciones a ERP/CRM, seguridad '
+                'avanzada, rendimiento y soporte 24/7; pensado para '
+                'operaciones críticas y crecimiento sostenido.'
+            ),
             'features': [
                 'Sitio a medida ilimitado', 'Hosting 100 GB SSD + CDN', 'Dominio .com + .co',
                 'SSL premium', 'Correos ilimitados', 'SEO + Marketing básico', 'Soporte 24/7', 'Backups diarios'
@@ -186,12 +210,24 @@ def plan_detail(request, slug):
         # Hosting & Email
         'hosting-basico': {
             'title': 'Hosting Básico', 'price': 120000, 'period': 'año', 'icon': 'fa-hdd',
+            'image': 'https://source.unsplash.com/640x640/?server,datacenter,hosting&sig=5',
+            'description': (
+                'Alojamiento confiable con SSD, SSL, cPanel y copias de '
+                'seguridad para proyectos personales o pequeños sitios que '
+                'requieren estabilidad y buen rendimiento.'
+            ),
             'features': [
                 '5 GB SSD', 'Ancho de banda ilimitado', '1 sitio web', 'SSL gratis', 'cPanel', 'Backups semanales'
             ]
         },
         'hosting-pro': {
             'title': 'Hosting Pro', 'price': 250000, 'period': 'año', 'icon': 'fa-server',
+            'image': 'https://source.unsplash.com/640x640/?servers,datacenter,rack&sig=6',
+            'description': (
+                'Recursos generosos, sitios ilimitados, backups diarios y '
+                'dominio incluido; ideal para negocios en crecimiento que '
+                'necesitan disponibilidad y velocidad.'
+            ),
             'features': [
                 '30 GB SSD', 'Ancho de banda ilimitado', 'Sitios ilimitados', 'SSL gratis',
                 'cPanel + Softaculous', 'Backups diarios', 'Dominio .com 1er año'
@@ -199,6 +235,12 @@ def plan_detail(request, slug):
         },
         'email-profesional': {
             'title': 'Email Profesional', 'price': 180000, 'period': 'año', 'icon': 'fa-envelope-open-text',
+            'image': 'https://source.unsplash.com/640x640/?email,inbox,communication&sig=7',
+            'description': (
+                'Correo corporativo con alta entregabilidad, antispam y '
+                'antivirus, acceso IMAP/POP3/SMTP y compatibilidad con '
+                'Outlook y Gmail.'
+            ),
             'features': [
                 '5 cuentas de correo', '5 GB por buzón', 'Webmail + IMAP/POP3/SMTP',
                 'Antispam y antivirus', 'Compatible Outlook/Gmail', 'Dominio .com incluido'
@@ -206,6 +248,12 @@ def plan_detail(request, slug):
         },
         'cloud-empresarial': {
             'title': 'Cloud Empresarial', 'price': 450000, 'period': 'año', 'icon': 'fa-cloud',
+            'image': 'https://source.unsplash.com/640x640/?cloud,cloud-computing,saas&sig=8',
+            'description': (
+                'Infraestructura robusta con correos ilimitados, SSL premium, '
+                'CDN, políticas de seguridad y soporte prioritario para '
+                'organizaciones exigentes.'
+            ),
             'features': [
                 '100 GB SSD', 'Correos ilimitados', 'Dominio .com + .co', 'SSL premium + CDN',
                 'Backups diarios', 'Soporte prioritario 24/7', 'Servidor dedicado'
@@ -214,6 +262,12 @@ def plan_detail(request, slug):
         # E-commerce
         'e-commerce-basico': {
             'title': 'E-commerce Básico', 'price': 900000, 'period': 'año', 'icon': 'fa-store',
+            'image': 'https://source.unsplash.com/640x640/?shopping,bag,storefront&sig=9',
+            'description': (
+                'Todo lo esencial para empezar a vender: dominio, SSL, hosting '
+                'veloz y catálogo inicial administrable con experiencia de '
+                'compra sencilla.'
+            ),
             'features': [
                 'Hasta 20 productos', 'Pasarela de pagos', 'Dominio .com + SSL', 'Hosting 20 GB SSD',
                 '3 cuentas de correo'
@@ -221,6 +275,12 @@ def plan_detail(request, slug):
         },
         'e-commerce-pro': {
             'title': 'E-commerce Pro', 'price': 1300000, 'period': 'año', 'icon': 'fa-shopping-basket',
+            'image': 'https://source.unsplash.com/640x640/?ecommerce,logistics,shipping,cart&sig=10',
+            'description': (
+                'Catálogo amplio con variantes, envíos, automatizaciones e '
+                'integraciones clave que impulsan conversión y operaciones '
+                'diarias.'
+            ),
             'features': [
                 'Hasta 200 productos', 'Variantes (talla/color)', 'Pagos + envíos', 'Integración WhatsApp',
                 'SEO y analítica básica'
@@ -228,6 +288,12 @@ def plan_detail(request, slug):
         },
         'e-commerce-avanzado': {
             'title': 'E-commerce Avanzado', 'price': 2100000, 'period': 'año', 'icon': 'fa-boxes-stacked',
+            'image': 'https://source.unsplash.com/640x640/?warehouse,inventory,analytics&sig=11',
+            'description': (
+                'Catálogo ilimitado, integraciones con ERP/CRM, recuperación '
+                'de carrito, feeds de productos y performance optimizada '
+                'para escalar.'
+            ),
             'features': [
                 'Catálogo ilimitado', 'Integraciones ERP/CRM', 'Carrito abandonado + email mkt',
                 'Google Merchant Center', 'SEO avanzado + performance'
@@ -235,6 +301,12 @@ def plan_detail(request, slug):
         },
         'marketplace': {
             'title': 'Marketplace', 'price': 3800000, 'period': 'año', 'icon': 'fa-people-carry-box',
+            'image': 'https://source.unsplash.com/640x640/?marketplace,market,vendors&sig=12',
+            'description': (
+                'Plataforma multi-vendedor con onboarding/KYC, comisiones, '
+                'logística integrada y paneles para vendedores listos para '
+                'operar.'
+            ),
             'features': [
                 'Múltiples vendedores', 'Comisiones y liquidaciones', 'Onboarding y KYC',
                 'Logística y envíos integrados', 'Panel para vendedores'
@@ -243,24 +315,48 @@ def plan_detail(request, slug):
         # WordPress
         'instalacion-basica': {
             'title': 'Instalación Básica (WordPress)', 'price': 150000, 'period': 'único', 'icon': 'fa-download',
+            'image': 'https://source.unsplash.com/640x640/?wordpress,cms,blog&sig=13',
+            'description': (
+                'Implementación limpia de WordPress con hardening inicial y '
+                'checklist a producción para empezar con una base segura y '
+                'eficiente.'
+            ),
             'features': [
                 'Instalación en hosting', 'Base de datos y configuración', 'Tema ligero preconfigurado'
             ]
         },
         'seguridad-backup': {
             'title': 'Seguridad & Backup (WordPress)', 'price': 220000, 'period': 'único', 'icon': 'fa-shield-alt',
+            'image': 'https://source.unsplash.com/640x640/?cybersecurity,shield,backup&sig=14',
+            'description': (
+                'Protección con firewall y antispam, monitoreo y backups '
+                'programados con restauración guiada para continuidad del '
+                'negocio.'
+            ),
             'features': [
                 'Firewall + anti-spam', 'Backups automáticos', 'Certificado SSL'
             ]
         },
         'velocidad-seo': {
             'title': 'Velocidad & SEO (WordPress)', 'price': 260000, 'period': 'único', 'icon': 'fa-tachometer-alt',
+            'image': 'https://source.unsplash.com/640x640/?speedmeter,seo,performance&sig=15',
+            'description': (
+                'Optimización de Core Web Vitals, caché, minificación, '
+                'imágenes y bases de SEO on-page para mejorar '
+                'posicionamiento.'
+            ),
             'features': [
                 'Cache + minificación', 'Optimización de imágenes', 'SEO on-page básico'
             ]
         },
         'soporte-mensual': {
             'title': 'Soporte Mensual (WordPress)', 'price': 180000, 'period': 'mes', 'icon': 'fa-life-ring',
+            'image': 'https://source.unsplash.com/640x640/?support,helpdesk,customer-service&sig=16',
+            'description': (
+                'Mantenimiento preventivo y correctivo, monitoreo constante y '
+                'horas de mejora para mantener tu sitio estable y '
+                'actualizado.'
+            ),
             'features': [
                 'Actualizaciones core/plugins', 'Monitoreo uptime', 'Horas de soporte incluidas'
             ]
