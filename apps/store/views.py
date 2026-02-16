@@ -7,7 +7,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -15,6 +15,18 @@ from django.views.decorators.http import require_POST
 from .models import Product, Order, OrderItem
 
 logger = logging.getLogger(__name__)
+
+
+# Slugs de planes digitales (no generan costo de envío)
+DIGITAL_PLAN_SLUGS = {
+    'presencia-web', 'corporativo', 'e-commerce', 'empresarial',
+    'hosting-basico', 'hosting-pro', 'email-profesional', 'cloud-empresarial',
+    'seo-starter', 'social-media', 'google-ads', 'marketing-360',
+    'e-commerce-basico', 'e-commerce-pro', 'e-commerce-avanzado',
+    'marketplace',
+    'instalacion-basica', 'seguridad-backup', 'velocidad-seo',
+    'soporte-mensual',
+}
 
 
 def _get_next_order_number():
@@ -115,9 +127,17 @@ def checkout(request):
 
         if not name or not email or not phone or not document:
             return JsonResponse(
-                {'error': 'Nombre, email, teléfono y documento son requeridos'},
+                {'error': 'Nombre, email, teléfono y documento requeridos'},
                 status=400
             )
+
+        # Determine if all items are digital plans
+        all_digital = True
+        for it in cart_items:
+            slug_val = str(it.get('id', '')).strip()
+            if slug_val not in DIGITAL_PLAN_SLUGS:
+                all_digital = False
+                break
 
         # Create order
         order = Order(
@@ -133,7 +153,7 @@ def checkout(request):
             customer_document=document,
             status='pending',
             payment_status='pending',
-            shipping_cost=Decimal('12000'),
+            shipping_cost=Decimal('0') if all_digital else Decimal('12000'),
         )
         if request.user.is_authenticated:
             order.created_by = request.user
@@ -216,6 +236,7 @@ def checkout(request):
         'countries': countries,
         'iso_map': iso_map,
         'prefill': prefill,
+        'digital_plan_slugs': sorted(list(DIGITAL_PLAN_SLUGS)),
     })
 
 

@@ -10,6 +10,7 @@ dv = dashboard_views
 urlpatterns = [
     # ── Sitio público ──
     path('', views.home, name='home'),
+    path('planes/<slug:slug>/', views.plan_detail, name='plan_detail'),
     path('servicios/', views.services, name='services'),
     path('servicios/<slug:slug>/', views.service_detail, name='service_detail'),
     path('cotizar/', views.quote_request, name='quote_request'),

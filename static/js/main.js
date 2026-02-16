@@ -31,6 +31,28 @@
             });
             initMobileHaptics();
         }
+
+        // Transform plan CTAs: replace "Lo quiero" (/cotizar/) with "Ver detalles" (/planes/<slug>/)
+        (function transformPlanCTAs(){
+            function slugify(s){
+                try { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+                catch(e){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+            }
+            var containers = document.querySelectorAll('#planes, #wordpress');
+            if (!containers.length) return;
+            containers.forEach(function(root){
+                root.querySelectorAll('a[href="/cotizar/"]')
+                    .forEach(function(a){
+                        var card = a.closest('.p-7');
+                        if (!card) return;
+                        var h3 = card.querySelector('h3');
+                        if (!h3) return;
+                        var slug = slugify(h3.textContent.trim());
+                        a.setAttribute('href', '/planes/' + slug + '/');
+                        a.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver detalles';
+                    });
+            });
+        })();
     });
 
     // ── Smooth Scroll ──────────────────────────────────────────────

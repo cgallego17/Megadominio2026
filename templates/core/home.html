@@ -243,8 +243,740 @@
     </div>
 </section>
 
+<!-- Planes Section -->
+<section id="planes" class="py-20 bg-white relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute top-20 left-0 w-80 h-80 bg-red-50 rounded-full opacity-30 blur-3xl" data-parallax-speed="0.15"></div>
+    <div class="absolute bottom-10 right-0 w-80 h-80 bg-orange-50 rounded-full opacity-25 blur-3xl" data-parallax-speed="0.2"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fas fa-tags mr-2 text-red-600"></i>Planes Todo-en-Uno
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Tu presencia digital <span class="text-red-600">completa</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Hosting + Dominio + SSL + Correos corporativos. Todo lo que necesitas en un solo plan.
+            </p>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex justify-center mb-12">
+            <div class="inline-flex bg-gray-100 rounded-xl p-1.5 gap-1" id="plan-tabs">
+                <button data-tab="web" class="plan-tab active px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 bg-white text-gray-900 shadow-sm">
+                    <i class="fas fa-globe mr-2"></i>Páginas Web
+                </button>
+                <button data-tab="hosting" class="plan-tab px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-server mr-2"></i>Hosting & Email
+                </button>
+                <button data-tab="ecommerce" class="plan-tab px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-shopping-basket mr-2"></i>E-commerce
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ TAB: Páginas Web ═══ -->
+        <div id="plans-web" class="plans-panel">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Plan: Presencia Web -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.08">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-file-alt text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Presencia Web</h3>
+                        <p class="text-sm text-gray-500 mb-4">Ideal para emprendedores</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$350.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Landing page de <strong>1 página</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Hosting 5 GB SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong>.com</strong> incluido</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL gratis</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>2 cuentas de correo corporativo</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Diseño responsive</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: Corporativo (Popular) -->
+                <div class="group relative bg-gray-900 rounded-2xl shadow-2xl hover:shadow-[0_25px_60px_rgba(220,38,38,0.3)] transition-all duration-300 border-2 border-red-600 overflow-hidden transform hover:-translate-y-2 lg:scale-105" data-parallax-card data-parallax-speed="0.09">
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
+                            <i class="fas fa-fire mr-1"></i>Más popular
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center mb-5">
+                            <i class="fas fa-building text-2xl text-red-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">Corporativo</h3>
+                        <p class="text-sm text-gray-400 mb-4">Para empresas en crecimiento</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-white">$750.000</span>
+                                <span class="text-gray-400 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-300">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Página corporativa <strong class="text-white">hasta 5 secciones</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Hosting 20 GB SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong class="text-white">.com</strong> incluido</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL gratis</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong class="text-white">10</strong> cuentas de correo corporativo</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>SEO básico + Google Analytics</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Formulario de contacto</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-600/30">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: E-Commerce -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.10">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-shopping-cart text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">E-Commerce</h3>
+                        <p class="text-sm text-gray-500 mb-4">Vende online profesionalmente</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$1.200.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Tienda online <strong>hasta 50 productos</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Hosting 40 GB SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong>.com</strong> incluido</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL gratis</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>20</strong> cuentas de correo corporativo</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Pasarela de pagos integrada</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>SEO avanzado + Google Analytics</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: Empresarial -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2" data-parallax-card data-parallax-speed="0.11">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-city text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Empresarial</h3>
+                        <p class="text-sm text-gray-500 mb-4">Solución a medida para grandes empresas</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$2.500.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Sitio web <strong>a medida ilimitado</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Hosting 100 GB SSD + CDN</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong>.com + .co</strong> incluidos</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL premium</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Correos corporativos <strong>ilimitados</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>SEO + Marketing digital básico</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Soporte prioritario 24/7</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Backups diarios automáticos</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══ TAB: Hosting & Email ═══ -->
+        <div id="plans-hosting" class="plans-panel hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Plan: Hosting Básico -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-hdd text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Hosting Básico</h3>
+                        <p class="text-sm text-gray-500 mb-4">Para sitios pequeños</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$120.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>5 GB almacenamiento SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Ancho de banda <strong>ilimitado</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>1 sitio web</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL gratis</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Panel cPanel</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Backups semanales</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: Hosting Pro (Popular) -->
+                <div class="group relative bg-gray-900 rounded-2xl shadow-2xl hover:shadow-[0_25px_60px_rgba(220,38,38,0.3)] transition-all duration-300 border-2 border-red-600 overflow-hidden transform hover:-translate-y-2 lg:scale-105">
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
+                            <i class="fas fa-fire mr-1"></i>Más popular
+                        </div>
+                    </div>
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center mb-5">
+                            <i class="fas fa-server text-2xl text-red-500"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">Hosting Pro</h3>
+                        <p class="text-sm text-gray-400 mb-4">Para negocios en crecimiento</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-white">$250.000</span>
+                                <span class="text-gray-400 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-300">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong class="text-white">30 GB</strong> almacenamiento SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Ancho de banda <strong class="text-white">ilimitado</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong class="text-white">Sitios ilimitados</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Certificado SSL gratis</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Panel cPanel + Softaculous</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Backups diarios</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-red-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong class="text-white">.com gratis</strong> 1er año</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-600/30">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: Email Profesional -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-envelope-open-text text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Email Profesional</h3>
+                        <p class="text-sm text-gray-500 mb-4">Correo con tu dominio</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$180.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>5</strong> cuentas de correo</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>5 GB por buzón</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Webmail + IMAP/POP3/SMTP</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Antispam y antivirus</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Compatible con Outlook y Gmail</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong>.com</strong> incluido</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plan: Hosting + Email Empresarial -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-cloud text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Cloud Empresarial</h3>
+                        <p class="text-sm text-gray-500 mb-4">Hosting + Email todo incluido</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$450.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>100 GB</strong> almacenamiento SSD</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Correos corporativos <strong>ilimitados</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Dominio <strong>.com + .co</strong> incluidos</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>SSL premium + CDN</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Backups diarios automáticos</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Soporte prioritario 24/7</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fas fa-check-circle text-green-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Servidor dedicado</span>
+                            </li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                            <i class="fas fa-rocket mr-2"></i>Lo quiero
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══ TAB: E-commerce ═══ -->
+        <div id="plans-ecommerce" class="plans-panel hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Plan: E-commerce Básico -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300">
+                            <i class="fas fa-store text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">E-commerce Básico</h3>
+                        <p class="text-sm text-gray-500 mb-4">Ideal para empezar a vender</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$900.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Tienda <strong>hasta 20 productos</strong></span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Pasarela de pagos integrada</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Dominio .com + SSL</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Hosting 20 GB SSD</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>3 cuentas de correo</span></li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300"><i class="fas fa-rocket mr-2"></i>Lo quiero</a>
+                    </div>
+                </div>
+
+                <!-- Plan: E-commerce Pro (Popular) -->
+                <div class="group relative bg-gray-900 rounded-2xl shadow-2xl hover:shadow-[0_25px_60px_rgba(220,38,38,0.3)] transition-all duration-300 border-2 border-red-600 overflow-hidden transform hover:-translate-y-2 lg:scale-105">
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl"><i class="fas fa-fire mr-1"></i>Más popular</div>
+                    </div>
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center mb-5"><i class="fas fa-shopping-basket text-2xl text-red-500"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-1">E-commerce Pro</h3>
+                        <p class="text-sm text-gray-400 mb-4">Para crecer en ventas</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-white">$1.300.000</span>
+                                <span class="text-gray-400 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-300">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-red-500 mt-0.5"></i><span>Tienda <strong class="text-white">hasta 200 productos</strong></span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-red-500 mt-0.5"></i><span>Variantes (talla, color)</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-red-500 mt-0.5"></i><span>Pasarela de pagos + envíos</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-red-500 mt-0.5"></i><span>Integración WhatsApp</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-red-500 mt-0.5"></i><span>SEO y analítica básica</span></li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-600/30"><i class="fas fa-rocket mr-2"></i>Lo quiero</a>
+                    </div>
+                </div>
+
+                <!-- Plan: E-commerce Avanzado -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300"><i class="fas fa-boxes-stacked text-2xl text-red-600"></i></div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">E-commerce Avanzado</h3>
+                        <p class="text-sm text-gray-500 mb-4">Catálogo grande y automatizaciones</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$2.100.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Catálogo <strong>ilimitado</strong></span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Integraciones (ERP/CRM)</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Carrito abandonado + email mkt</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Google Merchant Center</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>SEO avanzado + performance</span></li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300"><i class="fas fa-rocket mr-2"></i>Lo quiero</a>
+                    </div>
+                </div>
+
+                <!-- Plan: Marketplace -->
+                <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden transform hover:-translate-y-2">
+                    <div class="p-7">
+                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition-all duration-300"><i class="fas fa-people-carry-box text-2xl text-red-600"></i></div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Marketplace</h3>
+                        <p class="text-sm text-gray-500 mb-4">Varios vendedores, comisiones</p>
+                        <div class="mb-5">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-extrabold text-gray-900">$3.800.000</span>
+                                <span class="text-gray-500 text-sm font-medium">/año</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Múltiples vendedores</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Comisiones y liquidaciones</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Onboarding y KYC</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Logística y envíos integrados</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Panel para vendedores</span></li>
+                        </ul>
+                        <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300"><i class="fas fa-rocket mr-2"></i>Lo quiero</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Note -->
+        <div class="text-center mt-10">
+            <p class="text-gray-500 text-sm">
+                <i class="fas fa-info-circle mr-1"></i>
+                Todos los planes incluyen soporte técnico, panel de administración y migración gratuita. Precios en COP.
+                <br class="hidden sm:block">
+                ¿Necesitas algo personalizado? <a href="{% url 'core:quote_request' %}" class="text-red-600 font-semibold hover:underline">Cotiza gratis</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Plans Tab JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var tabs = document.querySelectorAll('.plan-tab');
+    var panels = document.querySelectorAll('.plans-panel');
+    if(tabs.length){
+        tabs.forEach(function(tab){
+            tab.addEventListener('click', function(){
+                var target = this.getAttribute('data-tab');
+                tabs.forEach(function(t){
+                    t.classList.remove('active','bg-white','text-gray-900','shadow-sm');
+                    t.classList.add('text-gray-500');
+                });
+                this.classList.add('active','bg-white','text-gray-900','shadow-sm');
+                this.classList.remove('text-gray-500');
+                panels.forEach(function(p){ p.classList.add('hidden'); });
+                var el = document.getElementById('plans-'+target);
+                if(el) el.classList.remove('hidden');
+            });
+        });
+    }
+
+    function slugify(s){
+        try { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+        catch(e){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+    }
+
+    function enhanceCards(selector){
+        document.querySelectorAll(selector).forEach(function(card){
+            if (card.querySelector('.plans-add-to-cart')) return;
+            var titleEl = card.querySelector('h3');
+            var priceEl = card.querySelector('.text-4xl');
+            if (!titleEl || !priceEl) return;
+
+            var name = titleEl.textContent.trim();
+            var priceText = (priceEl.textContent || '').replace(/[^0-9]/g,'');
+            var price = parseInt(priceText, 10) || 0;
+
+            var icon = 'fa-tag';
+            var iconEl = card.querySelector('.w-14 i');
+            if (iconEl) {
+                var cls = Array.prototype.slice.call(iconEl.classList).find(function(c){ return c.indexOf('fa-') === 0; });
+                if (cls) icon = cls;
+            }
+
+            var id = card.getAttribute('data-id') || slugify(name);
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'plans-add-to-cart inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-300 mt-2';
+            btn.innerHTML = '<i class="fas fa-cart-plus mr-2"></i>Agregar al carrito';
+            btn.addEventListener('click', function(){
+                try { window.storeCart.addItem(id, name, price, icon, ''); } catch(e) {}
+                var fab = document.getElementById('store-fab');
+                var badge = document.getElementById('store-fab-badge');
+                if (fab) {
+                    fab.classList.remove('bounce');
+                    void fab.offsetWidth;
+                    fab.classList.add('bounce');
+                    setTimeout(function(){ fab.classList.remove('bounce'); }, 1200);
+                }
+                if (badge) { badge.classList.add('show'); }
+                var original = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i>Agregado';
+                setTimeout(function(){ btn.disabled = false; btn.innerHTML = original; }, 1200);
+            });
+
+            card.appendChild(btn);
+
+            var btnBuy = document.createElement('button');
+            btnBuy.type = 'button';
+            btnBuy.className = 'plans-buy-now inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold border-2 border-gray-700 text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 mt-2';
+            btnBuy.innerHTML = '<i class="fas fa-bolt mr-2"></i>Comprar ahora';
+            btnBuy.addEventListener('click', function(){
+                try { window.storeCart.addItem(id, name, price, icon, ''); } catch(e) {}
+                window.location.href = '/tienda/checkout/';
+            });
+
+            card.appendChild(btnBuy);
+        });
+    }
+
+    enhanceCards('#planes .plans-panel .group .p-7');
+    enhanceCards('#wordpress .group.p-7, #wordpress .group .p-7');
+});
+</script>
+
+<section id="wordpress" class="py-20 bg-white relative overflow-hidden">
+    <div class="absolute top-16 right-0 w-80 h-80 bg-red-50 rounded-full opacity-30 blur-3xl" data-parallax-speed="0.15"></div>
+    <div class="absolute bottom-10 left-0 w-80 h-80 bg-orange-50 rounded-full opacity-25 blur-3xl" data-parallax-speed="0.2"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fab fa-wordpress-simple mr-2 text-red-600"></i>Soporte e Instalación WordPress
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Despliega tu sitio <span class="text-red-600">WordPress</span> con expertos
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Instalación, optimización, seguridad y soporte continuo para tu WordPress.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 p-7 transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition"><i class="fas fa-download text-2xl text-red-600"></i></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-1">Instalación Básica</h3>
+                <p class="text-sm text-gray-500 mb-4">WordPress listo para usar</p>
+                <div class="mb-5"><span class="text-4xl font-extrabold text-gray-900">$150.000</span></div>
+                <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Instalación en hosting</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Base de datos y configuración</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Tema ligero preconfigurado</span></li>
+                </ul>
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition">Lo quiero</a>
+            </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 p-7 transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition"><i class="fas fa-shield-alt text-2xl text-red-600"></i></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-1">Seguridad & Backup</h3>
+                <p class="text-sm text-gray-500 mb-4">Protege tu sitio</p>
+                <div class="mb-5"><span class="text-4xl font-extrabold text-gray-900">$220.000</span></div>
+                <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Firewall + anti-spam</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Backups automáticos</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Certificado SSL</span></li>
+                </ul>
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition">Lo quiero</a>
+            </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 p-7 transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition"><i class="fas fa-tachometer-alt text-2xl text-red-600"></i></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-1">Velocidad & SEO</h3>
+                <p class="text-sm text-gray-500 mb-4">Optimiza tu rendimiento</p>
+                <div class="mb-5"><span class="text-4xl font-extrabold text-gray-900">$260.000</span></div>
+                <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Cache + minificación</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Optimización de imágenes</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>SEO on-page básico</span></li>
+                </ul>
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition">Lo quiero</a>
+            </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 p-7 transform hover:-translate-y-2">
+                <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-50 transition"><i class="fas fa-life-ring text-2xl text-red-600"></i></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-1">Soporte Mensual</h3>
+                <p class="text-sm text-gray-500 mb-4">Mantenimiento continuo</p>
+                <div class="mb-5"><span class="text-4xl font-extrabold text-gray-900">$180.000</span><span class="text-gray-500 text-sm font-medium">/mes</span></div>
+                <ul class="space-y-3 mb-7 text-sm text-gray-600">
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Actualizaciones core/plugins</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Monitoreo uptime</span></li>
+                    <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-500 mt-0.5"></i><span>Horas de soporte incluidas</span></li>
+                </ul>
+                <a href="{% url 'core:quote_request' %}" class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition">Lo quiero</a>
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <p class="text-gray-500 text-sm">
+                ¿Necesitas una configuración especial? <a href="{% url 'core:quote_request' %}" class="text-red-600 font-semibold hover:underline">Cotiza tu WordPress</a>
+            </p>
+        </div>
+    </div>
+</section>
+
 <!-- Benefits Section -->
-<section class="py-20 bg-white relative overflow-hidden">
+<section class="py-20 bg-gray-50 relative overflow-hidden">
     <!-- Background Decoration -->
     <div class="absolute top-10 left-10 w-80 h-80 bg-red-50 rounded-full opacity-30 blur-3xl" data-parallax-speed="0.2"></div>
     <div class="absolute bottom-10 right-10 w-80 h-80 bg-orange-50 rounded-full opacity-25 blur-3xl" data-parallax-speed="0.15"></div>

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ plan.title }} - {{ site_name }}{% endblock %}
+{% block meta_description %}Detalle del plan {{ plan.title }} de {{ site_name }}. Incluye características, precio y opciones de compra.{% endblock %}
+
+{% block main_class %}pt-16{% endblock %}
+
+{% block content %}
+<section class="relative bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden py-16">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="mb-8">
+      <a href="javascript:history.back()" class="text-sm text-gray-400 hover:text-red-400 transition inline-flex items-center gap-2">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+    </div>
+
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-7 shadow-xl">
+      <div class="flex items-start gap-5 mb-6">
+        <div class="w-16 h-16 rounded-xl bg-red-600/20 text-red-400 flex items-center justify-center flex-shrink-0">
+          <i class="fas {{ plan.icon|default:'fa-tag' }} text-2xl"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h1 class="text-3xl md:text-4xl font-extrabold mb-1">{{ plan.title }}</h1>
+          <p class="text-gray-400 text-sm">Plan digital de {{ site_name }}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <div class="md:col-span-2">
+          <h2 class="text-xl font-bold mb-3">¿Qué incluye?</h2>
+          <ul class="space-y-3 text-gray-300">
+            {% for f in plan.features %}
+            <li class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-green-500 mt-0.5"></i>
+              <span>{{ f }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <aside class="bg-gray-800/60 border border-gray-700 rounded-2xl p-5">
+          <p class="text-gray-400 text-sm mb-1">Precio</p>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-4xl font-extrabold">${{ plan.price|intcomma }}</span>
+            {% if plan.period %}
+            <span class="text-gray-400 text-sm font-semibold">/ {{ plan.period }}</span>
+            {% endif %}
+          </div>
+          <div class="space-y-2">
+            <button id="plan-add-to-cart" class="w-full px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition inline-flex items-center justify-center">
+              <i class="fas fa-cart-plus mr-2"></i> Agregar al carrito
+            </button>
+            <button id="plan-buy-now" class="w-full px-5 py-3 border-2 border-gray-700 text-white bg-gray-800 hover:bg-gray-700 font-bold rounded-lg transition inline-flex items-center justify-center">
+              <i class="fas fa-bolt mr-2"></i> Comprar ahora
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 mt-3">Este es un producto digital. Envío: $0</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var btnAdd = document.getElementById('plan-add-to-cart');
+  var btnBuy = document.getElementById('plan-buy-now');
+  if (!btnAdd || !btnBuy) return;
+  var id = '{{ slug }}';
+  var name = '{{ plan.title|escapejs }}';
+  var price = {{ plan.price|default:0 }};
+  var icon = '{{ plan.icon|default:"fa-tag" }}';
+
+  function add(){ try { window.storeCart.addItem(id, name, price, icon, ''); } catch(e) {} }
+
+  btnAdd.addEventListener('click', function(){
+    add();
+    var fab = document.getElementById('store-fab');
+    var badge = document.getElementById('store-fab-badge');
+    if (fab) { fab.classList.remove('bounce'); void fab.offsetWidth; fab.classList.add('bounce'); setTimeout(function(){ fab.classList.remove('bounce'); }, 1200); }
+    if (badge) { badge.classList.add('show'); }
+    var original = btnAdd.innerHTML; btnAdd.disabled = true; btnAdd.innerHTML = '<i class="fas fa-check mr-2"></i> Agregado';
+    setTimeout(function(){ btnAdd.disabled = false; btnAdd.innerHTML = original; }, 1200);
+  });
+
+  btnBuy.addEventListener('click', function(){ add(); window.location.href = '/tienda/checkout/'; });
+})();
+</script>
+{% endblock %}

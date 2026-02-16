@@ -149,6 +149,135 @@ def store(request):
     })
 
 
+def plan_detail(request, slug):
+    """
+    Página de detalle para planes (web, hosting, e-commerce, wordpress, etc.).
+    """
+    plans = {
+        # Web
+        'presencia-web': {
+            'title': 'Presencia Web', 'price': 350000, 'period': 'año', 'icon': 'fa-file-alt',
+            'features': [
+                'Landing page de 1 página', 'Hosting 5 GB SSD', 'Dominio .com incluido',
+                'Certificado SSL', '2 cuentas de correo', 'Diseño responsive'
+            ]
+        },
+        'corporativo': {
+            'title': 'Corporativo', 'price': 750000, 'period': 'año', 'icon': 'fa-building',
+            'features': [
+                'Hasta 5 secciones', 'Hosting 20 GB SSD', 'Dominio .com incluido',
+                'SSL gratis', '10 correos corporativos', 'SEO básico + Analytics', 'Formulario de contacto'
+            ]
+        },
+        'e-commerce': {
+            'title': 'E-Commerce', 'price': 1200000, 'period': 'año', 'icon': 'fa-shopping-cart',
+            'features': [
+                'Hasta 50 productos', 'Hosting 40 GB SSD', 'Dominio .com incluido',
+                'SSL gratis', '20 correos', 'Pasarela de pagos', 'SEO avanzado + Analytics'
+            ]
+        },
+        'empresarial': {
+            'title': 'Empresarial', 'price': 2500000, 'period': 'año', 'icon': 'fa-city',
+            'features': [
+                'Sitio a medida ilimitado', 'Hosting 100 GB SSD + CDN', 'Dominio .com + .co',
+                'SSL premium', 'Correos ilimitados', 'SEO + Marketing básico', 'Soporte 24/7', 'Backups diarios'
+            ]
+        },
+        # Hosting & Email
+        'hosting-basico': {
+            'title': 'Hosting Básico', 'price': 120000, 'period': 'año', 'icon': 'fa-hdd',
+            'features': [
+                '5 GB SSD', 'Ancho de banda ilimitado', '1 sitio web', 'SSL gratis', 'cPanel', 'Backups semanales'
+            ]
+        },
+        'hosting-pro': {
+            'title': 'Hosting Pro', 'price': 250000, 'period': 'año', 'icon': 'fa-server',
+            'features': [
+                '30 GB SSD', 'Ancho de banda ilimitado', 'Sitios ilimitados', 'SSL gratis',
+                'cPanel + Softaculous', 'Backups diarios', 'Dominio .com 1er año'
+            ]
+        },
+        'email-profesional': {
+            'title': 'Email Profesional', 'price': 180000, 'period': 'año', 'icon': 'fa-envelope-open-text',
+            'features': [
+                '5 cuentas de correo', '5 GB por buzón', 'Webmail + IMAP/POP3/SMTP',
+                'Antispam y antivirus', 'Compatible Outlook/Gmail', 'Dominio .com incluido'
+            ]
+        },
+        'cloud-empresarial': {
+            'title': 'Cloud Empresarial', 'price': 450000, 'period': 'año', 'icon': 'fa-cloud',
+            'features': [
+                '100 GB SSD', 'Correos ilimitados', 'Dominio .com + .co', 'SSL premium + CDN',
+                'Backups diarios', 'Soporte prioritario 24/7', 'Servidor dedicado'
+            ]
+        },
+        # E-commerce
+        'e-commerce-basico': {
+            'title': 'E-commerce Básico', 'price': 900000, 'period': 'año', 'icon': 'fa-store',
+            'features': [
+                'Hasta 20 productos', 'Pasarela de pagos', 'Dominio .com + SSL', 'Hosting 20 GB SSD',
+                '3 cuentas de correo'
+            ]
+        },
+        'e-commerce-pro': {
+            'title': 'E-commerce Pro', 'price': 1300000, 'period': 'año', 'icon': 'fa-shopping-basket',
+            'features': [
+                'Hasta 200 productos', 'Variantes (talla/color)', 'Pagos + envíos', 'Integración WhatsApp',
+                'SEO y analítica básica'
+            ]
+        },
+        'e-commerce-avanzado': {
+            'title': 'E-commerce Avanzado', 'price': 2100000, 'period': 'año', 'icon': 'fa-boxes-stacked',
+            'features': [
+                'Catálogo ilimitado', 'Integraciones ERP/CRM', 'Carrito abandonado + email mkt',
+                'Google Merchant Center', 'SEO avanzado + performance'
+            ]
+        },
+        'marketplace': {
+            'title': 'Marketplace', 'price': 3800000, 'period': 'año', 'icon': 'fa-people-carry-box',
+            'features': [
+                'Múltiples vendedores', 'Comisiones y liquidaciones', 'Onboarding y KYC',
+                'Logística y envíos integrados', 'Panel para vendedores'
+            ]
+        },
+        # WordPress
+        'instalacion-basica': {
+            'title': 'Instalación Básica (WordPress)', 'price': 150000, 'period': 'único', 'icon': 'fa-download',
+            'features': [
+                'Instalación en hosting', 'Base de datos y configuración', 'Tema ligero preconfigurado'
+            ]
+        },
+        'seguridad-backup': {
+            'title': 'Seguridad & Backup (WordPress)', 'price': 220000, 'period': 'único', 'icon': 'fa-shield-alt',
+            'features': [
+                'Firewall + anti-spam', 'Backups automáticos', 'Certificado SSL'
+            ]
+        },
+        'velocidad-seo': {
+            'title': 'Velocidad & SEO (WordPress)', 'price': 260000, 'period': 'único', 'icon': 'fa-tachometer-alt',
+            'features': [
+                'Cache + minificación', 'Optimización de imágenes', 'SEO on-page básico'
+            ]
+        },
+        'soporte-mensual': {
+            'title': 'Soporte Mensual (WordPress)', 'price': 180000, 'period': 'mes', 'icon': 'fa-life-ring',
+            'features': [
+                'Actualizaciones core/plugins', 'Monitoreo uptime', 'Horas de soporte incluidas'
+            ]
+        },
+    }
+
+    plan = plans.get(slug)
+    if not plan:
+        from django.http import Http404
+        raise Http404('Plan no encontrado')
+
+    context = {
+        'slug': slug,
+        'plan': plan,
+    }
+    return render(request, 'core/plan_detail.html', context)
+
 def product_detail(request, slug):
     """
     Detalle de un producto de la tienda

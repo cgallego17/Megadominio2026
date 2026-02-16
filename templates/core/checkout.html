@@ -44,7 +44,7 @@
 
                 <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
                     <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                        <i class="fas fa-user text-red-500"></i> Datos de envío
+                        <i class="fas fa-user text-red-500"></i> <span id="checkout-section-title">Datos de envío</span>
                         {% if user.is_authenticated %}
                         <span class="ml-auto text-xs font-normal text-green-400 bg-green-500/10 px-2.5 py-1 rounded-lg">
                             <i class="fas fa-check-circle mr-1"></i>{{ user.get_full_name|default:user.username }}
@@ -181,6 +181,7 @@
 (function() {
     var CART_KEY = 'megadominio_store_cart';
     var WOMPI_PUBLIC_KEY = '{{ wompi_public_key }}';
+    var DIGITAL_PLAN_SLUGS = {{ digital_plan_slugs|safe }};
 
     function getCart() {
         try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
@@ -218,10 +219,40 @@
         itemsEl.appendChild(div);
     });
 
-    var shipping = 12000;
+    var allDigital = Array.isArray(cart) && cart.length > 0 && cart.every(function(it){ return DIGITAL_PLAN_SLUGS.indexOf(it.id) !== -1; });
+    var shipping = allDigital ? 0 : 12000;
+    var displayedShipping = document.getElementById('summary-shipping');
+    if (displayedShipping) {
+        displayedShipping.textContent = '$' + shipping.toLocaleString();
+    }
     subtotalEl.textContent = '$' + total.toLocaleString();
     totalEl.textContent = '$' + (total + shipping).toLocaleString();
     payBtnTotal.textContent = '— $' + (total + shipping).toLocaleString();
+
+    if (allDigital) {
+        var titleEl = document.getElementById('checkout-section-title');
+        if (titleEl) titleEl.textContent = 'Datos de facturación';
+        var countryEl = document.getElementById('c-country');
+        var stateEl = document.getElementById('c-state');
+        var cityEl = document.getElementById('c-city');
+        var addressEl = document.getElementById('c-address');
+
+        function hideField(el){
+            if (!el) return;
+            el.removeAttribute('required');
+            el.disabled = true;
+            var wrap = el.closest('div');
+            if (wrap) wrap.style.display = 'none';
+        }
+        hideField(countryEl);
+        hideField(stateEl);
+        hideField(cityEl);
+        hideField(addressEl);
+
+        if (displayedShipping && displayedShipping.parentElement) {
+            displayedShipping.parentElement.style.display = 'none';
+        }
+    }
 
     // Form submit
     var form = document.getElementById('checkout-form');
