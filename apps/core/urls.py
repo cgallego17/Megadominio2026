@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views
 from . import dashboard_views
 from . import panel_views as pv
@@ -16,7 +17,8 @@ urlpatterns = [
     path('cotizar/', views.quote_request, name='quote_request'),
     path('cotizar/<int:service_id>/', views.quote_request, name='quote_request_service'),
     path('cotizacion-enviada/<int:quote_id>/', views.quote_success, name='quote_success'),
-    path('about/', views.about, name='about'),
+    path('nosotros/', views.about, name='about'),
+    path('about/', RedirectView.as_view(pattern_name='core:about', permanent=True)),
     path('contact/', views.contact, name='contact'),
     path('tienda/', views.store, name='store'),
     path('tienda/<slug:slug>/', views.product_detail, name='product_detail'),
@@ -26,6 +28,47 @@ urlpatterns = [
 
     # ── Dashboard principal ──
     path('dashboard/', views.dashboard, name='dashboard'),
+    # Home content management
+    path(
+        'dashboard/home/logos/',
+        dv.dashboard_home_logos,
+        name='dashboard_home_logos'
+    ),
+    path(
+        'dashboard/home/logos/nuevo/',
+        dv.dashboard_home_logo_create,
+        name='dashboard_home_logo_create'
+    ),
+    path(
+        'dashboard/home/logos/<int:pk>/',
+        dv.dashboard_home_logo_edit,
+        name='dashboard_home_logo_edit'
+    ),
+    path(
+        'dashboard/home/logos/<int:pk>/eliminar/',
+        dv.dashboard_home_logo_delete,
+        name='dashboard_home_logo_delete'
+    ),
+    path(
+        'dashboard/home/testimonios/',
+        dv.dashboard_home_testimonials,
+        name='dashboard_home_testimonials'
+    ),
+    path(
+        'dashboard/home/testimonios/nuevo/',
+        dv.dashboard_home_testimonial_create,
+        name='dashboard_home_testimonial_create'
+    ),
+    path(
+        'dashboard/home/testimonios/<int:pk>/',
+        dv.dashboard_home_testimonial_edit,
+        name='dashboard_home_testimonial_edit'
+    ),
+    path(
+        'dashboard/home/testimonios/<int:pk>/eliminar/',
+        dv.dashboard_home_testimonial_delete,
+        name='dashboard_home_testimonial_delete'
+    ),
 
     # ── Clientes CRUD ──
     path('dashboard/clientes/', dv.dashboard_clients, name='dashboard_clients'),

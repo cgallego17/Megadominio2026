@@ -73,6 +73,14 @@
                     <i class="fas fa-link"></i> Servicios de clientes
                 </a>
 
+                <p class="dash-section-title mt-4">Contenido</p>
+                <a href="{% url 'core:dashboard_home_logos' %}" class="dash-link {% if '/dashboard/home/logos' in request.path %}active{% endif %}">
+                    <i class="fas fa-handshake"></i> Logos (Home)
+                </a>
+                <a href="{% url 'core:dashboard_home_testimonials' %}" class="dash-link {% if '/dashboard/home/testimonios' in request.path %}active{% endif %}">
+                    <i class="fas fa-comment-dots"></i> Testimonios (Home)
+                </a>
+
                 <p class="dash-section-title mt-4">Tienda</p>
                 <a href="{% url 'core:dashboard_products' %}" class="dash-link {% if '/dashboard/productos' in request.path and '/categorias' not in request.path %}active{% endif %}">
                     <i class="fas fa-box-open"></i> Productos

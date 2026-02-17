@@ -243,6 +243,77 @@
     </div>
 </section>
 
+<section class="py-20 bg-slate-900 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="text-xs tracking-[0.35em] text-white/80 font-semibold uppercase">Confían en nosotros</h2>
+            <div class="w-16 h-1 bg-red-600 mx-auto rounded-full mt-3"></div>
+        </div>
+        {% if logos %}
+        <style>
+            .sponsor-grid .sponsor-img { height: 40px; width: auto; object-fit: contain; opacity: .95; transition: opacity .2s ease; }
+            @media (min-width: 768px) { .sponsor-grid .sponsor-img { height: 48px; } }
+            @media (min-width: 1024px) { .sponsor-grid .sponsor-img { height: 56px; } }
+            .sponsor-grid .sponsor-logo:hover .sponsor-img { opacity: 1; }
+        </style>
+        <div class="sponsor-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-14 gap-y-10 justify-items-center items-center">
+            {% for l in logos %}
+            <div class="sponsor-logo flex items-center justify-center">
+                {% if l.url %}<a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.name }} (abre en nueva pestaña)">{% endif %}
+                {% if l.image %}
+                    <img src="{{ l.image.url }}" alt="{{ l.name }}" class="sponsor-img" loading="lazy" decoding="async">
+                {% else %}
+                    <span class="text-white/80 font-semibold">{{ l.name }}</span>
+                {% endif %}
+                {% if l.url %}</a>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="text-center mt-10">
+            <a href="{% url 'core:contact' %}" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300">
+                <i class="fas fa-comments mr-2"></i> Conversemos sobre tu proyecto
+            </a>
+        </div>
+    </div>
+</section>
+
+{% if testimonials %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold inline-block mb-4">
+                <i class="fas fa-star mr-2 text-yellow-500"></i>Testimonios
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3">Lo que dicen nuestros clientes</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Resultados reales, relaciones de largo plazo y proyectos que impulsan el crecimiento.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for t in testimonials %}
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8">
+                <div class="flex items-center mb-4">
+                    {% for _ in '12345' %}
+                        <i class="fas fa-star{% if forloop.counter > t.rating %} text-gray-300{% else %} text-yellow-500{% endif %}"></i>
+                    {% endfor %}
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-6">{{ t.comment }}</p>
+                <div class="flex items-center gap-4">
+                    {% if t.avatar %}
+                    <img src="{{ t.avatar.url }}" alt="{{ t.name }}" class="w-12 h-12 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold">{{ t.initials|default:t.name|slice:":2"|upper }}</div>
+                    {% endif %}
+                    <div>
+                        <div class="font-bold text-gray-900">{{ t.name }}</div>
+                        <div class="text-gray-500 text-sm">{{ t.role }}{% if t.company %}{% if t.role %}, {% endif %}{{ t.company }}{% endif %}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 <!-- Planes Section -->
 <section id="planes" class="py-20 bg-white relative overflow-hidden">
     <!-- Background Decoration -->

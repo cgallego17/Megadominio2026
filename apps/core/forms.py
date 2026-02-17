@@ -7,6 +7,7 @@ from apps.services.models import Service, ClientService
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.store.models import ProductCategory, Product, Order, OrderItem
+from .models import HomeClientLogo, HomeTestimonial
 
 User = get_user_model()
 
@@ -54,6 +55,57 @@ class ClientForm(forms.ModelForm):
             'is_active': forms.CheckboxInput(attrs=_checkbox),
         }
 
+
+# ══════════════════════════════════════════════════════════════════════
+# HOME: LOGOS DE CLIENTES Y TESTIMONIOS
+# ══════════════════════════════════════════════════════════════════════
+
+class HomeClientLogoForm(forms.ModelForm):
+    class Meta:
+        model = HomeClientLogo
+        fields = ['name', 'url', 'image', 'icon', 'order', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre de la marca'}),
+            'url': forms.URLInput(attrs={**_input, 'placeholder': 'https://www.ejemplo.com'}),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'w-full bg-gray-800 border border-gray-700 text-gray-100 text-sm rounded-lg px-3 py-2 focus:border-red-500 focus:ring-1 focus:ring-red-500 file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-600 file:text-white hover:file:bg-red-700',
+                'accept': 'image/*',
+            }),
+            'icon': forms.TextInput(attrs={**_input, 'placeholder': 'fa-rocket (si no hay imagen)'}),
+            'order': forms.NumberInput(attrs={**_number, 'step': '1', 'placeholder': '0', 'min': '0'}),
+            'is_active': forms.CheckboxInput(attrs=_checkbox),
+        }
+
+
+class HomeTestimonialForm(forms.ModelForm):
+    class Meta:
+        model = HomeTestimonial
+        fields = [
+            'name', 'role', 'company', 'initials', 'avatar',
+            'rating', 'comment', 'order', 'is_active'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre del cliente'}),
+            'role': forms.TextInput(attrs={**_input, 'placeholder': 'Cargo'}),
+            'company': forms.TextInput(attrs={**_input, 'placeholder': 'Empresa'}),
+            'initials': forms.TextInput(attrs={**_input, 'placeholder': 'Iniciales (p. ej. AM)'}),
+            'avatar': forms.ClearableFileInput(attrs={
+                'class': 'w-full bg-gray-800 border border-gray-700 text-gray-100 text-sm rounded-lg px-3 py-2 focus:border-red-500 focus:ring-1 focus:ring-red-500 file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-600 file:text-white hover:file:bg-red-700',
+                'accept': 'image/*',
+            }),
+            'rating': forms.NumberInput(attrs={**_number, 'step': '1', 'placeholder': '5', 'min': '1', 'max': '5'}),
+            'comment': forms.Textarea(attrs={**_textarea, 'placeholder': 'Comentario del cliente...'}),
+            'order': forms.NumberInput(attrs={**_number, 'step': '1', 'placeholder': '0', 'min': '0'}),
+            'is_active': forms.CheckboxInput(attrs=_checkbox),
+        }
+
+    def clean_rating(self):
+        r = self.cleaned_data.get('rating') or 5
+        if r < 1:
+            r = 1
+        if r > 5:
+            r = 5
+        return r
 
 # ══════════════════════════════════════════════════════════════════════
 # SERVICIOS

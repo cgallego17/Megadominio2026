@@ -887,6 +887,35 @@
     })();
     </script>
 
+    <style>
+        #whatsapp-fab { position: fixed; bottom: 96px; right: 24px; z-index: 996; display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; box-shadow: 0 8px 30px rgba(22, 163, 74, 0.45); transition: transform 0.3s, box-shadow 0.3s; }
+        #whatsapp-fab:hover { transform: scale(1.07); box-shadow: 0 12px 36px rgba(22, 163, 74, 0.55); }
+        #whatsapp-fab:active { transform: scale(0.93); }
+        #whatsapp-tip { position: fixed; right: 24px; bottom: 164px; z-index: 995; background: #064e3b; color: #ecfdf5; font-size: 12px; font-weight: 700; padding: 10px 12px; border-radius: 10px; box-shadow: 0 8px 24px rgba(6, 78, 59, 0.45); opacity: 0; transform: translateY(8px); transition: opacity 0.25s, transform 0.25s; pointer-events: none; white-space: nowrap; }
+        #whatsapp-tip.show { opacity: 1; transform: translateY(0); }
+    </style>
+
+    <a id="whatsapp-fab" href="https://wa.me/573244011967?text={{ 'Hola, vengo de la página: '|add:request.build_absolute_uri|urlencode }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <div id="whatsapp-tip">¿Necesitas ayuda? Escríbenos por WhatsApp</div>
+
+    <script>
+    (function(){
+        var a = document.getElementById('whatsapp-fab');
+        var tip = document.getElementById('whatsapp-tip');
+        if (!a || !tip) return;
+        function show(){ tip.classList.add('show'); }
+        function hide(){ tip.classList.remove('show'); }
+        a.addEventListener('mouseenter', show);
+        a.addEventListener('mouseleave', hide);
+        a.addEventListener('focus', show);
+        a.addEventListener('blur', hide);
+        a.addEventListener('click', function(){ if (navigator.vibrate) navigator.vibrate(12); });
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape') hide(); });
+    })();
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

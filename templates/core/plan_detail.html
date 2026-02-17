@@ -151,5 +151,16 @@
 
   btnBuy.addEventListener('click', function(){ add(); window.location.href = '/tienda/checkout/'; });
 })();
+
+(function(){
+  var wa = document.getElementById('whatsapp-fab');
+  if (!wa) return;
+  var base = 'https://wa.me/573244011967?';
+  var p1 = new URLSearchParams();
+  var msg = 'Hola, estoy interesado en el plan: {{ plan.title|escapejs }} - URL: ' + window.location.href;
+  p1.set('text', msg);
+  var p2 = new URLSearchParams({ utm_source: 'website', utm_medium: 'whatsapp_fab', utm_campaign: 'plan_detail', utm_content: '{{ slug }}' });
+  wa.href = base + p1.toString() + '&' + p2.toString();
+})();
 </script>
 {% endblock %}

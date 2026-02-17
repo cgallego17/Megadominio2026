@@ -21,7 +21,9 @@ from .forms import (
     UserForm, UserCreateForm,
     ProductCategoryForm, ProductForm,
     OrderForm, OrderItemFormSet,
+    HomeClientLogoForm, HomeTestimonialForm,
 )
+from .models import HomeClientLogo, HomeTestimonial
 
 User = get_user_model()
 
@@ -848,15 +850,147 @@ def dashboard_order_edit(request, pk):
             formset.save()
             order.calculate_totals()
             return redirect('core:dashboard_order_detail', pk=pk)
+
+
+# ============ HOME: LOGOS DE CLIENTES ============
+
+@login_required
+@dashboard_required
+def dashboard_home_logos(request):
+    logos = HomeClientLogo.objects.all().order_by('order', 'name')
+    return render(request, 'core/dashboard_list.html', {
+        'object_list': logos,
+        'title': 'Logos (Home)',
+        'create_url': 'core:dashboard_home_logo_create',
+        'detail_url': 'core:dashboard_home_logo_edit',
+        'empty_message': 'No hay logos registrados.',
+        'columns': [
+            ('name', 'Nombre'),
+            ('order', 'Orden'),
+            ('is_active', 'Activo'),
+        ],
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_logo_create(request):
+    if request.method == 'POST':
+        form = HomeClientLogoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('core:dashboard_home_logos')
     else:
-        form = OrderForm(instance=order)
-        formset = OrderItemFormSet(instance=order)
-    return render(request, 'core/dashboard_order_form.html', {
+        form = HomeClientLogoForm()
+    return render(request, 'core/dashboard_form.html', {
         'form': form,
-        'formset': formset,
-        'title': f'Editar Orden: {order.number}',
-        'back_url': 'core:dashboard_order_detail',
-        'back_pk': pk,
+        'title': 'Nuevo logo (Home)',
+        'back_url': 'core:dashboard_home_logos',
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_logo_edit(request, pk):
+    logo = get_object_or_404(HomeClientLogo, pk=pk)
+    if request.method == 'POST':
+        form = HomeClientLogoForm(request.POST, request.FILES, instance=logo)
+        if form.is_valid():
+            form.save()
+            return redirect('core:dashboard_home_logos')
+    else:
+        form = HomeClientLogoForm(instance=logo)
+    return render(request, 'core/dashboard_form.html', {
+        'form': form,
+        'title': f'Editar logo: {logo.name}',
+        'back_url': 'core:dashboard_home_logos',
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_logo_delete(request, pk):
+    logo = get_object_or_404(HomeClientLogo, pk=pk)
+    if request.method == 'POST':
+        logo.delete()
+        return redirect('core:dashboard_home_logos')
+    return render(request, 'core/dashboard_confirm_delete.html', {
+        'object': logo,
+        'object_name': logo.name,
+        'title': f'Eliminar logo: {logo.name}',
+        'list_url': 'core:dashboard_home_logos',
+    })
+
+
+# ============ HOME: TESTIMONIOS ============
+
+@login_required
+@dashboard_required
+def dashboard_home_testimonials(request):
+    testimonials = HomeTestimonial.objects.all().order_by('order', '-created_at')
+    return render(request, 'core/dashboard_list.html', {
+        'object_list': testimonials,
+        'title': 'Testimonios (Home)',
+        'create_url': 'core:dashboard_home_testimonial_create',
+        'detail_url': 'core:dashboard_home_testimonial_edit',
+        'empty_message': 'No hay testimonios registrados.',
+        'columns': [
+            ('name', 'Nombre'),
+            ('company', 'Empresa'),
+            ('rating', 'Rating'),
+            ('order', 'Orden'),
+            ('is_active', 'Activo'),
+        ],
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_testimonial_create(request):
+    if request.method == 'POST':
+        form = HomeTestimonialForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('core:dashboard_home_testimonials')
+    else:
+        form = HomeTestimonialForm()
+    return render(request, 'core/dashboard_form.html', {
+        'form': form,
+        'title': 'Nuevo testimonio (Home)',
+        'back_url': 'core:dashboard_home_testimonials',
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_testimonial_edit(request, pk):
+    t = get_object_or_404(HomeTestimonial, pk=pk)
+    if request.method == 'POST':
+        form = HomeTestimonialForm(request.POST, request.FILES, instance=t)
+        if form.is_valid():
+            form.save()
+            return redirect('core:dashboard_home_testimonials')
+    else:
+        form = HomeTestimonialForm(instance=t)
+    return render(request, 'core/dashboard_form.html', {
+        'form': form,
+        'title': f'Editar testimonio: {t.name}',
+        'back_url': 'core:dashboard_home_testimonials',
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_home_testimonial_delete(request, pk):
+    t = get_object_or_404(HomeTestimonial, pk=pk)
+    if request.method == 'POST':
+        t.delete()
+        return redirect('core:dashboard_home_testimonials')
+    return render(request, 'core/dashboard_confirm_delete.html', {
+        'object': t,
+        'object_name': t.name,
+        'title': f'Eliminar testimonio: {t.name}',
+        'list_url': 'core:dashboard_home_testimonials',
     })
 
 

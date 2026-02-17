@@ -9,6 +9,7 @@ from apps.clients.models import Client
 from apps.services.models import Service, ClientService
 from apps.accounts.models import User
 from apps.store.models import Product, ProductCategory
+from .models import HomeClientLogo, HomeTestimonial
 
 
 def home(request):
@@ -30,9 +31,14 @@ def home(request):
         if svc:
             top_services[key] = svc
 
+    logos = HomeClientLogo.objects.filter(is_active=True).order_by('order', 'name')
+    testimonials = HomeTestimonial.objects.filter(is_active=True).order_by('order', '-created_at')
+
     context = {
         'services': Service.objects.filter(is_active=True)[:6],
         'top_services': top_services,
+        'logos': logos,
+        'testimonials': testimonials,
     }
     return render(request, 'core/home.html', context)
 
