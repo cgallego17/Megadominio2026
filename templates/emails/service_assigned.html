@@ -1,0 +1,28 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Nuevo servicio asignado: {{ service_name }}{% endblock %}
+{% block email_title %}Servicio asignado a tu cuenta{% endblock %}
+{% block email_body %}
+  <p>Hola{% if client_name %} {{ client_name }}{% endif %},</p>
+  
+  <p>Te informamos que se ha asignado el siguiente servicio a tu cuenta:</p>
+  
+  <div class="info-box">
+    <div class="info-box-title">{{ service_name }}</div>
+    <p><span class="tag">{{ billing_type }}</span> <strong>Valor:</strong> {{ amount }}</p>
+    {% if renewal_price %}
+    <p><strong>Valor renovación:</strong> {{ renewal_price }}</p>
+    {% endif %}
+    <p><strong>Fecha inicio:</strong> {{ start_date }}</p>
+    {% if end_date %}
+    <p><strong>Fecha fin:</strong> {{ end_date }}</p>
+    {% endif %}
+  </div>
+  
+  {% if manage_url %}
+  <p><a class="cta" href="{{ manage_url }}">Ver mis servicios</a></p>
+  {% endif %}
+  
+  <div class="meta">
+    Si tienes alguna pregunta sobre este servicio, por favor contáctanos respondiendo a este correo o llamando al +57 324 4011967.
+  </div>
+{% endblock %}

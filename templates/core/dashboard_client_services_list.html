@@ -20,7 +20,8 @@
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Cliente</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Servicio</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
-                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Precio mensual</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tipo</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Valor</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Inicio</th>
                     <th class="px-5 py-3"></th>
                 </tr>
@@ -35,6 +36,7 @@
                             {{ cs.get_status_display }}
                         </span>
                     </td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ cs.get_billing_type_display }}</td>
                     <td class="px-5 py-3.5 text-sm text-white font-bold">{{ cs.monthly_price|floatformat:2 }}</td>
                     <td class="px-5 py-3.5 text-sm text-gray-400">{{ cs.start_date|date:"d/m/Y" }}</td>
                     <td class="px-5 py-3.5 text-right">

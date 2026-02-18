@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from django.conf import settings
@@ -12,7 +13,7 @@ from apps.services.models import Service, ClientService
 from apps.accounts.models import User
 from apps.store.models import Product, ProductCategory
 from .models import HomeClientLogo, HomeTestimonial
-from apps.core.emails import send_admin_notification
+from apps.core.emails import send_admin_notification, send_generic_notification
 
 
 def home(request):
@@ -129,6 +130,52 @@ def contact(request):
     """
     Página de contacto
     """
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        email = request.POST.get('email', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        subject = request.POST.get('subject', '').strip() or 'Contacto desde el sitio'
+        message = request.POST.get('message', '').strip()
+
+        # Notificar al administrador
+        try:
+            dash_url = request.build_absolute_uri(reverse('core:dashboard'))
+            body = (
+                f"Asunto: {subject}\n"
+                f"Nombre: {name}\n"
+                f"Email: {email}\n"
+                f"Teléfono: {phone}\n\n"
+                f"Mensaje:\n{message}"
+            )
+            send_admin_notification(
+                title='Nuevo mensaje de contacto',
+                body=body,
+                cta_url=dash_url,
+                cta_label='Abrir dashboard',
+            )
+        except Exception:
+            pass
+
+        # Acuse de recibo al usuario (si dejó email)
+        if email:
+            try:
+                home_url = request.build_absolute_uri('/')
+                send_generic_notification(
+                    to=email,
+                    title='Hemos recibido tu mensaje',
+                    body=(
+                        'Gracias por escribirnos. Nuestro equipo te contactará '
+                        'en menos de 24 horas.'
+                    ),
+                    cta_url=home_url,
+                    cta_label='Volver al sitio',
+                )
+            except Exception:
+                pass
+
+        messages.success(request, '¡Mensaje enviado! Te contactaremos muy pronto.')
+        return render(request, 'core/contact.html')
+
     return render(request, 'core/contact.html')
 
 

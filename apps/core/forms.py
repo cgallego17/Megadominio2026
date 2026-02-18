@@ -249,15 +249,17 @@ CuentaDeCobroItemFormSet = inlineformset_factory(
 class ClientServiceForm(forms.ModelForm):
     class Meta:
         model = ClientService
-        fields = ['client', 'service', 'status', 'start_date', 'end_date',
-                  'monthly_price', 'notes']
+        fields = ['client', 'service', 'billing_type', 'status', 'start_date', 'end_date',
+                  'monthly_price', 'renewal_price', 'notes']
         widgets = {
             'client': forms.Select(attrs=_select),
             'service': forms.Select(attrs=_select),
+            'billing_type': forms.Select(attrs=_select),
             'status': forms.Select(attrs=_select),
             'start_date': forms.DateInput(attrs=_date),
             'end_date': forms.DateInput(attrs=_date),
             'monthly_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),
+            'renewal_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00 (0 = igual al valor)'}),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas sobre este servicio...'}),
         }
 

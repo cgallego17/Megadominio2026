@@ -13,7 +13,7 @@
             <thead>
                 <tr class="border-b border-gray-800">
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Servicio</th>
-                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Precio</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Valor</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Inicio</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fin</th>
                     <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
@@ -24,7 +24,7 @@
                 <tr class="hover:bg-gray-800/40 transition">
                     <td class="px-5 py-3.5">
                         <p class="text-sm text-white font-semibold">{{ cs.service.name }}</p>
-                        <p class="text-xs text-gray-500">{{ cs.service.get_billing_type_display }}</p>
+                        <p class="text-xs text-gray-500">{{ cs.get_billing_type_display }}</p>
                     </td>
                     <td class="px-5 py-3.5 text-sm text-white font-bold">${{ cs.monthly_price|intcomma }}</td>
                     <td class="px-5 py-3.5 text-sm text-gray-300">{{ cs.start_date|date:"d/m/Y" }}</td>

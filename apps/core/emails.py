@@ -37,13 +37,94 @@ def send_html_email(
         reply_to=list(reply_to or []),
         headers=dict(headers or {}),
     )
-
     if attachments:
         for a in attachments:
             msg.attach(a)
-
     msg.attach_alternative(html, "text/html")
     return msg.send()
+
+def send_payment_failed(
+    to: str,
+    order_number: str,
+    *,
+    payment_method: Optional[str] = None,
+    retry_url: Optional[str] = None,
+    failure_reason: Optional[str] = None,
+    subject: Optional[str] = None,
+) -> int:
+    ctx = {
+        "order_number": order_number,
+        "payment_method": payment_method,
+        "retry_url": retry_url,
+        "failure_reason": failure_reason,
+    }
+    return send_html_email(
+        subject or f"No pudimos procesar tu pago • {order_number}",
+        "emails/payment_failed.html",
+        ctx,
+        [to],
+    )
+
+
+def send_service_renewal_reminder(
+    to: str,
+    *,
+    service_name: str,
+    renewal_date: str,
+    amount: str,
+    billing_type: str,
+    client_name: Optional[str] = None,
+    pay_url: Optional[str] = None,
+    manage_url: Optional[str] = None,
+    subject: Optional[str] = None,
+) -> int:
+    ctx = {
+        "service_name": service_name,
+        "renewal_date": renewal_date,
+        "amount": amount,
+        "billing_type": billing_type,
+        "client_name": client_name,
+        "pay_url": pay_url,
+        "manage_url": manage_url,
+    }
+    return send_html_email(
+        subject or f"Recordatorio: renovación de {service_name} el {renewal_date}",
+        "emails/service_renewal_reminder.html",
+        ctx,
+        [to],
+    )
+
+
+def send_service_assigned_notification(
+    to: str,
+    *,
+    service_name: str,
+    amount: str,
+    billing_type: str,
+    start_date: str,
+    client_name: Optional[str] = None,
+    renewal_price: Optional[str] = None,
+    end_date: Optional[str] = None,
+    manage_url: Optional[str] = None,
+    subject: Optional[str] = None,
+) -> int:
+    """Envía notificación al cliente cuando se le asigna un nuevo servicio"""
+    ctx = {
+        "service_name": service_name,
+        "amount": amount,
+        "billing_type": billing_type,
+        "start_date": start_date,
+        "client_name": client_name,
+        "renewal_price": renewal_price,
+        "end_date": end_date,
+        "manage_url": manage_url,
+    }
+    return send_html_email(
+        subject or f"Nuevo servicio asignado: {service_name}",
+        "emails/service_assigned.html",
+        ctx,
+        [to],
+    )
 
 
 def send_account_confirmation(to: str, activation_url: str, user=None, subject: Optional[str] = None) -> int:

@@ -76,6 +76,13 @@ class ClientService(models.Model):
         on_delete=models.CASCADE, 
         verbose_name="Servicio"
     )
+    # Tipo de precio para este cliente/servicio (único, mensual o anual)
+    billing_type = models.CharField(
+        max_length=10,
+        choices=Service.BILLING_TYPE_CHOICES,
+        default='monthly',
+        verbose_name="Tipo de precio",
+    )
     status = models.CharField(
         max_length=10, 
         choices=STATUS_CHOICES, 
@@ -91,7 +98,14 @@ class ClientService(models.Model):
     monthly_price = models.DecimalField(
         max_digits=10, 
         decimal_places=2, 
-        verbose_name="Precio mensual"
+        verbose_name="Valor"
+    )
+    renewal_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        verbose_name="Valor renovación",
+        help_text="Si es 0, se asumirá el mismo valor del campo 'Valor'",
     )
     notes = models.TextField(
         blank=True, 

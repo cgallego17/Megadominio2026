@@ -36,8 +36,17 @@
                     <a href="{% url 'core:dashboard_service_detail' cs.service.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cs.service.name }}</a>
                 </div>
                 <div>
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Precio mensual</p>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Valor</p>
                     <p class="text-white text-lg font-extrabold">{{ cs.monthly_price|floatformat:2 }}</p>
+                    <p class="text-gray-400 text-xs mt-1">Tipo: {{ cs.get_billing_type_display }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Valor renovación</p>
+                    {% if cs.renewal_price and cs.renewal_price > 0 %}
+                        <p class="text-white text-sm font-semibold">{{ cs.renewal_price|floatformat:2 }}</p>
+                    {% else %}
+                        <p class="text-gray-400 text-sm">Igual al valor</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="space-y-4">

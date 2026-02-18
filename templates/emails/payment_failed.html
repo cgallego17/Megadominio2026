@@ -1,0 +1,13 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}No pudimos procesar tu pago para {{ order_number }}{% endblock %}
+{% block email_title %}No pudimos procesar tu pago{% endblock %}
+{% block email_body %}
+  <p>Intentamos procesar el pago del pedido <strong>#{{ order_number }}</strong>, pero fue <strong>{{ failure_reason|default:"rechazado" }}</strong>.</p>
+  <p class="meta">Método: {{ payment_method|default:"-" }}</p>
+  {% if retry_url %}
+  <p>
+    <a class="cta" href="{{ retry_url }}">Reintentar pago</a>
+  </p>
+  {% endif %}
+  <p class="meta">Si necesitas ayuda, responde a este correo o contáctanos.</p>
+{% endblock %}

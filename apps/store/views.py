@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .models import Product, Order, OrderItem
+from apps.core.emails import send_payment_failed, send_admin_notification
 
 logger = logging.getLogger(__name__)
 
@@ -341,10 +342,80 @@ def wompi_webhook(request):
         order.paid_at = timezone.now()
     elif tx_status == 'DECLINED':
         order.payment_status = 'declined'
+        # Notificar fallo de pago al cliente y admin
+        try:
+            if order.customer_email:
+                base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+                retry_url = f"{base}/tienda/" if base else '/tienda/'
+                send_payment_failed(
+                    to=order.customer_email,
+                    order_number=order.number,
+                    payment_method=order.payment_method,
+                    retry_url=retry_url,
+                    failure_reason='pago declinado',
+                )
+            base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+            admin_path = f"/dashboard/ordenes/{order.pk}/"
+            admin_url = f"{base}{admin_path}" if base else admin_path
+            send_admin_notification(
+                title=f"Pago declinado • {order.number}",
+                body=(
+                    f"Cliente: {order.customer_name} <{order.customer_email}>\n"
+                    f"Método: {order.payment_method or ''}"
+                ),
+                cta_url=admin_url,
+                cta_label='Ver orden',
+            )
+        except Exception:
+            logger.exception('Error enviando notificaciones de pago declinado')
     elif tx_status == 'VOIDED':
         order.payment_status = 'voided'
+        try:
+            if order.customer_email:
+                base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+                retry_url = f"{base}/tienda/" if base else '/tienda/'
+                send_payment_failed(
+                    to=order.customer_email,
+                    order_number=order.number,
+                    payment_method=order.payment_method,
+                    retry_url=retry_url,
+                    failure_reason='pago anulado',
+                )
+            base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+            admin_path = f"/dashboard/ordenes/{order.pk}/"
+            admin_url = f"{base}{admin_path}" if base else admin_path
+            send_admin_notification(
+                title=f"Pago anulado • {order.number}",
+                body=f"Cliente: {order.customer_name} <{order.customer_email}>",
+                cta_url=admin_url,
+                cta_label='Ver orden',
+            )
+        except Exception:
+            logger.exception('Error enviando notificaciones de pago anulado')
     elif tx_status == 'ERROR':
         order.payment_status = 'error'
+        try:
+            if order.customer_email:
+                base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+                retry_url = f"{base}/tienda/" if base else '/tienda/'
+                send_payment_failed(
+                    to=order.customer_email,
+                    order_number=order.number,
+                    payment_method=order.payment_method,
+                    retry_url=retry_url,
+                    failure_reason='error en el pago',
+                )
+            base = (getattr(settings, 'SITE_URL', '') or '').rstrip('/')
+            admin_path = f"/dashboard/ordenes/{order.pk}/"
+            admin_url = f"{base}{admin_path}" if base else admin_path
+            send_admin_notification(
+                title=f"Error de pago • {order.number}",
+                body=f"Cliente: {order.customer_name} <{order.customer_email}>",
+                cta_url=admin_url,
+                cta_label='Ver orden',
+            )
+        except Exception:
+            logger.exception('Error enviando notificaciones de error de pago')
 
     order.save(update_fields=[
         'wompi_transaction_id', 'payment_status',

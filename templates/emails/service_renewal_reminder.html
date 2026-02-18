@@ -1,0 +1,15 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Recordatorio: renovación de {{ service_name }} el {{ renewal_date }}{% endblock %}
+{% block email_title %}Tu servicio está por renovarse{% endblock %}
+{% block email_body %}
+  <p>Hola{% if client_name %} {{ client_name }}{% endif %},</p>
+  <p>Tu servicio <strong>{{ service_name }}</strong> tiene próxima renovación el <strong>{{ renewal_date }}</strong> ({{ billing_type }}).</p>
+  <p>Valor de renovación: <strong>{{ amount }}</strong></p>
+  {% if pay_url %}
+  <p><a class="cta" href="{{ pay_url }}">Pagar renovación</a></p>
+  {% endif %}
+  {% if manage_url %}
+  <p class="meta">Puedes administrar tu servicio aquí: <a class="link" href="{{ manage_url }}">{{ manage_url }}</a></p>
+  {% endif %}
+  <p class="meta">Si necesitas ayuda o deseas hacer cambios, responde a este correo o contáctanos.</p>
+{% endblock %}
