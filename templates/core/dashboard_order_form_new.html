@@ -59,11 +59,6 @@
         <div class="space-y-4" id="formset-container">
             {% for item_form in formset %}
             <div class="formset-row bg-gray-800/50 rounded-lg p-4 border border-gray-700/30">
-                <div class="flex justify-end mb-2">
-                    <button type="button" class="remove-form-row inline-flex items-center gap-2 px-3 py-1.5 bg-red-600/10 text-red-400 text-xs font-semibold rounded hover:bg-red-600/20 transition">
-                        <i class="fas fa-trash-alt"></i> Eliminar
-                    </button>
-                </div>
                 <!-- Tipo de item (producto o servicio) -->
                 <div class="mb-3 pb-3 border-b border-gray-700/30">
                     <label class="block text-gray-400 text-xs font-semibold mb-1">{{ item_form.item_type.label }}</label>
@@ -190,170 +185,49 @@
         // Configurar manejadores iniciales
         setupItemTypeHandlers();
         
-        // Configurar manejadores para nuevas filas del formset
-        const addButton = document.querySelector('.add-form-row');
-        if (addButton) {
-            addButton.addEventListener('click', function() {
-                // Esperar a que se agregue la nueva fila
-                setTimeout(setupItemTypeHandlers, 100);
-            });
-        }
-        
-        // Configurar formset para agregar filas (compatible con cualquier prefijo)
+        // Configurar formset para agregar filas
         const formsetContainer = document.getElementById('formset-container');
-        const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
-        let formPrefix = null;
-        if (totalFormsInput) {
-            const m = (totalFormsInput.getAttribute('name') || '').match(/^(.+)-TOTAL_FORMS$/);
-            formPrefix = m ? m[1] : null;
-        }
-
-        if (addButton && formsetContainer && totalFormsInput && formPrefix) {
+        const totalFormsInput = document.getElementById('id_form-TOTAL_FORMS');
+        const addButton = document.querySelector('.add-form-row');
+        
+        if (addButton && formsetContainer && totalFormsInput) {
             addButton.addEventListener('click', function() {
-                const formCount = parseInt(totalFormsInput.value, 10) || 0;
-                const template = formsetContainer.querySelector('.formset-row');
-                if (!template) return;
-                const newForm = template.cloneNode(true);
-
-                const re = new RegExp(`${formPrefix}-\\d+`, 'g');
-
-                // Actualizar atributos y limpiar valores/errores
-                newForm.querySelectorAll('input, select, textarea, label').forEach(el => {
-                    if (el.tagName === 'LABEL') {
-                        const f = el.getAttribute('for');
-                        if (f) el.setAttribute('for', f.replace(re, `${formPrefix}-${formCount}`));
-                        return;
+                const formCount = parseInt(totalFormsInput.value);
+                const newForm = formsetContainer.querySelector('.formset-row').cloneNode(true);
+                
+                // Actualizar IDs y names
+                const inputs = newForm.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    const name = input.getAttribute('name');
+                    if (name) {
+                        input.setAttribute('name', name.replace(/form-\d+/, `form-${formCount}`));
                     }
-                    const name = el.getAttribute('name');
-                    if (name) el.setAttribute('name', name.replace(re, `${formPrefix}-${formCount}`));
-                    const id = el.getAttribute('id');
-                    if (id) el.setAttribute('id', id.replace(re, `${formPrefix}-${formCount}`));
-
-                    // Limpiar valores y estados
-                    if (el.type === 'hidden') {
-                        // Limpiar el campo oculto de PK del formset (p.ej. form-0-id)
-                        const nm = el.getAttribute('name') || '';
-                        if (/-id$/.test(nm)) {
-                            el.value = '';
+                    
+                    const id = input.getAttribute('id');
+                    if (id) {
+                        const newId = id.replace(/form-\d+/, `form-${formCount}`);
+                        input.setAttribute('id', newId);
+                        
+                        // Actualizar labels asociados
+                        const label = newForm.querySelector(`label[for="${id}"]`);
+                        if (label) {
+                            label.setAttribute('for', newId);
                         }
-                    } else if (el.type === 'checkbox' || el.type === 'radio') {
-                        el.checked = false;
-                    } else if (el.tagName === 'SELECT') {
-                        el.selectedIndex = 0;
-                    } else if (el.type !== 'hidden') {
-                        el.value = '';
+                    }
+                    
+                    // Limpiar valores
+                    if (input.type !== 'hidden' && input.type !== 'checkbox') {
+                        input.value = '';
+                    } else if (input.type === 'checkbox') {
+                        input.checked = false;
                     }
                 });
-
-                // Quitar posibles textos de error clonados
-                newForm.querySelectorAll('.text-red-400').forEach(n => n.remove());
-
+                
                 formsetContainer.appendChild(newForm);
                 totalFormsInput.value = formCount + 1;
-
+                
                 // Configurar manejadores para la nueva fila
                 setupItemTypeHandlers();
-            });
-        }
-
-        // Eliminar filas: marca DELETE si existe o remueve y ajusta TOTAL_FORMS
-        if (formsetContainer) {
-            formsetContainer.addEventListener('click', function(e) {
-                const btn = e.target.closest('.remove-form-row');
-                if (!btn) return;
-                const row = btn.closest('.formset-row');
-                if (!row) return;
-                const deleteInput = row.querySelector('input[name$="-DELETE"]');
-                if (deleteInput) {
-                    deleteInput.checked = true;
-                    row.style.display = 'none';
-                } else {
-                    // Fallback para clones sin DELETE: crear input DELETE oculto y ocultar la fila
-                    let sample = row.querySelector(`[name^="${formPrefix}-"]`);
-                    let idx = null;
-                    if (sample) {
-                        const nm = sample.getAttribute('name') || '';
-                        const m2 = nm.match(new RegExp(`^${formPrefix}-(\\d+)-`));
-                        if (m2) idx = m2[1];
-                    }
-                    if (idx !== null) {
-                        const hiddenDel = document.createElement('input');
-                        hiddenDel.type = 'checkbox';
-                        hiddenDel.name = `${formPrefix}-${idx}-DELETE`;
-                        hiddenDel.checked = true;
-                        hiddenDel.style.display = 'none';
-                        row.appendChild(hiddenDel);
-                    }
-                    row.style.display = 'none';
-                }
-            });
-        }
-    });
-</script>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Función para manejar la selección de cliente
-        const clientSelect = document.querySelector('select[name="client"]');
-        if (clientSelect) {
-            clientSelect.addEventListener('change', function() {
-                const clientId = this.value;
-                if (clientId) {
-                    // Deshabilitar campos que se llenarán automáticamente
-                    document.querySelector('input[name="customer_name"]').setAttribute('readonly', true);
-                    document.querySelector('input[name="customer_email"]').setAttribute('readonly', true);
-                    document.querySelector('input[name="customer_phone"]').setAttribute('readonly', true);
-                    document.querySelector('textarea[name="customer_address"]').setAttribute('readonly', true);
-                } else {
-                    // Habilitar campos para edición manual
-                    document.querySelector('input[name="customer_name"]').removeAttribute('readonly');
-                    document.querySelector('input[name="customer_email"]').removeAttribute('readonly');
-                    document.querySelector('input[name="customer_phone"]').removeAttribute('readonly');
-                    document.querySelector('textarea[name="customer_address"]').removeAttribute('readonly');
-                }
-            });
-        }
-        
-        // Función para manejar la visibilidad de campos producto/servicio
-        function setupItemTypeHandlers() {
-            const itemTypeSelects = document.querySelectorAll('select[name$="-item_type"]');
-            
-            itemTypeSelects.forEach(select => {
-                // Configurar estado inicial
-                updateFieldVisibility(select);
-                
-                // Configurar evento change
-                select.addEventListener('change', function() {
-                    updateFieldVisibility(this);
-                });
-            });
-        }
-        
-        function updateFieldVisibility(select) {
-            const row = select.closest('.formset-row');
-            const productField = row.querySelector('.product-field');
-            const serviceField = row.querySelector('.service-field');
-            
-            if (select.value === 'product') {
-                productField.style.display = 'block';
-                serviceField.style.display = 'none';
-            } else if (select.value === 'service') {
-                productField.style.display = 'none';
-                serviceField.style.display = 'block';
-            }
-        }
-        
-        // Configurar manejadores iniciales
-        setupItemTypeHandlers();
-        
-        // Configurar manejadores para nuevas filas del formset
-        const addButton = document.querySelector('.add-form-row');
-        if (addButton) {
-            addButton.addEventListener('click', function() {
-                // Esperar a que se agregue la nueva fila
-                setTimeout(setupItemTypeHandlers, 100);
             });
         }
     });

@@ -442,6 +442,14 @@ class ProductForm(forms.ModelForm):
 # ══════════════════════════════════════════════════════════════════════
 
 class OrderForm(forms.ModelForm):
+    client = forms.ModelChoiceField(
+        queryset=Client.objects.all(),
+        required=False,
+        label="Cliente registrado",
+        widget=forms.Select(attrs={**_select}),
+        help_text="Seleccione un cliente registrado o ingrese los datos manualmente"
+    )
+    
     class Meta:
         model = Order
         fields = ['number', 'customer_name', 'customer_email', 'customer_phone',
@@ -462,9 +470,11 @@ class OrderForm(forms.ModelForm):
 class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ['product', 'description', 'quantity', 'unit_price']
+        fields = ['item_type', 'product', 'service', 'description', 'quantity', 'unit_price']
         widgets = {
+            'item_type': forms.Select(attrs=_select),
             'product': forms.Select(attrs=_select),
+            'service': forms.Select(attrs=_select),
             'description': forms.TextInput(attrs={**_input, 'placeholder': 'Descripción del item'}),
             'quantity': forms.NumberInput(attrs={**_number, 'step': '1', 'placeholder': '1', 'min': '1'}),
             'unit_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),

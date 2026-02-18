@@ -818,11 +818,25 @@ def dashboard_order_create(request):
         form = OrderForm(request.POST)
         formset = OrderItemFormSet(request.POST)
         if form.is_valid() and formset.is_valid():
+            # Procesar el cliente seleccionado
+            client = form.cleaned_data.get('client')
             order = form.save(commit=False)
             order.created_by = request.user
+            
+            # Si se seleccionó un cliente registrado, usar sus datos
+            if client:
+                order.customer_name = client.name
+                order.customer_email = client.email
+                order.customer_phone = client.phone
+                order.customer_address = client.address
+            
             order.save()
+            
+            # Guardar los items (productos y servicios)
             formset.instance = order
             formset.save()
+            
+            # Recalcular totales
             order.calculate_totals()
             return redirect('core:dashboard_orders')
     else:
@@ -830,9 +844,16 @@ def dashboard_order_create(request):
             'number': _get_next_number('ORD', Order),
         })
         formset = OrderItemFormSet()
+    
+    # Obtener productos y servicios para el formulario
+    products = Product.objects.filter(is_active=True)
+    services = Service.objects.filter(is_active=True)
+    
     return render(request, 'core/dashboard_order_form.html', {
         'form': form,
         'formset': formset,
+        'products': products,
+        'services': services,
         'title': 'Nueva Orden',
         'back_url': 'core:dashboard_orders',
     })

@@ -214,14 +214,28 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     """Item de una orden"""
+    ITEM_TYPE_CHOICES = [
+        ('product', 'Producto'),
+        ('service', 'Servicio'),
+    ]
+    
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name='items',
         verbose_name='Orden'
+    )
+    item_type = models.CharField(
+        'Tipo de item', max_length=10, choices=ITEM_TYPE_CHOICES,
+        default='product'
     )
     product = models.ForeignKey(
         Product, on_delete=models.SET_NULL,
         null=True, blank=True, related_name='order_items',
         verbose_name='Producto'
+    )
+    service = models.ForeignKey(
+        'services.Service', on_delete=models.SET_NULL,
+        null=True, blank=True, related_name='order_items',
+        verbose_name='Servicio'
     )
     description = models.CharField('Descripción', max_length=300)
     quantity = models.PositiveIntegerField('Cantidad', default=1)
