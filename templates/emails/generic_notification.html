@@ -1,0 +1,9 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}{{ title }}{% endblock %}
+{% block email_title %}{{ title }}{% endblock %}
+{% block email_body %}
+  {% if body_html %}{{ body_html|safe }}{% else %}<p>{{ body }}</p>{% endif %}
+  {% if cta_url %}
+    <p><a class="cta" href="{{ cta_url }}">{{ cta_label|default:"Ver más" }}</a></p>
+  {% endif %}
+{% endblock %}

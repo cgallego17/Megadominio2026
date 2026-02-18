@@ -1,0 +1,12 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Confirma tu cuenta{% endblock %}
+{% block email_title %}Confirma tu cuenta{% endblock %}
+{% block email_body %}
+  <p>Hola{% if user %} {{ user.first_name|default:user.username }}{% endif %},</p>
+  <p>Gracias por registrarte en {{ site_name }}. Para activar tu cuenta, confirma tu correo electrónico.</p>
+  <p>
+    <a class="cta" href="{{ activation_url }}">Confirmar cuenta</a>
+  </p>
+  <p class="meta">Si el botón no funciona, copia y pega este enlace:</p>
+  <p class="link">{{ activation_url }}</p>
+{% endblock %}

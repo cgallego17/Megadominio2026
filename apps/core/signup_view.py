@@ -5,8 +5,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.cache import cache
 from django.http import HttpResponseForbidden
+from django.urls import reverse
 
 from .forms import SignupForm
+from apps.core.emails import send_admin_notification
 
 logger = logging.getLogger('security')
 
@@ -61,6 +63,20 @@ def signup(request):
             cache.delete(cache_key)
             login(request, user,
                   backend='django.contrib.auth.backends.ModelBackend')
+
+            # Notificar al administrador del sistema
+            try:
+                admin_url = request.build_absolute_uri(
+                    reverse('core:dashboard_user_detail', args=[user.id])
+                )
+                send_admin_notification(
+                    title='Nuevo registro de usuario',
+                    body=f"Usuario: {user.get_full_name() or user.email} <{user.email}>\nIP: {client_ip}",
+                    cta_url=admin_url,
+                    cta_label='Ver usuario',
+                )
+            except Exception:
+                pass
             next_url = request.GET.get('next', '')
             if next_url and next_url.startswith('/'):
                 return redirect(next_url)

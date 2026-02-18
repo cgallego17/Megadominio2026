@@ -1,0 +1,8 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Tu suscripción fue cancelada{% endblock %}
+{% block email_title %}Suscripción cancelada{% endblock %}
+{% block email_body %}
+  <p>Lamentamos verte partir. Tu suscripción finaliza el <strong>{{ end_date }}</strong>.</p>
+  {% if resume_url %}<p><a class="cta" href="{{ resume_url }}">Reactivar</a></p>{% endif %}
+  {% if feedback_url %}<p class="meta">Ayúdanos a mejorar: <a class="link" href="{{ feedback_url }}">Dejar comentarios</a></p>{% endif %}
+{% endblock %}

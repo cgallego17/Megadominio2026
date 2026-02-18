@@ -1,0 +1,26 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Confirmación de compra {{ order_number }}{% endblock %}
+{% block email_title %}¡Gracias por tu compra!{% endblock %}
+{% block email_body %}
+  <p>Hemos recibido tu pedido <strong>#{{ order_number }}</strong>.</p>
+  {% if items %}
+  <p>Resumen:</p>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:8px 0 12px 0;">
+    {% for it in items %}
+    <tr>
+      <td style="padding:6px 0; color:#cbd5e1;">{{ it.name }} × {{ it.qty }}</td>
+      <td style="padding:6px 0; text-align:right; color:#e5e7eb;">{{ it.total }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td style="padding-top:8px; border-top:1px solid #1f2937; color:#ffffff; font-weight:700;">Total</td>
+      <td style="padding-top:8px; border-top:1px solid #1f2937; text-align:right; color:#ffffff; font-weight:700;">{{ order_total }}</td>
+    </tr>
+  </table>
+  {% endif %}
+  {% if view_order_url %}
+  <p><a class="cta" href="{{ view_order_url }}">Ver mi pedido</a></p>
+  {% endif %}
+  {% if billing_name %}<p class="meta">Facturado a: {{ billing_name }}</p>{% endif %}
+  {% if shipping_address %}<p class="meta">Envío a: {{ shipping_address }}</p>{% endif %}
+{% endblock %}

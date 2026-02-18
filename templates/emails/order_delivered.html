@@ -1,0 +1,8 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Pedido {{ order_number }} entregado{% endblock %}
+{% block email_title %}¡Entrega confirmada!{% endblock %}
+{% block email_body %}
+  <p>Confirmamos la entrega del pedido <strong>#{{ order_number }}</strong>.</p>
+  {% if rate_url %}<p class="meta">¿Cómo te fue con tu compra? <a class="link" href="{{ rate_url }}">Califícanos</a></p>{% endif %}
+  {% if view_order_url %}<p><a class="cta" href="{{ view_order_url }}">Ver detalles</a></p>{% endif %}
+{% endblock %}

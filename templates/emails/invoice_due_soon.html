@@ -1,0 +1,9 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Recordatorio: factura {{ invoice_number }} vence pronto{% endblock %}
+{% block email_title %}Tu factura vence pronto{% endblock %}
+{% block email_body %}
+  <p>La factura <strong>{{ invoice_number }}</strong> vence el <strong>{{ due_date }}</strong>.</p>
+  <p>Total a pagar: <strong>{{ amount_due }}</strong></p>
+  {% if pay_url %}<p><a class="cta" href="{{ pay_url }}">Pagar ahora</a></p>{% endif %}
+  {% if invoice_url %}<p class="meta">Descargar factura: <a class="link" href="{{ invoice_url }}">{{ invoice_url }}</a></p>{% endif %}
+{% endblock %}

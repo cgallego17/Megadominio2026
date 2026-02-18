@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum, Q
 from django.utils import timezone
+from django.conf import settings
+from django.urls import reverse
 from datetime import timedelta
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice
@@ -10,6 +12,7 @@ from apps.services.models import Service, ClientService
 from apps.accounts.models import User
 from apps.store.models import Product, ProductCategory
 from .models import HomeClientLogo, HomeTestimonial
+from apps.core.emails import send_admin_notification
 
 
 def home(request):
@@ -542,10 +545,29 @@ def service_detail(request, slug):
                         f'Cotización #{quote.number} - {srv.name}'
                     ),
                     message=plain_msg,
-                    from_email='info@megadominio.com',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
                     html_message=html_msg,
                     fail_silently=False,
+                )
+            except Exception:
+                pass
+
+            # Notificar al administrador del sistema
+            try:
+                admin_url = request.build_absolute_uri(
+                    reverse('core:dashboard_quote_detail', args=[quote.id])
+                )
+                body = (
+                    f"Nueva solicitud de cotización #{quote.number}\n"
+                    f"Cliente: {client.name} <{client.email}> / {client.phone}\n"
+                    f"Servicio: {srv.name}"
+                )
+                send_admin_notification(
+                    title=f"Nueva cotización #{quote.number}",
+                    body=body,
+                    cta_url=admin_url,
+                    cta_label="Ver cotización",
                 )
             except Exception:
                 pass
@@ -683,7 +705,7 @@ def quote_request(request, service_id=None):
                 send_mail(
                     subject=f'Cotización #{quote.number} - {service.name}',
                     message=plain_message,
-                    from_email='info@megadominio.com',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
                     html_message=html_message,
                     fail_silently=False,
@@ -698,6 +720,25 @@ def quote_request(request, service_id=None):
                     request,
                     f'Cotización creada pero hubo un error al enviar el email: {str(e)}'
                 )
+
+            # Notificar al administrador del sistema
+            try:
+                admin_url = request.build_absolute_uri(
+                    reverse('core:dashboard_quote_detail', args=[quote.id])
+                )
+                body = (
+                    f"Solicitud de cotización #{quote.number}\n"
+                    f"Cliente: {client.name} <{client.email}> / {client.phone}\n"
+                    f"Servicio: {service.name}"
+                )
+                send_admin_notification(
+                    title=f"Cotización enviada #{quote.number}",
+                    body=body,
+                    cta_url=admin_url,
+                    cta_label="Ver cotización",
+                )
+            except Exception:
+                pass
             
             return redirect('core:quote_success', quote_id=quote.id)
     else:

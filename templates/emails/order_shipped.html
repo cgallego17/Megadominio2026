@@ -1,0 +1,10 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Tu pedido {{ order_number }} fue despachado{% endblock %}
+{% block email_title %}Tu pedido está en camino{% endblock %}
+{% block email_body %}
+  <p>El pedido <strong>#{{ order_number }}</strong> ha sido despachado.</p>
+  {% if carrier %}<p>Transportadora: {{ carrier }}</p>{% endif %}
+  {% if tracking_number %}<p>Guía: {{ tracking_number }}</p>{% endif %}
+  {% if tracking_url %}<p><a class="cta" href="{{ tracking_url }}">Rastrear envío</a></p>{% endif %}
+  {% if estimated_delivery %}<p class="meta">Entrega estimada: {{ estimated_delivery }}</p>{% endif %}
+{% endblock %}

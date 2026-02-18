@@ -1,0 +1,8 @@
+{% extends 'emails/base_email.html' %}
+{% block subject %}Bienvenido(a) a tu suscripción {{ plan_name }}{% endblock %}
+{% block email_title %}¡Suscripción activa!{% endblock %}
+{% block email_body %}
+  <p>Gracias por suscribirte al plan <strong>{{ plan_name }}</strong>.</p>
+  {% if next_billing_date %}<p class="meta">Próxima facturación: {{ next_billing_date }}</p>{% endif %}
+  {% if manage_url %}<p><a class="cta" href="{{ manage_url }}">Administrar suscripción</a></p>{% endif %}
+{% endblock %}
