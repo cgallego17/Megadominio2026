@@ -28,6 +28,11 @@
                     </div>
                     {% endfor %}
                 </div>
+                <div class="mt-4">
+                    <button type="button" class="add-form-row inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+                        <i class="fas fa-plus"></i> Agregar item
+                    </button>
+                </div>
             </div>
             <div class="flex items-center gap-3 mt-6 pt-6 border-t border-gray-800">
                 <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
@@ -51,4 +56,55 @@
     .dash-form .text-muted, .dash-form .form-text { color: #6b7280 !important; font-size: 0.75rem !important; }
     .dash-form .asteriskField { color: #ef4444; }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('formset-container');
+        const addBtn = document.querySelector('.add-form-row');
+        const totalInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
+        let prefix = null;
+        if (totalInput) {
+            const m = (totalInput.getAttribute('name') || '').match(/^(.+)-TOTAL_FORMS$/);
+            prefix = m ? m[1] : null;
+        }
+        function clearRowValues(row, index) {
+            const re = new RegExp(`${prefix}-\\d+`, 'g');
+            row.querySelectorAll('input, select, textarea, label').forEach(el => {
+                if (el.tagName === 'LABEL') {
+                    const f = el.getAttribute('for');
+                    if (f) el.setAttribute('for', f.replace(re, `${prefix}-${index}`));
+                    return;
+                }
+                const name = el.getAttribute('name');
+                if (name) el.setAttribute('name', name.replace(re, `${prefix}-${index}`));
+                const id = el.getAttribute('id');
+                if (id) el.setAttribute('id', id.replace(re, `${prefix}-${index}`));
+                if (el.type === 'hidden') {
+                    const nm = el.getAttribute('name') || '';
+                    if (/-id$/.test(nm)) el.value = '';
+                } else if (el.type === 'checkbox' || el.type === 'radio') {
+                    el.checked = false;
+                } else if (el.tagName === 'SELECT') {
+                    el.selectedIndex = 0;
+                } else {
+                    el.value = '';
+                }
+            });
+            row.querySelectorAll('.invalid-feedback, .text-danger, .text-red-400').forEach(n => n.remove());
+        }
+        if (addBtn && container && totalInput && prefix) {
+            addBtn.addEventListener('click', function() {
+                const count = parseInt(totalInput.value, 10) || 0;
+                const template = container.querySelector('.formset-row');
+                if (!template) return;
+                const newRow = template.cloneNode(true);
+                clearRowValues(newRow, count);
+                container.appendChild(newRow);
+                totalInput.value = count + 1;
+            });
+        }
+    });
+</script>
 {% endblock %}
