@@ -117,6 +117,26 @@ class ClientService(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
+    reminder_15_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Recordatorio 15 días enviado",
+    )
+    reminder_3_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Recordatorio 3 días enviado",
+    )
+    expired_notified_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Notificación de vencido enviada",
+    )
+    auto_disabled_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Deshabilitado automático",
+    )
     
     class Meta:
         verbose_name = "Servicio del cliente"
