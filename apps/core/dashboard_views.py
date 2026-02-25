@@ -1001,51 +1001,51 @@ def dashboard_cuenta_pdf(request, pk):
     title_style = ParagraphStyle(
         'CuentaTitle',
         parent=styles['Normal'],
-        fontName='Helvetica-Bold',
-        fontSize=15,
-        leading=18,
+        fontName='Times-Bold',
+        fontSize=13.5,
+        leading=16,
     )
     date_style = ParagraphStyle(
         'CuentaDate',
         parent=styles['Normal'],
-        fontName='Helvetica-Bold',
+        fontName='Times-Bold',
         fontSize=9,
         alignment=2,
     )
     left_info_style = ParagraphStyle(
         'LeftInfo',
         parent=styles['Normal'],
-        fontName='Helvetica',
-        fontSize=9,
-        leading=12,
+        fontName='Times-Roman',
+        fontSize=10,
+        leading=14,
     )
     right_info_style = ParagraphStyle(
         'RightInfo',
         parent=styles['Normal'],
-        fontName='Helvetica',
-        fontSize=9,
-        leading=12,
+        fontName='Times-Roman',
+        fontSize=10,
+        leading=14,
         alignment=2,
     )
     obs_style = ParagraphStyle(
         'Obs',
         parent=styles['Normal'],
-        fontName='Helvetica',
-        fontSize=8.5,
-        leading=12,
+        fontName='Times-Roman',
+        fontSize=10,
+        leading=14,
     )
     legal_style = ParagraphStyle(
         'Legal',
         parent=styles['Normal'],
-        fontName='Helvetica-Oblique',
-        fontSize=7.5,
-        leading=11,
+        fontName='Times-Italic',
+        fontSize=9,
+        leading=13,
     )
     total_style = ParagraphStyle(
         'Total',
         parent=styles['Normal'],
-        fontName='Helvetica-Bold',
-        fontSize=11.5,
+        fontName='Times-Bold',
+        fontSize=18,
         alignment=2,
     )
 
@@ -1071,8 +1071,8 @@ def dashboard_cuenta_pdf(request, pk):
     header_table = Table(
         [[
             logo_cell,
-            Paragraph(f'CUENTA DE COBRO<br/>#{escape(str(cuenta.number))}', title_style),
-            Paragraph(f'Fecha {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style),
+            Paragraph(f'CUENTA DE COBRO #{escape(str(cuenta.number))}', title_style),
+            Paragraph(f'FECHA {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style),
         ]],
         colWidths=[0.85 * inch, 4.1 * inch, 2.0 * inch],
     )
@@ -1087,7 +1087,7 @@ def dashboard_cuenta_pdf(request, pk):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
     ]))
     elements.append(header_table)
-    elements.append(Spacer(1, 0.28 * inch))
+    elements.append(Spacer(1, 0.34 * inch))
 
     emisor_nombre = getattr(settings, 'CUENTA_COBRO_EMISOR_NOMBRE', 'CRISTIAN GALLEGO ARBOLEDA')
     emisor_documento = getattr(settings, 'CUENTA_COBRO_EMISOR_DOCUMENTO', 'C.C. 1.036.640.871')
@@ -1105,7 +1105,7 @@ def dashboard_cuenta_pdf(request, pk):
     if cuenta.client.address:
         client_info_lines.append(escape(cuenta.client.address))
     if cuenta.client.email:
-        client_info_lines.append(f"Email: {escape(cuenta.client.email)}")
+        client_info_lines.append(escape(cuenta.client.email))
 
     emisor_lines = [
         f"<b>{escape(emisor_nombre)}</b>",
@@ -1149,12 +1149,12 @@ def dashboard_cuenta_pdf(request, pk):
     items_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.black),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Times-Bold'),
         ('FONTSIZE', (0, 0), (-1, 0), 9),
         ('ALIGN', (0, 0), (0, -1), 'LEFT'),
         ('ALIGN', (1, 0), (1, -1), 'CENTER'),
         ('ALIGN', (2, 0), (3, -1), 'RIGHT'),
-        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Times-Roman'),
         ('FONTSIZE', (0, 1), (-1, -1), 9),
         ('GRID', (0, 0), (-1, -1), 0.6, colors.black),
         ('LEFTPADDING', (0, 0), (-1, -1), 8),
@@ -1164,7 +1164,7 @@ def dashboard_cuenta_pdf(request, pk):
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
     ]))
     elements.append(items_table)
-    elements.append(Spacer(1, 0.2 * inch))
+    elements.append(Spacer(1, 0.26 * inch))
 
     elements.append(Paragraph(f"TOTAL A PAGAR: {format_money(cuenta.total)}", total_style))
     elements.append(Spacer(1, 0.42 * inch))
@@ -1173,12 +1173,37 @@ def dashboard_cuenta_pdf(request, pk):
     elements.append(Paragraph(f"<b>OBSERVACIONES:</b> {escape(obs_text)}", obs_style))
     elements.append(Spacer(1, 0.42 * inch))
 
-    signature_line = Table([[""]], colWidths=[1.6 * inch], rowHeights=[0.01 * inch])
-    signature_line.setStyle(TableStyle([
-        ('LINEABOVE', (0, 0), (0, 0), 1, colors.black),
-    ]))
-    elements.append(signature_line)
-    elements.append(Spacer(1, 0.08 * inch))
+    # Firma: usar imagen si existe; fallback a linea manual
+    signature_image = None
+    signature_paths = [
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'Sin título.jpg'),
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'Sin titulo.jpg'),
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'firma.jpg'),
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'firma.png'),
+        os.path.join(settings.BASE_DIR, 'staticfiles', 'img', 'Sin título.jpg'),
+    ]
+    for path in signature_paths:
+        if os.path.exists(path):
+            try:
+                # Leer bytes evita problemas con rutas con tildes en Windows
+                with open(path, 'rb') as sig_file:
+                    signature_image = RLImage(BytesIO(sig_file.read()))
+                signature_image.drawWidth = 2.35 * inch
+                signature_image.drawHeight = 0.62 * inch
+                break
+            except Exception:
+                pass
+
+    if signature_image:
+        elements.append(signature_image)
+        elements.append(Spacer(1, 0.03 * inch))
+    else:
+        signature_line = Table([[""]], colWidths=[1.6 * inch], rowHeights=[0.01 * inch])
+        signature_line.setStyle(TableStyle([
+            ('LINEABOVE', (0, 0), (0, 0), 1, colors.black),
+        ]))
+        elements.append(signature_line)
+        elements.append(Spacer(1, 0.08 * inch))
     elements.append(Paragraph(f"<b>{escape(emisor_nombre)}</b><br/>{escape(emisor_documento)}", left_info_style))
     elements.append(Spacer(1, 0.22 * inch))
 
