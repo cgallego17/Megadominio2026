@@ -312,6 +312,32 @@ def dashboard_quote_delete(request, pk):
     })
 
 
+@login_required
+@dashboard_required
+def dashboard_quote_pdf(request, pk):
+    """Genera PDF de la cotización"""
+    from django.http import HttpResponse
+    from django.template.loader import render_to_string
+    from weasyprint import HTML
+    
+    quote = get_object_or_404(Quote, pk=pk)
+    
+    html_string = render_to_string('core/dashboard_quote_pdf.html', {
+        'quote': quote,
+        'site_name': 'Megadominio',
+    })
+    
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="cotizacion_{quote.number}.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    response.write(result)
+    
+    return response
+
+
 # ============ FACTURAS ============
 
 @login_required
@@ -411,6 +437,32 @@ def dashboard_invoice_delete(request, pk):
     })
 
 
+@login_required
+@dashboard_required
+def dashboard_invoice_pdf(request, pk):
+    """Genera PDF de la factura"""
+    from django.http import HttpResponse
+    from django.template.loader import render_to_string
+    from weasyprint import HTML
+    
+    invoice = get_object_or_404(Invoice, pk=pk)
+    
+    html_string = render_to_string('core/dashboard_invoice_pdf.html', {
+        'invoice': invoice,
+        'site_name': 'Megadominio',
+    })
+    
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="factura_{invoice.number}.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    response.write(result)
+    
+    return response
+
+
 # ============ CUENTAS DE COBRO ============
 
 @login_required
@@ -502,6 +554,36 @@ def dashboard_cuenta_mark_paid(request, pk):
 
 @login_required
 @dashboard_required
+def dashboard_cuenta_pdf(request, pk):
+    """Genera PDF de la cuenta de cobro"""
+    from django.http import HttpResponse
+    from django.template.loader import render_to_string
+    from weasyprint import HTML
+    import tempfile
+    
+    cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
+    
+    # Renderizar el template HTML
+    html_string = render_to_string('core/dashboard_cuenta_pdf.html', {
+        'cuenta': cuenta,
+        'site_name': 'Megadominio',
+    })
+    
+    # Crear PDF
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    
+    # Crear respuesta HTTP con el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="cuenta_cobro_{cuenta.number}.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    response.write(result)
+    
+    return response
+
+
+@login_required
+@dashboard_required
 def dashboard_cuenta_delete(request, pk):
     cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
     if request.method == 'POST':
@@ -515,6 +597,35 @@ def dashboard_cuenta_delete(request, pk):
         'back_pk': pk,
         'list_url': 'core:dashboard_cuentas_cobro',
     })
+
+
+@login_required
+@dashboard_required
+def dashboard_cuenta_pdf(request, pk):
+    """Genera PDF de la cuenta de cobro"""
+    from django.http import HttpResponse
+    from django.template.loader import render_to_string
+    from weasyprint import HTML
+    
+    cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
+    
+    # Renderizar el template HTML
+    html_string = render_to_string('core/dashboard_cuenta_pdf.html', {
+        'cuenta': cuenta,
+        'site_name': 'Megadominio',
+    })
+    
+    # Crear PDF
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    
+    # Crear respuesta HTTP con el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="cuenta_cobro_{cuenta.number}.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    response.write(result)
+    
+    return response
 
 
 # ============ SERVICIOS DE CLIENTES ============

@@ -6,6 +6,12 @@
 {% block dashboard_desc %}Cotización para {{ quote.client.name }}{% endblock %}
 
 {% block dashboard_actions %}
+<button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">
+    <i class="fas fa-print"></i> Imprimir
+</button>
+<a href="{% url 'core:dashboard_quote_pdf' quote.pk %}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 transition">
+    <i class="fas fa-file-pdf"></i> Descargar PDF
+</a>
 <a href="{% url 'core:dashboard_quote_edit' quote.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
     <i class="fas fa-edit"></i> Editar
 </a>
@@ -39,10 +45,10 @@
                 </div>
             </div>
             <div class="space-y-2">
-                <div class="flex justify-between"><span class="text-gray-500 text-sm">Subtotal</span><span class="text-gray-300 text-sm">{{ quote.subtotal|intcomma }}</span></div>
-                <div class="flex justify-between"><span class="text-gray-500 text-sm">Descuento</span><span class="text-gray-300 text-sm">{{ quote.discount_amount|intcomma }}</span></div>
-                <div class="flex justify-between"><span class="text-gray-500 text-sm">Impuesto</span><span class="text-gray-300 text-sm">{{ quote.tax_amount|intcomma }}</span></div>
-                <div class="flex justify-between pt-2 border-t border-gray-800"><span class="text-white font-bold">Total</span><span class="text-white font-extrabold text-lg">{{ quote.total|intcomma }}</span></div>
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Subtotal</span><span class="text-gray-300 text-sm">${{ quote.subtotal|floatformat:0|intcomma }} COP</span></div>
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Descuento</span><span class="text-gray-300 text-sm">${{ quote.discount_amount|floatformat:0|intcomma }} COP</span></div>
+                <div class="flex justify-between"><span class="text-gray-500 text-sm">Impuesto</span><span class="text-gray-300 text-sm">${{ quote.tax_amount|floatformat:0|intcomma }} COP</span></div>
+                <div class="flex justify-between pt-2 border-t border-gray-800"><span class="text-white font-bold">Total</span><span class="text-white font-extrabold text-lg">${{ quote.total|floatformat:0|intcomma }} COP</span></div>
             </div>
         </div>
         {% if quote.notes %}
@@ -76,12 +82,54 @@
                     <td class="px-5 py-3.5 text-sm text-white font-semibold">{{ item.service.name }}</td>
                     <td class="px-5 py-3.5 text-sm text-gray-400">{{ item.description }}</td>
                     <td class="px-5 py-3.5 text-sm text-gray-300">{{ item.quantity }}</td>
-                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ item.unit_price|intcomma }}</td>
-                    <td class="px-5 py-3.5 text-sm text-white font-bold">{{ item.subtotal|intcomma }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">${{ item.unit_price|floatformat:0|intcomma }}</td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">${{ item.subtotal|floatformat:0|intcomma }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<style>
+@media print {
+    /* Ocultar elementos que no deben imprimirse */
+    nav, header, .dashboard-sidebar, button:not(.print-only), a[href*="edit"], a[href*="delete"], form {
+        display: none !important;
+    }
+    
+    /* Ajustar el contenido para impresión */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .bg-gray-900, .bg-gray-800 {
+        background: white !important;
+        border: 1px solid #e5e7eb !important;
+    }
+    
+    .text-white, .text-gray-300, .text-gray-400, .text-gray-500 {
+        color: #000 !important;
+    }
+    
+    .text-red-400 {
+        color: #dc2626 !important;
+    }
+    
+    .border-gray-800, .border-gray-700 {
+        border-color: #e5e7eb !important;
+    }
+    
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    main {
+        margin: 0 !important;
+        padding: 20px !important;
+    }
+}
+</style>
 {% endblock %}
