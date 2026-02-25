@@ -3,6 +3,10 @@
 
 {% block dashboard_title %}{{ title }}{% endblock %}
 {% block dashboard_heading %}{{ title }}{% endblock %}
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+{% endblock %}
 
 {% block dashboard_actions %}
 <a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
@@ -39,5 +43,56 @@
     .dash-form .form-check-input { accent-color: #dc2626; }
     .dash-form .text-muted, .dash-form .form-text { color: #6b7280 !important; font-size: 0.75rem !important; }
     .dash-form .asteriskField { color: #ef4444; }
+    .choices {
+        margin-bottom: 0.25rem;
+    }
+    .choices__inner {
+        background: #1f2937 !important;
+        border: 1px solid #374151 !important;
+        color: #f3f4f6 !important;
+        border-radius: 0.5rem !important;
+        min-height: 42px !important;
+        padding: 0.35rem 0.65rem !important;
+    }
+    .choices__input {
+        background: transparent !important;
+        color: #f3f4f6 !important;
+    }
+    .choices__list--dropdown,
+    .choices__list[aria-expanded] {
+        background: #111827 !important;
+        border: 1px solid #374151 !important;
+        color: #f3f4f6 !important;
+    }
+    .choices__list--dropdown .choices__item--selectable.is-highlighted,
+    .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+        background: #dc2626 !important;
+    }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    (function () {
+        var clientSelect = document.getElementById('id_client');
+        var serviceSelect = document.getElementById('id_service');
+
+        function initAutocomplete(selectEl, placeholder) {
+            if (!selectEl) return;
+            if (selectEl.dataset.autocompleteReady === '1') return;
+
+            new Choices(selectEl, {
+                searchEnabled: true,
+                shouldSort: false,
+                itemSelectText: '',
+                searchPlaceholderValue: 'Escribe para buscar...',
+                placeholder: true,
+                placeholderValue: placeholder
+            });
+
+            selectEl.dataset.autocompleteReady = '1';
+        }
+
+        initAutocomplete(clientSelect, 'Selecciona un cliente');
+        initAutocomplete(serviceSelect, 'Selecciona un servicio');
+    })();
+</script>
 {% endblock %}
