@@ -4,6 +4,50 @@
 {% block dashboard_title %}{{ title }}{% endblock %}
 {% block dashboard_heading %}{{ title }}{% endblock %}
 
+{% block extra_css %}
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+.select2-container--default .select2-selection--single {
+    background-color: #1f2937 !important;
+    border: 1px solid #374151 !important;
+    color: #f3f4f6 !important;
+    border-radius: 0.5rem !important;
+    height: 42px !important;
+    padding: 0.6rem 0.75rem !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #f3f4f6 !important;
+    line-height: 28px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+}
+.select2-dropdown {
+    background-color: #1f2937 !important;
+    border: 1px solid #374151 !important;
+    border-radius: 0.5rem !important;
+}
+.select2-container--default .select2-results__option {
+    color: #f3f4f6 !important;
+    background-color: #1f2937 !important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #dc2626 !important;
+    color: white !important;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: #111827 !important;
+    border: 1px solid #374151 !important;
+    color: #f3f4f6 !important;
+    border-radius: 0.5rem !important;
+}
+.select2-container--default .select2-results__option[aria-selected="true"] {
+    background-color: #374151 !important;
+}
+</style>
+{% endblock %}
+
 {% block dashboard_actions %}
 <a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
     <i class="fas fa-arrow-left"></i> Volver
@@ -84,8 +128,51 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- Select2 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar Select2 para el selector de clientes
+        $('#id_client').select2({
+            placeholder: 'Buscar cliente...',
+            allowClear: true,
+            width: '100%',
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                },
+                searching: function() {
+                    return "Buscando...";
+                }
+            }
+        });
+        
+        // Función para inicializar Select2 en selectores de servicios
+        function initServiceSelects() {
+            $('select[name$="-service"]').each(function() {
+                if (!$(this).hasClass('select2-hidden-accessible')) {
+                    $(this).select2({
+                        placeholder: 'Buscar servicio...',
+                        allowClear: true,
+                        width: '100%',
+                        dropdownParent: $(this).parent(),
+                        language: {
+                            noResults: function() {
+                                return "No se encontraron resultados";
+                            },
+                            searching: function() {
+                                return "Buscando...";
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Inicializar Select2 en servicios existentes
+        initServiceSelects();
+        
         const container = document.getElementById('formset-container');
         const addBtn = document.querySelector('.add-form-row');
         const totalInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
@@ -195,6 +282,10 @@
                 clearRowValues(newRow, count);
                 container.appendChild(newRow);
                 totalInput.value = count + 1;
+                
+                // Inicializar Select2 en el nuevo row
+                initServiceSelects();
+                
                 addCalculationListeners();
                 calculateTotals();
             });

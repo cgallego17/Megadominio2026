@@ -238,7 +238,7 @@ class CuentaDeCobroItemForm(forms.ModelForm):
 
 CuentaDeCobroItemFormSet = inlineformset_factory(
     CuentaDeCobro, CuentaDeCobroItem, form=CuentaDeCobroItemForm,
-    extra=3, can_delete=True, min_num=1, validate_min=True,
+    extra=1, can_delete=True, min_num=1, validate_min=True,
 )
 
 
