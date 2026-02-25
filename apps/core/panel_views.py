@@ -14,7 +14,7 @@ from apps.invoices.models import CuentaDeCobro
 from apps.accounts.models import UserAddress, State, City
 from .forms import (
     ProfileForm, PasswordChangeForm, UserAddressForm,
-    ClientEmailAccountForm, ClientEmailPasswordChangeForm,
+    ClientEmailAccountForm, ClientEmailAccountPanelForm, ClientEmailPasswordChangeForm,
 )
 from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
 from apps.services.cpanel_config import get_cpanel_config
@@ -113,6 +113,7 @@ def panel_servicio_emails(request, pk):
     accounts = client_service.email_accounts.all().order_by('email')
     limit = client_service.email_accounts_limit
     can_add_more = (limit == 0) or (accounts.count() < limit)
+    cfg = get_cpanel_config()
 
     if request.method == 'POST':
         if not can_add_more:
@@ -122,15 +123,45 @@ def panel_servicio_emails(request, pk):
             )
             return redirect('core:panel_servicio_emails', pk=pk)
 
-        form = ClientEmailAccountForm(request.POST)
+        form = ClientEmailAccountPanelForm(
+            data=request.POST,
+            cpanel_sync_enabled=cfg.sync_enabled,
+        )
         if form.is_valid():
             email_account = form.save(commit=False)
             email_account.client_service = client_service
             email_account.save()
-            messages.success(request, 'Cuenta de correo creada correctamente.')
+            password = form.cleaned_data.get('password')
+
+            if cfg.sync_enabled and cfg.cpanel_ready and password:
+                try:
+                    cpanel = CpanelAPI(
+                        host=cfg.host,
+                        username=cfg.username,
+                        api_token=cfg.api_token,
+                        use_https=cfg.use_https,
+                        port=cfg.port,
+                        timeout=cfg.timeout,
+                    )
+                    cpanel.create_mailbox(
+                        email=email_account.email,
+                        password=password,
+                        quota_mb=cfg.mailbox_quota_mb,
+                    )
+                    messages.success(
+                        request,
+                        'Cuenta de correo creada correctamente. Buzón configurado en el servidor.',
+                    )
+                except CpanelAPIError as exc:
+                    messages.warning(
+                        request,
+                        f'Cuenta registrada, pero no se pudo crear el buzón en el servidor: {exc}',
+                    )
+            else:
+                messages.success(request, 'Cuenta de correo creada correctamente.')
             return redirect('core:panel_servicio_emails', pk=pk)
     else:
-        form = ClientEmailAccountForm()
+        form = ClientEmailAccountPanelForm(cpanel_sync_enabled=cfg.sync_enabled)
 
     return render(request, 'panel/panel_servicio_emails.html', {
         'client_service': client_service,
@@ -138,6 +169,7 @@ def panel_servicio_emails(request, pk):
         'limit': limit,
         'can_add_more': can_add_more,
         'form': form,
+        'cpanel_sync_enabled': cfg.sync_enabled,
     })
 
 
