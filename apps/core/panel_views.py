@@ -2,11 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.db.models import Sum
 from apps.clients.models import Client
 from apps.services.models import ClientService
 from apps.store.models import Order
+from apps.invoices.models import CuentaDeCobro
 from apps.accounts.models import UserAddress, State, City
 from .forms import ProfileForm, PasswordChangeForm, UserAddressForm
 
@@ -27,6 +28,8 @@ def panel_home(request):
     # Servicios contratados
     services = []
     active_services_count = 0
+    recent_cuentas = []
+    total_cuentas = 0
     if client:
         services = ClientService.objects.filter(
             client=client
@@ -34,6 +37,9 @@ def panel_home(request):
         active_services_count = ClientService.objects.filter(
             client=client, status='active'
         ).count()
+        cuentas_qs = CuentaDeCobro.objects.filter(client=client).order_by('-created_at')
+        total_cuentas = cuentas_qs.count()
+        recent_cuentas = cuentas_qs[:5]
 
     # Órdenes de la tienda (por email o por created_by)
     orders = Order.objects.filter(
@@ -55,6 +61,8 @@ def panel_home(request):
         'recent_orders': recent_orders,
         'total_orders': total_orders,
         'total_spent': total_spent,
+        'recent_cuentas': recent_cuentas,
+        'total_cuentas': total_cuentas,
     })
 
 
@@ -100,12 +108,43 @@ def panel_compra_detail(request, pk):
         or order.created_by == request.user
     )
     if not is_owner:
-        from django.http import HttpResponseForbidden
         return HttpResponseForbidden("No tienes acceso a esta orden.")
 
     return render(request, 'panel/panel_compra_detail.html', {
         'order': order,
     })
+
+
+@login_required
+def panel_cuentas(request):
+    """Listado de cuentas de cobro emitidas al cliente."""
+    client = get_client_for_user(request.user)
+    cuentas = []
+    if client:
+        cuentas = CuentaDeCobro.objects.filter(
+            client=client
+        ).order_by('-created_at')
+
+    return render(request, 'panel/panel_cuentas.html', {
+        'client': client,
+        'cuentas': cuentas,
+    })
+
+
+@login_required
+def panel_cuenta_pdf(request, pk):
+    """Descargar PDF de una cuenta de cobro propia."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a esta cuenta de cobro.")
+
+    cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
+    if cuenta.client_id != client.id:
+        return HttpResponseForbidden("No tienes acceso a esta cuenta de cobro.")
+
+    # Reutiliza la misma generación PDF del dashboard.
+    from . import dashboard_views as dv
+    return dv.dashboard_cuenta_pdf.__wrapped__.__wrapped__(request, pk)
 
 
 @login_required

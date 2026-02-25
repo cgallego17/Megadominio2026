@@ -60,6 +60,9 @@
                 <a href="{% url 'core:panel_compras' %}" class="panel-link {% if '/mi-cuenta/compras' in request.path %}active{% endif %}">
                     <i class="fas fa-shopping-bag"></i> Historial de compras
                 </a>
+                <a href="{% url 'core:panel_cuentas' %}" class="panel-link {% if '/mi-cuenta/cuentas-cobro' in request.path %}active{% endif %}">
+                    <i class="fas fa-file-invoice-dollar"></i> Cuentas de cobro
+                </a>
 
                 <p class="panel-section-title mt-4">Cuenta</p>
                 <a href="{% url 'core:panel_perfil' %}" class="panel-link {% if '/mi-cuenta/perfil' in request.path %}active{% endif %}">

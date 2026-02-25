@@ -7,7 +7,7 @@
 
 {% block panel_content %}
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center">
@@ -38,6 +38,17 @@
             <div>
                 <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Total gastado</p>
                 <p class="text-white text-2xl font-extrabold">${{ total_spent|intcomma }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center">
+                <i class="fas fa-file-invoice-dollar text-purple-400 text-lg"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Cuentas de cobro</p>
+                <p class="text-white text-2xl font-extrabold">{{ total_cuentas }}</p>
             </div>
         </div>
     </div>
@@ -105,5 +116,38 @@
         </div>
         {% endif %}
     </div>
+</div>
+
+<!-- Cuentas de cobro recientes -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden mt-6">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Cuentas de cobro recientes</h3>
+        <a href="{% url 'core:panel_cuentas' %}" class="text-xs text-purple-400 hover:text-purple-300 font-semibold">Ver todas →</a>
+    </div>
+    {% if recent_cuentas %}
+    <div class="divide-y divide-gray-800/50">
+        {% for cuenta in recent_cuentas %}
+        <div class="px-5 py-3.5 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-white font-semibold">{{ cuenta.number }}</p>
+                <p class="text-xs text-gray-500">{{ cuenta.issue_date|date:"d/m/Y" }} · ${{ cuenta.total|floatformat:0|intcomma }} COP</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold {% if cuenta.status == 'paid' %}bg-green-500/10 text-green-400{% elif cuenta.status == 'pending' %}bg-amber-500/10 text-amber-400{% elif cuenta.status == 'overdue' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                    {{ cuenta.get_status_display }}
+                </span>
+                <a href="{% url 'core:panel_cuenta_pdf' cuenta.pk %}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-purple-400 bg-purple-500/10 rounded-lg hover:bg-purple-500/20 transition">
+                    <i class="fas fa-file-pdf"></i> PDF
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-10">
+        <i class="fas fa-file-invoice-dollar text-gray-700 text-3xl mb-2"></i>
+        <p class="text-gray-500 text-sm">No tienes cuentas de cobro emitidas</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

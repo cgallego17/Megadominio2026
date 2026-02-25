@@ -848,6 +848,7 @@ def dashboard_cuenta_create(request):
     else:
         form = CuentaDeCobroForm(initial={
             'number': _get_next_number('CC', CuentaDeCobro),
+            'tax_percentage': 0,
             'issue_date': date.today(),
             'due_date': date.today(),
         })

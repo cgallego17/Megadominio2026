@@ -217,7 +217,7 @@ class CuentaDeCobroForm(forms.ModelForm):
             'client': forms.Select(attrs=_select),
             'quote': forms.Select(attrs=_select),
             'discount_amount': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),
-            'tax_percentage': forms.NumberInput(attrs={**_number, 'placeholder': '15'}),
+            'tax_percentage': forms.NumberInput(attrs={**_number, 'placeholder': '0'}),
             'issue_date': forms.DateInput(attrs=_date),
             'due_date': forms.DateInput(attrs=_date),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas...'}),
@@ -247,6 +247,16 @@ CuentaDeCobroItemFormSet = inlineformset_factory(
 # ══════════════════════════════════════════════════════════════════════
 
 class ClientServiceForm(forms.ModelForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs=_date, format='%Y-%m-%d'),
+        input_formats=['%Y-%m-%d'],
+    )
+    end_date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs=_date, format='%Y-%m-%d'),
+        input_formats=['%Y-%m-%d'],
+    )
+
     class Meta:
         model = ClientService
         fields = ['client', 'service', 'billing_type', 'status', 'start_date', 'end_date',
@@ -256,8 +266,6 @@ class ClientServiceForm(forms.ModelForm):
             'service': forms.Select(attrs=_select),
             'billing_type': forms.Select(attrs=_select),
             'status': forms.Select(attrs=_select),
-            'start_date': forms.DateInput(attrs=_date),
-            'end_date': forms.DateInput(attrs=_date),
             'monthly_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),
             'renewal_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00 (0 = igual al valor)'}),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas sobre este servicio...'}),

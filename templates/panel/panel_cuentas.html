@@ -1,0 +1,53 @@
+{% extends 'panel/panel_base.html' %}
+{% load humanize %}
+
+{% block panel_title %}Mis Cuentas de Cobro{% endblock %}
+{% block panel_heading %}Mis Cuentas de Cobro{% endblock %}
+{% block panel_desc %}{{ cuentas|length }} cuenta{{ cuentas|length|pluralize:"s" }} emitida{{ cuentas|length|pluralize:"s" }}{% endblock %}
+
+{% block panel_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    {% if cuentas %}
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="border-b border-gray-800">
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Número</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fecha emisión</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Vencimiento</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                    <th class="px-5 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/50">
+                {% for cuenta in cuentas %}
+                <tr class="hover:bg-gray-800/40 transition">
+                    <td class="px-5 py-3.5 text-sm text-white font-semibold">{{ cuenta.number }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ cuenta.issue_date|date:"d/m/Y" }}</td>
+                    <td class="px-5 py-3.5 text-sm text-gray-300">{{ cuenta.due_date|date:"d/m/Y" }}</td>
+                    <td class="px-5 py-3.5">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold {% if cuenta.status == 'paid' %}bg-green-500/10 text-green-400{% elif cuenta.status == 'pending' %}bg-amber-500/10 text-amber-400{% elif cuenta.status == 'overdue' %}bg-red-500/10 text-red-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">
+                            {{ cuenta.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">${{ cuenta.total|floatformat:0|intcomma }} COP</td>
+                    <td class="px-5 py-3.5 text-right">
+                        <a href="{% url 'core:panel_cuenta_pdf' cuenta.pk %}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-purple-400 bg-purple-500/10 rounded-lg hover:bg-purple-500/20 transition">
+                            <i class="fas fa-file-pdf"></i> Descargar PDF
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-16">
+        <i class="fas fa-file-invoice-dollar text-gray-700 text-4xl mb-3"></i>
+        <p class="text-gray-500 font-semibold mb-1">No tienes cuentas de cobro emitidas</p>
+        <p class="text-gray-600 text-sm">Cuando te emitan una cuenta de cobro aparecerá aquí</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
