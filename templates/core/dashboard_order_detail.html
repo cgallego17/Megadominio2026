@@ -146,8 +146,8 @@
                         <tr>
                             <td class="px-5 py-3 text-white">{{ item.description }}</td>
                             <td class="px-5 py-3 text-center text-gray-300">{{ item.quantity }}</td>
-                            <td class="px-5 py-3 text-right text-gray-300">{{ item.unit_price|intcomma }}</td>
-                            <td class="px-5 py-3 text-right text-white font-semibold">{{ item.subtotal|intcomma }}</td>
+                            <td class="px-5 py-3 text-right text-gray-300">${{ item.unit_price|floatformat:0|intcomma }} COP</td>
+                            <td class="px-5 py-3 text-right text-white font-semibold">${{ item.subtotal|floatformat:0|intcomma }} COP</td>
                         </tr>
                         {% empty %}
                         <tr>
@@ -174,21 +174,21 @@
             <div class="space-y-3">
                 <div class="flex justify-between text-sm">
                     <span class="text-gray-400">Subtotal</span>
-                    <span class="text-white">{{ order.subtotal|intcomma }}</span>
+                    <span class="text-white">${{ order.subtotal|floatformat:0|intcomma }} COP</span>
                 </div>
                 <div class="flex justify-between text-sm">
                     <span class="text-gray-400">Envío</span>
-                    <span class="text-white">{{ order.shipping_cost|intcomma }}</span>
+                    <span class="text-white">${{ order.shipping_cost|floatformat:0|intcomma }} COP</span>
                 </div>
                 {% if order.discount %}
                 <div class="flex justify-between text-sm">
                     <span class="text-gray-400">Descuento</span>
-                    <span class="text-red-400">-{{ order.discount|intcomma }}</span>
+                    <span class="text-red-400">-${{ order.discount|floatformat:0|intcomma }} COP</span>
                 </div>
                 {% endif %}
                 <div class="border-t border-gray-800 pt-3 flex justify-between">
                     <span class="text-white font-bold">Total</span>
-                    <span class="text-white font-extrabold text-xl">{{ order.total|intcomma }}</span>
+                    <span class="text-white font-extrabold text-xl">${{ order.total|floatformat:0|intcomma }} COP</span>
                 </div>
             </div>
         </div>

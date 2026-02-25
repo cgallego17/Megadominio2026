@@ -3,7 +3,12 @@
 
 {% block dashboard_title %}Servicios{% endblock %}
 {% block dashboard_heading %}Servicios{% endblock %}
-{% block dashboard_desc %}{{ object_list|length }} servicio{{ object_list|length|pluralize:"s" }}{% endblock %}
+{% block dashboard_desc %}
+    {{ object_list|length }} servicio{{ object_list|length|pluralize:"s" }}
+    {% if search or status or billing_type or min_price or max_price %}
+        <span class="text-gray-500">- Filtrado</span>
+    {% endif %}
+{% endblock %}
 
 {% block dashboard_actions %}
 <a href="{% url 'core:dashboard_service_create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
@@ -12,6 +17,106 @@
 {% endblock %}
 
 {% block dashboard_content %}
+<!-- Filtros y Búsqueda -->
+<div class="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-white">
+            <i class="fas fa-filter mr-2 text-red-500"></i>
+            Filtros y Búsqueda
+        </h3>
+        {% if search or status or billing_type or min_price or max_price %}
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-500/10 text-red-400 text-xs font-bold rounded-full border border-red-500/20">
+            <i class="fas fa-check-circle"></i>
+            Filtros activos
+        </span>
+        {% endif %}
+    </div>
+    <form method="get" class="space-y-4">
+        <!-- Búsqueda -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-400 mb-2">
+                <i class="fas fa-search mr-1"></i> Buscar
+            </label>
+            <input type="text" name="search" value="{{ search }}" placeholder="Buscar por nombre o descripción..." class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Filtro por Estado -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-400 mb-2">
+                    <i class="fas fa-toggle-on mr-1"></i> Estado
+                </label>
+                <select name="status" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+                    <option value="">Todos</option>
+                    <option value="active" {% if status == 'active' %}selected{% endif %}>Activos</option>
+                    <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>Inactivos</option>
+                </select>
+            </div>
+
+            <!-- Filtro por Tipo de Facturación -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-400 mb-2">
+                    <i class="fas fa-file-invoice mr-1"></i> Facturación
+                </label>
+                <select name="billing_type" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+                    <option value="">Todos</option>
+                    {% for value, label in billing_types %}
+                    <option value="{{ value }}" {% if billing_type == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Precio Mínimo -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-400 mb-2">
+                    <i class="fas fa-dollar-sign mr-1"></i> Precio Mínimo
+                </label>
+                <input type="number" name="min_price" value="{{ min_price }}" placeholder="0" min="0" step="1000" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+            </div>
+
+            <!-- Precio Máximo -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-400 mb-2">
+                    <i class="fas fa-dollar-sign mr-1"></i> Precio Máximo
+                </label>
+                <input type="number" name="max_price" value="{{ max_price }}" placeholder="Sin límite" min="0" step="1000" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+            </div>
+        </div>
+
+        <!-- Ordenamiento -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-400 mb-2">
+                <i class="fas fa-sort mr-1"></i> Ordenar por
+            </label>
+            <select name="sort" class="w-full md:w-auto px-4 py-2.5 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition">
+                <option value="name" {% if sort == 'name' %}selected{% endif %}>Nombre (A-Z)</option>
+                <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Precio (Menor a Mayor)</option>
+                <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Precio (Mayor a Menor)</option>
+                <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Más Recientes</option>
+            </select>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+                <i class="fas fa-filter"></i> Aplicar Filtros
+            </button>
+            {% if search or status or billing_type or min_price or max_price %}
+            <a href="{% url 'core:dashboard_services' %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-600 transition">
+                <i class="fas fa-times"></i> Limpiar Filtros
+            </a>
+            <div class="ml-auto">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-400 text-sm font-semibold rounded-lg border border-blue-500/20">
+                    <i class="fas fa-info-circle"></i>
+                    Mostrando resultados filtrados
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Resultados -->
 <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
     {% if object_list %}
     <div class="overflow-x-auto">
@@ -69,11 +174,20 @@
     </div>
     {% else %}
     <div class="text-center py-16">
-        <i class="fas fa-concierge-bell text-gray-700 text-4xl mb-3"></i>
-        <p class="text-gray-500 font-semibold mb-1">No hay servicios registrados</p>
-        <a href="{% url 'core:dashboard_service_create' %}" class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
-            <i class="fas fa-plus"></i> Crear el primero
-        </a>
+        {% if search or status or billing_type or min_price or max_price %}
+            <i class="fas fa-search text-gray-700 text-4xl mb-3"></i>
+            <p class="text-gray-500 font-semibold mb-1">No se encontraron servicios con los filtros aplicados</p>
+            <p class="text-gray-600 text-sm mb-4">Intenta ajustar los criterios de búsqueda</p>
+            <a href="{% url 'core:dashboard_services' %}" class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-600 transition">
+                <i class="fas fa-times"></i> Limpiar Filtros
+            </a>
+        {% else %}
+            <i class="fas fa-concierge-bell text-gray-700 text-4xl mb-3"></i>
+            <p class="text-gray-500 font-semibold mb-1">No hay servicios registrados</p>
+            <a href="{% url 'core:dashboard_service_create' %}" class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+                <i class="fas fa-plus"></i> Crear el primero
+            </a>
+        {% endif %}
     </div>
     {% endif %}
 </div>

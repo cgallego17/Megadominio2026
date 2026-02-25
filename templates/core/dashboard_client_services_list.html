@@ -1,4 +1,5 @@
 {% extends 'core/dashboard_base.html' %}
+{% load humanize %}
 
 {% block dashboard_title %}{{ title }}{% endblock %}
 {% block dashboard_heading %}{{ title }}{% endblock %}
@@ -37,7 +38,7 @@
                         </span>
                     </td>
                     <td class="px-5 py-3.5 text-sm text-gray-300">{{ cs.get_billing_type_display }}</td>
-                    <td class="px-5 py-3.5 text-sm text-white font-bold">{{ cs.monthly_price|floatformat:2 }}</td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">${{ cs.monthly_price|floatformat:0|intcomma }} COP</td>
                     <td class="px-5 py-3.5 text-sm text-gray-400">{{ cs.start_date|date:"d/m/Y" }}</td>
                     <td class="px-5 py-3.5 text-right">
                         <a href="{% url 'core:dashboard_client_service_detail' cs.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-lg hover:bg-red-500/20 transition">

@@ -1,4 +1,5 @@
 {% extends 'core/dashboard_base.html' %}
+{% load humanize %}
 
 {% block dashboard_title %}{{ cs.client.name }} - {{ cs.service.name }}{% endblock %}
 {% block dashboard_heading %}{{ cs.client.name }}{% endblock %}
@@ -37,13 +38,13 @@
                 </div>
                 <div>
                     <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Valor</p>
-                    <p class="text-white text-lg font-extrabold">{{ cs.monthly_price|floatformat:2 }}</p>
+                    <p class="text-white text-lg font-extrabold">${{ cs.monthly_price|floatformat:0|intcomma }} COP</p>
                     <p class="text-gray-400 text-xs mt-1">Tipo: {{ cs.get_billing_type_display }}</p>
                 </div>
                 <div>
                     <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Valor renovación</p>
                     {% if cs.renewal_price and cs.renewal_price > 0 %}
-                        <p class="text-white text-sm font-semibold">{{ cs.renewal_price|floatformat:2 }}</p>
+                        <p class="text-white text-sm font-semibold">${{ cs.renewal_price|floatformat:0|intcomma }} COP</p>
                     {% else %}
                         <p class="text-gray-400 text-sm">Igual al valor</p>
                     {% endif %}

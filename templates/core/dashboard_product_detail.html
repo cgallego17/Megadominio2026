@@ -34,9 +34,9 @@
             {% if product.badge %}
             <span class="px-3 py-1 text-xs font-bold rounded-full text-white {{ product.badge_color }}">{{ product.badge_label }}</span>
             {% endif %}
-            <p class="text-3xl font-extrabold text-white mt-3">{{ product.price|intcomma }}</p>
+            <p class="text-3xl font-extrabold text-white mt-3">${{ product.price|floatformat:0|intcomma }} COP</p>
             {% if product.compare_price %}
-            <p class="text-gray-500 line-through text-sm">{{ product.compare_price|intcomma }}</p>
+            <p class="text-gray-500 line-through text-sm">${{ product.compare_price|floatformat:0|intcomma }} COP</p>
             {% endif %}
         </div>
     </div>

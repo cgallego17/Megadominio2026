@@ -49,7 +49,7 @@
                         </div>
                     </td>
                     <td class="px-5 py-3 text-gray-400">{{ product.category.name|default:"—" }}</td>
-                    <td class="px-5 py-3 text-right text-white font-semibold">{{ product.price|intcomma }}</td>
+                    <td class="px-5 py-3 text-right text-white font-semibold">${{ product.price|floatformat:0|intcomma }} COP</td>
                     <td class="px-5 py-3 text-center">
                         {% if product.stock > 0 %}
                         <span class="text-green-400 font-semibold">{{ product.stock }}</span>

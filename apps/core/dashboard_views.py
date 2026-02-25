@@ -146,9 +146,68 @@ def dashboard_client_delete(request, pk):
 @login_required
 @dashboard_required
 def dashboard_services(request):
-    services = Service.objects.all().order_by('name')
+    from django.db.models import Q
+    
+    services = Service.objects.all()
+    
+    # Búsqueda por nombre o descripción
+    search = request.GET.get('search', '')
+    if search:
+        services = services.filter(
+            Q(name__icontains=search) | Q(description__icontains=search)
+        )
+    
+    # Filtro por estado
+    status = request.GET.get('status', '')
+    if status == 'active':
+        services = services.filter(is_active=True)
+    elif status == 'inactive':
+        services = services.filter(is_active=False)
+    
+    # Filtro por tipo de facturación
+    billing_type = request.GET.get('billing_type', '')
+    if billing_type:
+        services = services.filter(billing_type=billing_type)
+    
+    # Filtro por precio mínimo
+    min_price = request.GET.get('min_price', '')
+    if min_price:
+        try:
+            services = services.filter(price__gte=float(min_price))
+        except (ValueError, TypeError):
+            pass
+    
+    # Filtro por precio máximo
+    max_price = request.GET.get('max_price', '')
+    if max_price:
+        try:
+            services = services.filter(price__lte=float(max_price))
+        except (ValueError, TypeError):
+            pass
+    
+    # Ordenamiento
+    sort = request.GET.get('sort', 'name')
+    if sort == 'price_asc':
+        services = services.order_by('price')
+    elif sort == 'price_desc':
+        services = services.order_by('-price')
+    elif sort == 'newest':
+        services = services.order_by('-created_at')
+    else:
+        services = services.order_by('name')
+    
+    # Obtener valores únicos para los filtros
+    billing_types = Service.BILLING_TYPE_CHOICES
+    
     return render(request, 'core/dashboard_services_list.html', {
         'object_list': services,
+        'search': search,
+        'status': status,
+        'billing_type': billing_type,
+        'min_price': min_price,
+        'max_price': max_price,
+        'sort': sort,
+        'billing_types': billing_types,
     })
 
 
@@ -317,23 +376,160 @@ def dashboard_quote_delete(request, pk):
 def dashboard_quote_pdf(request, pk):
     """Genera PDF de la cotización"""
     from django.http import HttpResponse
-    from django.template.loader import render_to_string
-    from weasyprint import HTML
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib import colors
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from io import BytesIO
     
     quote = get_object_or_404(Quote, pk=pk)
     
-    html_string = render_to_string('core/dashboard_quote_pdf.html', {
-        'quote': quote,
-        'site_name': 'Megadominio',
-    })
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+    elements = []
+    styles = getSampleStyleSheet()
     
-    html = HTML(string=html_string)
-    result = html.write_pdf()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#dc2626'),
+        alignment=TA_CENTER,
+        spaceAfter=30,
+    )
+    
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Normal'],
+        fontSize=10,
+        textColor=colors.gray,
+        alignment=TA_CENTER,
+        spaceAfter=20,
+    )
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#dc2626'),
+        spaceAfter=12,
+    )
+    
+    # Encabezado
+    elements.append(Paragraph('MEGADOMINIO', title_style))
+    elements.append(Paragraph('Soluciones Digitales Profesionales', subtitle_style))
+    elements.append(Paragraph('info@megadominio.com | +57 300 123 4567 | Bogota, Colombia', subtitle_style))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Información del documento
+    elements.append(Paragraph(f'COTIZACION #{quote.number}', heading_style))
+    elements.append(Paragraph(f'Estado: {quote.get_status_display()}', styles['Normal']))
+    elements.append(Paragraph(f'Valida hasta: {quote.valid_until.strftime("%d/%m/%Y")}', styles['Normal']))
+    elements.append(Spacer(1, 0.2*inch))
+    
+    # Información del cliente
+    info_data = [
+        ['<b>INFORMACION DEL CLIENTE</b>', '<b>INFORMACION DEL DOCUMENTO</b>'],
+        [f'Cliente: {quote.client.name}', f'Fecha: {quote.created_at.strftime("%d/%m/%Y")}'],
+        [f'Email: {quote.client.email}', f'Valida hasta: {quote.valid_until.strftime("%d/%m/%Y")}'],
+    ]
+    
+    if quote.client.company:
+        info_data.insert(2, [f'Empresa: {quote.client.company}', ''])
+    if quote.client.phone:
+        info_data.insert(3, [f'Telefono: {quote.client.phone}', ''])
+    
+    info_table = Table(info_data, colWidths=[3.5*inch, 3.5*inch])
+    info_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f9fafb')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 11),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 10),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(info_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de items
+    elements.append(Paragraph('DETALLE DE ITEMS', heading_style))
+    
+    items_data = [['Servicio', 'Descripcion', 'Cant.', 'Precio Unit.', 'Subtotal']]
+    
+    for item in quote.items.all():
+        desc = item.description[:40] + '...' if len(item.description) > 40 else item.description
+        items_data.append([
+            item.service.name,
+            desc,
+            str(item.quantity),
+            f'${item.unit_price:,.0f}',
+            f'${item.subtotal:,.0f}',
+        ])
+    
+    items_table = Table(items_data, colWidths=[1.8*inch, 2.2*inch, 0.7*inch, 1.3*inch, 1.3*inch])
+    items_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
+        ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+        ('ALIGN', (3, 1), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('TOPPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(items_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de totales
+    totals_data = [
+        ['Subtotal:', f'${quote.subtotal:,.0f} COP'],
+        [f'Descuento ({quote.discount_percentage}%):', f'${quote.discount_amount:,.0f} COP'],
+        [f'IVA ({quote.tax_percentage}%):', f'${quote.tax_amount:,.0f} COP'],
+        ['<b>TOTAL:</b>', f'<b>${quote.total:,.0f} COP</b>'],
+    ]
+    
+    totals_table = Table(totals_data, colWidths=[5*inch, 2.3*inch])
+    totals_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('TEXTCOLOR', (0, 0), (-1, 2), colors.black),
+        ('TEXTCOLOR', (0, 3), (-1, 3), colors.HexColor('#dc2626')),
+        ('FONTNAME', (0, 3), (-1, 3), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 3), (-1, 3), 14),
+        ('LINEABOVE', (0, 3), (-1, 3), 2, colors.HexColor('#dc2626')),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(totals_table)
+    
+    if quote.notes:
+        elements.append(Spacer(1, 0.3*inch))
+        elements.append(Paragraph('<b>Notas:</b>', styles['Normal']))
+        elements.append(Paragraph(quote.notes, styles['Normal']))
+    
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
     
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="cotizacion_{quote.number}.pdf"'
-    response['Content-Transfer-Encoding'] = 'binary'
-    response.write(result)
+    response.write(pdf)
     
     return response
 
@@ -442,23 +638,163 @@ def dashboard_invoice_delete(request, pk):
 def dashboard_invoice_pdf(request, pk):
     """Genera PDF de la factura"""
     from django.http import HttpResponse
-    from django.template.loader import render_to_string
-    from weasyprint import HTML
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib import colors
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from io import BytesIO
     
     invoice = get_object_or_404(Invoice, pk=pk)
     
-    html_string = render_to_string('core/dashboard_invoice_pdf.html', {
-        'invoice': invoice,
-        'site_name': 'Megadominio',
-    })
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+    elements = []
+    styles = getSampleStyleSheet()
     
-    html = HTML(string=html_string)
-    result = html.write_pdf()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#dc2626'),
+        alignment=TA_CENTER,
+        spaceAfter=30,
+    )
+    
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Normal'],
+        fontSize=10,
+        textColor=colors.gray,
+        alignment=TA_CENTER,
+        spaceAfter=20,
+    )
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#dc2626'),
+        spaceAfter=12,
+    )
+    
+    # Encabezado
+    elements.append(Paragraph('MEGADOMINIO', title_style))
+    elements.append(Paragraph('Soluciones Digitales Profesionales', subtitle_style))
+    elements.append(Paragraph('info@megadominio.com | +57 300 123 4567 | Bogota, Colombia', subtitle_style))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Información del documento
+    elements.append(Paragraph(f'FACTURA #{invoice.number}', heading_style))
+    elements.append(Paragraph(f'Estado: {invoice.get_status_display()}', styles['Normal']))
+    elements.append(Spacer(1, 0.2*inch))
+    
+    # Información del cliente
+    info_data = [
+        ['<b>INFORMACION DEL CLIENTE</b>', '<b>INFORMACION DEL DOCUMENTO</b>'],
+        [f'Cliente: {invoice.client.name}', f'Fecha de Emision: {invoice.issue_date.strftime("%d/%m/%Y")}'],
+        [f'Email: {invoice.client.email}', f'Fecha de Vencimiento: {invoice.due_date.strftime("%d/%m/%Y")}'],
+    ]
+    
+    if invoice.client.company:
+        info_data.insert(2, [f'Empresa: {invoice.client.company}', ''])
+    if invoice.client.phone:
+        info_data.insert(3, [f'Telefono: {invoice.client.phone}', ''])
+    if invoice.quote:
+        info_data.append(['', f'Cotizacion: {invoice.quote.number}'])
+    if invoice.paid_date:
+        info_data.append(['', f'Fecha de Pago: {invoice.paid_date.strftime("%d/%m/%Y")}'])
+    
+    info_table = Table(info_data, colWidths=[3.5*inch, 3.5*inch])
+    info_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f9fafb')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 11),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 10),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(info_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de items
+    elements.append(Paragraph('DETALLE DE ITEMS', heading_style))
+    
+    items_data = [['Servicio', 'Descripcion', 'Cant.', 'Precio Unit.', 'Subtotal']]
+    
+    for item in invoice.items.all():
+        desc = item.description[:40] + '...' if len(item.description) > 40 else item.description
+        items_data.append([
+            item.service.name,
+            desc,
+            str(item.quantity),
+            f'${item.unit_price:,.0f}',
+            f'${item.subtotal:,.0f}',
+        ])
+    
+    items_table = Table(items_data, colWidths=[1.8*inch, 2.2*inch, 0.7*inch, 1.3*inch, 1.3*inch])
+    items_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
+        ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+        ('ALIGN', (3, 1), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('TOPPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(items_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de totales
+    totals_data = [
+        ['Subtotal:', f'${invoice.subtotal:,.0f} COP'],
+        [f'Descuento ({invoice.discount_percentage}%):', f'${invoice.discount_amount:,.0f} COP'],
+        [f'IVA ({invoice.tax_percentage}%):', f'${invoice.tax_amount:,.0f} COP'],
+        ['<b>TOTAL:</b>', f'<b>${invoice.total:,.0f} COP</b>'],
+    ]
+    
+    totals_table = Table(totals_data, colWidths=[5*inch, 2.3*inch])
+    totals_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('TEXTCOLOR', (0, 0), (-1, 2), colors.black),
+        ('TEXTCOLOR', (0, 3), (-1, 3), colors.HexColor('#dc2626')),
+        ('FONTNAME', (0, 3), (-1, 3), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 3), (-1, 3), 14),
+        ('LINEABOVE', (0, 3), (-1, 3), 2, colors.HexColor('#dc2626')),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(totals_table)
+    
+    if invoice.notes:
+        elements.append(Spacer(1, 0.3*inch))
+        elements.append(Paragraph('<b>Notas:</b>', styles['Normal']))
+        elements.append(Paragraph(invoice.notes, styles['Normal']))
+    
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
     
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="factura_{invoice.number}.pdf"'
-    response['Content-Transfer-Encoding'] = 'binary'
-    response.write(result)
+    response.write(pdf)
     
     return response
 
@@ -604,26 +940,167 @@ def dashboard_cuenta_delete(request, pk):
 def dashboard_cuenta_pdf(request, pk):
     """Genera PDF de la cuenta de cobro"""
     from django.http import HttpResponse
-    from django.template.loader import render_to_string
-    from weasyprint import HTML
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib import colors
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from io import BytesIO
     
     cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
     
-    # Renderizar el template HTML
-    html_string = render_to_string('core/dashboard_cuenta_pdf.html', {
-        'cuenta': cuenta,
-        'site_name': 'Megadominio',
-    })
+    # Crear el PDF en memoria
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+    elements = []
+    styles = getSampleStyleSheet()
     
-    # Crear PDF
-    html = HTML(string=html_string)
-    result = html.write_pdf()
+    # Estilos personalizados
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#dc2626'),
+        alignment=TA_CENTER,
+        spaceAfter=30,
+    )
     
-    # Crear respuesta HTTP con el PDF
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Normal'],
+        fontSize=10,
+        textColor=colors.gray,
+        alignment=TA_CENTER,
+        spaceAfter=20,
+    )
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#dc2626'),
+        spaceAfter=12,
+    )
+    
+    # Encabezado
+    elements.append(Paragraph('MEGADOMINIO', title_style))
+    elements.append(Paragraph('Soluciones Digitales Profesionales', subtitle_style))
+    elements.append(Paragraph('📧 info@megadominio.com | 📱 +57 300 123 4567 | 📍 Bogotá, Colombia', subtitle_style))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Información del documento
+    elements.append(Paragraph(f'CUENTA DE COBRO #{cuenta.number}', heading_style))
+    elements.append(Paragraph(f'Estado: {cuenta.get_status_display()}', styles['Normal']))
+    elements.append(Spacer(1, 0.2*inch))
+    
+    # Información del cliente
+    info_data = [
+        ['<b>INFORMACIÓN DEL CLIENTE</b>', '<b>INFORMACIÓN DEL DOCUMENTO</b>'],
+        [f'Cliente: {cuenta.client.name}', f'Fecha de Emisión: {cuenta.issue_date.strftime("%d/%m/%Y")}'],
+        [f'Email: {cuenta.client.email}', f'Fecha de Vencimiento: {cuenta.due_date.strftime("%d/%m/%Y")}'],
+    ]
+    
+    if cuenta.client.company:
+        info_data.insert(2, [f'Empresa: {cuenta.client.company}', ''])
+    if cuenta.client.phone:
+        info_data.insert(3, [f'Teléfono: {cuenta.client.phone}', ''])
+    if cuenta.quote:
+        info_data.append(['', f'Cotización: {cuenta.quote.number}'])
+    
+    info_table = Table(info_data, colWidths=[3.5*inch, 3.5*inch])
+    info_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f9fafb')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 11),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 10),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(info_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de items
+    elements.append(Paragraph('DETALLE DE ITEMS', heading_style))
+    
+    items_data = [['Servicio', 'Descripción', 'Cant.', 'Precio Unit.', 'Subtotal']]
+    
+    for item in cuenta.items.all():
+        items_data.append([
+            item.service.name if item.service else '-',
+            item.description[:40] + '...' if len(item.description) > 40 else item.description,
+            str(item.quantity),
+            f'${item.unit_price:,.0f}',
+            f'${item.subtotal:,.0f}',
+        ])
+    
+    items_table = Table(items_data, colWidths=[1.8*inch, 2.2*inch, 0.7*inch, 1.3*inch, 1.3*inch])
+    items_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
+        ('ALIGN', (2, 1), (2, -1), 'CENTER'),
+        ('ALIGN', (3, 1), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('TOPPADDING', (0, 0), (-1, 0), 12),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 1), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(items_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Tabla de totales
+    totals_data = [
+        ['Subtotal:', f'${cuenta.subtotal:,.0f} COP'],
+        ['Descuento:', f'${cuenta.discount_amount:,.0f} COP'],
+        [f'IVA ({cuenta.tax_percentage}%):', f'${cuenta.tax_amount:,.0f} COP'],
+        ['<b>TOTAL:</b>', f'<b>${cuenta.total:,.0f} COP</b>'],
+    ]
+    
+    totals_table = Table(totals_data, colWidths=[5*inch, 2.3*inch])
+    totals_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('TEXTCOLOR', (0, 0), (-1, 2), colors.black),
+        ('TEXTCOLOR', (0, 3), (-1, 3), colors.HexColor('#dc2626')),
+        ('FONTNAME', (0, 3), (-1, 3), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 3), (-1, 3), 14),
+        ('LINEABOVE', (0, 3), (-1, 3), 2, colors.HexColor('#dc2626')),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(totals_table)
+    
+    # Notas
+    if cuenta.notes:
+        elements.append(Spacer(1, 0.3*inch))
+        elements.append(Paragraph('<b>Notas:</b>', styles['Normal']))
+        elements.append(Paragraph(cuenta.notes, styles['Normal']))
+    
+    # Construir PDF
+    doc.build(elements)
+    
+    # Obtener el valor del buffer
+    pdf = buffer.getvalue()
+    buffer.close()
+    
+    # Crear respuesta
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="cuenta_cobro_{cuenta.number}.pdf"'
-    response['Content-Transfer-Encoding'] = 'binary'
-    response.write(result)
+    response.write(pdf)
     
     return response
 

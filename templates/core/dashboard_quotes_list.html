@@ -36,7 +36,7 @@
                             {{ quote.get_status_display }}
                         </span>
                     </td>
-                    <td class="px-5 py-3.5 text-sm text-white font-bold">{{ quote.total|intcomma }}</td>
+                    <td class="px-5 py-3.5 text-sm text-white font-bold">${{ quote.total|floatformat:0|intcomma }} COP</td>
                     <td class="px-5 py-3.5 text-sm text-gray-400">{{ quote.valid_until|date:"d/m/Y" }}</td>
                     <td class="px-5 py-3.5 text-right">
                         <a href="{% url detail_url quote.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-lg hover:bg-red-500/20 transition">
