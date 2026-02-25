@@ -890,36 +890,6 @@ def dashboard_cuenta_mark_paid(request, pk):
 
 @login_required
 @dashboard_required
-def dashboard_cuenta_pdf(request, pk):
-    """Genera PDF de la cuenta de cobro"""
-    from django.http import HttpResponse
-    from django.template.loader import render_to_string
-    from weasyprint import HTML
-    import tempfile
-    
-    cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
-    
-    # Renderizar el template HTML
-    html_string = render_to_string('core/dashboard_cuenta_pdf.html', {
-        'cuenta': cuenta,
-        'site_name': 'Megadominio',
-    })
-    
-    # Crear PDF
-    html = HTML(string=html_string)
-    result = html.write_pdf()
-    
-    # Crear respuesta HTTP con el PDF
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'inline; filename="cuenta_cobro_{cuenta.number}.pdf"'
-    response['Content-Transfer-Encoding'] = 'binary'
-    response.write(result)
-    
-    return response
-
-
-@login_required
-@dashboard_required
 def dashboard_cuenta_delete(request, pk):
     cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
     if request.method == 'POST':
@@ -938,157 +908,327 @@ def dashboard_cuenta_delete(request, pk):
 @login_required
 @dashboard_required
 def dashboard_cuenta_pdf(request, pk):
-    """Genera PDF de la cuenta de cobro"""
+    """Genera PDF de la cuenta de cobro con formato profesional"""
     from django.http import HttpResponse
     from reportlab.lib.pagesizes import letter
     from reportlab.lib import colors
     from reportlab.lib.units import inch
-    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image as RLImage
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
     from io import BytesIO
+    import os
+    from django.conf import settings
     
     cuenta = get_object_or_404(CuentaDeCobro, pk=pk)
     
     # Crear el PDF en memoria
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
+    doc = SimpleDocTemplate(
+        buffer, 
+        pagesize=letter, 
+        topMargin=0.75*inch, 
+        bottomMargin=0.75*inch,
+        leftMargin=0.75*inch,
+        rightMargin=0.75*inch
+    )
     elements = []
     styles = getSampleStyleSheet()
     
     # Estilos personalizados
     title_style = ParagraphStyle(
-        'CustomTitle',
+        'Title',
         parent=styles['Heading1'],
-        fontSize=24,
-        textColor=colors.HexColor('#dc2626'),
-        alignment=TA_CENTER,
-        spaceAfter=30,
+        fontSize=16,
+        fontName='Helvetica-Bold',
+        textColor=colors.black,
+        alignment=TA_LEFT,
+        spaceAfter=0,
     )
     
-    subtitle_style = ParagraphStyle(
-        'CustomSubtitle',
+    date_style = ParagraphStyle(
+        'Date',
         parent=styles['Normal'],
         fontSize=10,
-        textColor=colors.gray,
-        alignment=TA_CENTER,
-        spaceAfter=20,
+        fontName='Helvetica',
+        alignment=TA_RIGHT,
+        spaceAfter=0,
     )
     
-    heading_style = ParagraphStyle(
-        'CustomHeading',
-        parent=styles['Heading2'],
-        fontSize=14,
-        textColor=colors.HexColor('#dc2626'),
+    info_style = ParagraphStyle(
+        'Info',
+        parent=styles['Normal'],
+        fontSize=9,
+        fontName='Helvetica',
+        leading=12,
+    )
+    
+    info_bold_style = ParagraphStyle(
+        'InfoBold',
+        parent=styles['Normal'],
+        fontSize=9,
+        fontName='Helvetica-Bold',
+        leading=12,
+    )
+    
+    observation_style = ParagraphStyle(
+        'Observation',
+        parent=styles['Normal'],
+        fontSize=8,
+        fontName='Helvetica',
+        alignment=TA_LEFT,
         spaceAfter=12,
     )
     
-    # Encabezado
-    elements.append(Paragraph('MEGADOMINIO', title_style))
-    elements.append(Paragraph('Soluciones Digitales Profesionales', subtitle_style))
-    elements.append(Paragraph('📧 info@megadominio.com | 📱 +57 300 123 4567 | 📍 Bogotá, Colombia', subtitle_style))
-    elements.append(Spacer(1, 0.3*inch))
+    legal_style = ParagraphStyle(
+        'Legal',
+        parent=styles['Normal'],
+        fontSize=7,
+        fontName='Helvetica-Oblique',
+        alignment=TA_LEFT,
+    )
     
-    # Información del documento
-    elements.append(Paragraph(f'CUENTA DE COBRO #{cuenta.number}', heading_style))
-    elements.append(Paragraph(f'Estado: {cuenta.get_status_display()}', styles['Normal']))
-    elements.append(Spacer(1, 0.2*inch))
+    # Header con logo y título
+    header_data = []
     
-    # Información del cliente
-    info_data = [
-        ['<b>INFORMACIÓN DEL CLIENTE</b>', '<b>INFORMACIÓN DEL DOCUMENTO</b>'],
-        [f'Cliente: {cuenta.client.name}', f'Fecha de Emisión: {cuenta.issue_date.strftime("%d/%m/%Y")}'],
-        [f'Email: {cuenta.client.email}', f'Fecha de Vencimiento: {cuenta.due_date.strftime("%d/%m/%Y")}'],
+    # Intentar cargar el logo desde varias ubicaciones posibles
+    logo = None
+    possible_logo_paths = [
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'logo.png'),
+        os.path.join(settings.BASE_DIR, 'static', 'img', 'logo.jpg'),
+        os.path.join(settings.BASE_DIR, 'static', 'images', 'logo.png'),
+        os.path.join(settings.BASE_DIR, 'staticfiles', 'img', 'logo.png'),
     ]
     
-    if cuenta.client.company:
-        info_data.insert(2, [f'Empresa: {cuenta.client.company}', ''])
-    if cuenta.client.phone:
-        info_data.insert(3, [f'Teléfono: {cuenta.client.phone}', ''])
-    if cuenta.quote:
-        info_data.append(['', f'Cotización: {cuenta.quote.number}'])
+    for logo_path in possible_logo_paths:
+        if os.path.exists(logo_path):
+            try:
+                logo = RLImage(logo_path, width=1.2*inch, height=0.4*inch)
+                break
+            except:
+                continue
+    
+    if logo:
+        header_data = [[
+            logo,
+            Paragraph(f'<b>CUENTA DE COBRO #{cuenta.number}</b>', title_style),
+            Paragraph(f'Fecha {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style)
+        ]]
+    else:
+        header_data = [[
+            Paragraph('<b>MEGADOMINIO</b>', info_bold_style),
+            Paragraph(f'<b>CUENTA DE COBRO #{cuenta.number}</b>', title_style),
+            Paragraph(f'Fecha {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style)
+        ]]
+    
+    header_table = Table(header_data, colWidths=[1.5*inch, 3*inch, 2.5*inch])
+    header_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('ALIGN', (0, 0), (0, 0), 'LEFT'),
+        ('ALIGN', (1, 0), (1, 0), 'CENTER'),
+        ('ALIGN', (2, 0), (2, 0), 'RIGHT'),
+    ]))
+    elements.append(header_table)
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Información emisor y cliente
+    # Información del emisor (tu empresa/persona)
+    emisor_nombre = getattr(settings, 'CUENTA_COBRO_EMISOR_NOMBRE', 'CRISTIAN GALLEGO ARBOLEDA')
+    emisor_documento = getattr(settings, 'CUENTA_COBRO_EMISOR_DOCUMENTO', 'C.C. 1.036.640.871')
+    emisor_direccion = getattr(settings, 'CUENTA_COBRO_EMISOR_DIRECCION', 'Cr 58F #63A-21')
+    emisor_ciudad = getattr(settings, 'CUENTA_COBRO_EMISOR_CIUDAD', 'Medellín, Antioquia')
+    emisor_telefono = getattr(settings, 'CUENTA_COBRO_EMISOR_TELEFONO', '300 860 1310')
+    emisor_email = getattr(settings, 'CUENTA_COBRO_EMISOR_EMAIL', 'info@megadominio.co')
+    
+    emisor_info = f'''<b>{emisor_nombre}</b><br/>
+{emisor_documento}<br/>
+{emisor_direccion}<br/>
+{emisor_ciudad}<br/>
+Tel: {emisor_telefono}<br/>
+Email: {emisor_email}'''
+    
+    # Información del cliente
+    cliente_nombre = cuenta.client.company or cuenta.client.name
+    cliente_documento = f'NIT {cuenta.client.document_number}' if cuenta.client.document_type == 'nit' else f'{cuenta.client.get_document_type_display()} {cuenta.client.document_number}'
+    
+    cliente_info = f'''<b>{cliente_nombre}</b><br/>
+{cliente_documento}<br/>'''
+    
+    if cuenta.client.address:
+        cliente_info += f'{cuenta.client.address}<br/>'
+    else:
+        cliente_info += 'Medellín, Antioquia<br/>'
+    
+    if cuenta.client.email:
+        # Intentar formar un email corporativo si es posible
+        if '@' in cuenta.client.email:
+            domain = cuenta.client.email.split("@")[1]
+            cliente_info += f'Email: {cuenta.client.email}'
+        else:
+            cliente_info += f'Email: {cuenta.client.email}'
+    
+    info_data = [[
+        Paragraph(emisor_info, info_style),
+        Paragraph(cliente_info, info_style)
+    ]]
     
     info_table = Table(info_data, colWidths=[3.5*inch, 3.5*inch])
     info_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#f9fafb')),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 0), (-1, 0), 11),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('LEFTPADDING', (0, 0), (-1, -1), 10),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 10),
-        ('TOPPADDING', (0, 1), (-1, -1), 8),
-        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+        ('ALIGN', (0, 0), (0, 0), 'LEFT'),
+        ('ALIGN', (1, 0), (1, 0), 'RIGHT'),
     ]))
     elements.append(info_table)
-    elements.append(Spacer(1, 0.3*inch))
+    elements.append(Spacer(1, 0.35*inch))
     
     # Tabla de items
-    elements.append(Paragraph('DETALLE DE ITEMS', heading_style))
-    
-    items_data = [['Servicio', 'Descripción', 'Cant.', 'Precio Unit.', 'Subtotal']]
+    items_data = [['<b>Descripción</b>', '<b>Cantidad</b>', '<b>Valor Unitario</b>', '<b>Subtotal</b>']]
     
     for item in cuenta.items.all():
+        desc = item.service.name if item.service else item.description
         items_data.append([
-            item.service.name if item.service else '-',
-            item.description[:40] + '...' if len(item.description) > 40 else item.description,
-            str(item.quantity),
-            f'${item.unit_price:,.0f}',
-            f'${item.subtotal:,.0f}',
+            desc,
+            str(int(item.quantity)),
+            f'${int(item.unit_price):,}'.replace(',', '.'),
+            f'${int(item.subtotal):,}'.replace(',', '.')
         ])
     
-    items_table = Table(items_data, colWidths=[1.8*inch, 2.2*inch, 0.7*inch, 1.3*inch, 1.3*inch])
+    items_table = Table(items_data, colWidths=[3.8*inch, 0.9*inch, 1.3*inch, 1.3*inch])
     items_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.black),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
-        ('ALIGN', (2, 1), (2, -1), 'CENTER'),
-        ('ALIGN', (3, 1), (-1, -1), 'RIGHT'),
+        ('ALIGN', (0, 0), (0, -1), 'LEFT'),
+        ('ALIGN', (1, 0), (1, -1), 'CENTER'),
+        ('ALIGN', (2, 0), (-1, -1), 'RIGHT'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 0), (-1, 0), 10),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('TOPPADDING', (0, 0), (-1, 0), 12),
-        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#e5e7eb')),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('LEFTPADDING', (0, 0), (-1, -1), 8),
         ('RIGHTPADDING', (0, 0), (-1, -1), 8),
-        ('TOPPADDING', (0, 1), (-1, -1), 8),
-        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+        ('TOPPADDING', (0, 0), (-1, -1), 8),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
     ]))
     elements.append(items_table)
+    elements.append(Spacer(1, 0.2*inch))
+    
+    # Total
+    total_text = f'<b>TOTAL A PAGAR: ${int(cuenta.total):,}'.replace(',', '.') + '</b>'
+    total_para = Paragraph(total_text, ParagraphStyle(
+        'Total',
+        parent=styles['Normal'],
+        fontSize=11,
+        fontName='Helvetica-Bold',
+        alignment=TA_RIGHT,
+    ))
+    elements.append(total_para)
+    elements.append(Spacer(1, 0.5*inch))
+    
+    # Observaciones - Detectar si son productos físicos o servicios
+    if not cuenta.notes:
+        # Revisar los items para determinar el tipo
+        items = cuenta.items.all()
+        tiene_servicios = False
+        tiene_productos = False
+        
+        # Palabras clave para productos físicos
+        keywords_productos = [
+            'procesador', 'cpu', 'ryzen', 'intel', 'core',
+            'tarjeta', 'madre', 'asus', 'prime', 'motherboard', 'mother',
+            'kit', 'memoria', 'ram', 'ddr', 'ddr4', 'ddr5',
+            'unidad', 'disco', 'ssd', 'hdd', 'nvme', 'm.2', 'sata',
+            'fuente', 'poder', 'psu', 'power', 'watts', 'bronze', 'gold',
+            'chasis', 'case', 'gabinete', 'atx', 'tower',
+            'ventilador', 'cooler', 'fan', 'rgb',
+            'gpu', 'grafica', 'nvidia', 'amd', 'radeon', 'geforce',
+            'video', 'sapphire', 'rtx', 'gtx',
+            'monitor', 'pantalla', 'display',
+            'teclado', 'mouse', 'raton',
+            'componente', 'hardware', 'pieza',
+            'montaje', 'ensamblaje', 'instalacion',
+            'cable', 'adaptador', 'conector'
+        ]
+        
+        # Palabras clave para servicios
+        keywords_servicios = [
+            'hosting', 'dominio', 'alojamiento', 'servidor', 'vps',
+            'desarrollo', 'diseño', 'web', 'sitio', 'página',
+            'mantenimiento', 'soporte', 'actualizacion',
+            'email', 'correo', 'smtp',
+            'seguridad', 'ssl', 'certificado', 'backup',
+            'optimizacion', 'seo', 'marketing',
+            'consultoria', 'asesoria', 'capacitacion',
+            'migracion', 'transferencia',
+            'licencia', 'suscripcion', 'plan',
+            'mensual', 'anual', 'recurrente'
+        ]
+        
+        for item in items:
+            texto_analizar = ''
+            
+            if item.service:
+                texto_analizar = item.service.name.lower()
+                # También considerar el tipo de facturación
+                billing_type = item.service.billing_type
+            else:
+                texto_analizar = item.description.lower()
+                billing_type = None
+            
+            # Verificar productos físicos
+            is_physical = any(keyword in texto_analizar for keyword in keywords_productos)
+            
+            # Verificar servicios
+            is_service = any(keyword in texto_analizar for keyword in keywords_servicios)
+            
+            # Si tiene billing_type mensual o anual, probablemente es un servicio
+            if billing_type in ['monthly', 'annual']:
+                tiene_servicios = True
+            # Si es pago único y tiene palabras de productos, es producto
+            elif billing_type == 'unique' and (is_physical or not is_service):
+                tiene_productos = True
+            # Si no tiene billing_type, decidir por palabras clave
+            elif is_physical and not is_service:
+                tiene_productos = True
+            elif is_service and not is_physical:
+                tiene_servicios = True
+            else:
+                # Por defecto, si no está claro, considerarlo como servicio
+                tiene_servicios = True
+        
+        # Determinar el mensaje según el tipo predominante usando configuración de settings
+        if tiene_productos and not tiene_servicios:
+            observaciones = getattr(settings, 'CUENTA_COBRO_OBS_PRODUCTOS',
+                "Garantía de montaje 30 días sobre mano de obra. Los componentes tienen garantía del fabricante según cada pieza.")
+        elif tiene_servicios and not tiene_productos:
+            observaciones = getattr(settings, 'CUENTA_COBRO_OBS_SERVICIOS',
+                "Garantía de 30 días sobre el servicio prestado. Soporte técnico incluido durante el período de garantía.")
+        else:
+            # Mezcla de productos y servicios
+            observaciones = getattr(settings, 'CUENTA_COBRO_OBS_MIXTO',
+                "Garantía de 30 días sobre mano de obra y servicios prestados. Los componentes físicos tienen garantía del fabricante según cada pieza.")
+    else:
+        observaciones = cuenta.notes
+    obs_para = Paragraph(f'<b>OBSERVACIONES:</b> {observaciones}', observation_style)
+    elements.append(obs_para)
+    elements.append(Spacer(1, 0.4*inch))
+    
+    # Firma
+    firma_data = [[Paragraph('_______________________', info_style)]]
+    firma_table = Table(firma_data, colWidths=[2.5*inch])
+    firma_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, 0), 'LEFT'),
+    ]))
+    elements.append(firma_table)
+    
+    firma_info = f'''<b>{emisor_nombre}</b><br/>
+{emisor_documento}'''
+    elements.append(Paragraph(firma_info, info_bold_style))
     elements.append(Spacer(1, 0.3*inch))
     
-    # Tabla de totales
-    totals_data = [
-        ['Subtotal:', f'${cuenta.subtotal:,.0f} COP'],
-        ['Descuento:', f'${cuenta.discount_amount:,.0f} COP'],
-        [f'IVA ({cuenta.tax_percentage}%):', f'${cuenta.tax_amount:,.0f} COP'],
-        ['<b>TOTAL:</b>', f'<b>${cuenta.total:,.0f} COP</b>'],
-    ]
-    
-    totals_table = Table(totals_data, colWidths=[5*inch, 2.3*inch])
-    totals_table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
-        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
-        ('FONTSIZE', (0, 0), (-1, -1), 11),
-        ('TEXTCOLOR', (0, 0), (-1, 2), colors.black),
-        ('TEXTCOLOR', (0, 3), (-1, 3), colors.HexColor('#dc2626')),
-        ('FONTNAME', (0, 3), (-1, 3), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 3), (-1, 3), 14),
-        ('LINEABOVE', (0, 3), (-1, 3), 2, colors.HexColor('#dc2626')),
-        ('TOPPADDING', (0, 0), (-1, -1), 6),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-    ]))
-    elements.append(totals_table)
-    
-    # Notas
-    if cuenta.notes:
-        elements.append(Spacer(1, 0.3*inch))
-        elements.append(Paragraph('<b>Notas:</b>', styles['Normal']))
-        elements.append(Paragraph(cuenta.notes, styles['Normal']))
+    # Texto legal
+    legal_text = getattr(settings, 'CUENTA_COBRO_TEXTO_LEGAL',
+        'Conforme al parágrafo 2 del art 383 ET, informo que no he sido contratado o vinculado las (2) o más trabajadores asociados a mi actividad. NO PRACTICAR RETENCION EN LA FUENTE.')
+    elements.append(Paragraph(legal_text, legal_style))
     
     # Construir PDF
     doc.build(elements)
