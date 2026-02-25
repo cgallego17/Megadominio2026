@@ -1091,10 +1091,18 @@ def dashboard_cuenta_pdf(request, pk):
 
     emisor_nombre = getattr(settings, 'CUENTA_COBRO_EMISOR_NOMBRE', 'CRISTIAN GALLEGO ARBOLEDA')
     emisor_documento = getattr(settings, 'CUENTA_COBRO_EMISOR_DOCUMENTO', 'C.C. 1.036.640.871')
-    emisor_direccion = getattr(settings, 'CUENTA_COBRO_EMISOR_DIRECCION', '')
-    emisor_ciudad = getattr(settings, 'CUENTA_COBRO_EMISOR_CIUDAD', '')
-    emisor_telefono = getattr(settings, 'CUENTA_COBRO_EMISOR_TELEFONO', '')
-    emisor_email = getattr(settings, 'CUENTA_COBRO_EMISOR_EMAIL', '')
+    emisor_direccion = getattr(
+        settings, 'CUENTA_COBRO_EMISOR_DIRECCION', 'Cr 58F #63A-21'
+    )
+    emisor_ciudad = getattr(
+        settings, 'CUENTA_COBRO_EMISOR_CIUDAD', 'Medellín, Antioquia'
+    )
+    emisor_telefono = getattr(
+        settings, 'CUENTA_COBRO_EMISOR_TELEFONO', '300 860 1310'
+    )
+    emisor_email = getattr(
+        settings, 'CUENTA_COBRO_EMISOR_EMAIL', 'info@megadominio.co'
+    )
 
     doc_type = 'NIT' if cuenta.client.document_type == 'nit' else cuenta.client.get_document_type_display()
     client_name = cuenta.client.company or cuenta.client.name
@@ -1120,8 +1128,8 @@ def dashboard_cuenta_pdf(request, pk):
         escape(emisor_documento),
         escape(emisor_direccion),
         escape(emisor_ciudad),
-        f"Tel: {escape(emisor_telefono)}" if emisor_telefono else "",
-        f"Email: {escape(emisor_email)}" if emisor_email else "",
+        f"Tel: {escape(emisor_telefono)}",
+        f"Email: {escape(emisor_email)}",
     ]
 
     info_table = Table([[
@@ -1221,17 +1229,35 @@ def dashboard_cuenta_pdf(request, pk):
             except Exception:
                 pass
 
+    signature_name = Paragraph(
+        f"<b>{escape(emisor_nombre)}</b><br/>{escape(emisor_documento)}",
+        left_info_style
+    )
+
     if signature_image:
-        elements.append(signature_image)
-        elements.append(Spacer(1, 0.03 * inch))
+        signature_block = Table(
+            [[signature_image], [signature_name]],
+            colWidths=[2.5 * inch]
+        )
+        signature_block.setStyle(TableStyle([
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 0),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+            ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ]))
+        elements.append(signature_block)
     else:
-        signature_line = Table([[""]], colWidths=[1.6 * inch], rowHeights=[0.01 * inch])
+        signature_line = Table([[""], [signature_name]], colWidths=[2.5 * inch])
         signature_line.setStyle(TableStyle([
             ('LINEABOVE', (0, 0), (0, 0), 1, colors.black),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 0),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+            ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
         ]))
         elements.append(signature_line)
-        elements.append(Spacer(1, 0.08 * inch))
-    elements.append(Paragraph(f"<b>{escape(emisor_nombre)}</b><br/>{escape(emisor_documento)}", left_info_style))
     elements.append(Spacer(1, 0.22 * inch))
 
     legal_text = getattr(
