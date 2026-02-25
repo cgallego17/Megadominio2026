@@ -1049,28 +1049,10 @@ def dashboard_cuenta_pdf(request, pk):
         alignment=2,
     )
 
-    # Header
-    logo_paths = [
-        os.path.join(settings.BASE_DIR, 'static', 'img', 'logo.png'),
-        os.path.join(settings.BASE_DIR, 'static', 'img', 'logo.jpg'),
-        os.path.join(settings.BASE_DIR, 'static', 'images', 'logo.png'),
-        os.path.join(settings.BASE_DIR, 'staticfiles', 'img', 'logo.png'),
-    ]
-    logo_cell = Paragraph('<b> </b>', styles['Normal'])
-    for path in logo_paths:
-        if os.path.exists(path):
-            try:
-                logo = RLImage(path)
-                logo.drawHeight = 0.38 * inch
-                logo.drawWidth = 0.85 * inch
-                logo_cell = logo
-                break
-            except Exception:
-                pass
-
+    # Header (sin logo)
     header_table = Table(
         [[
-            logo_cell,
+            Paragraph('', styles['Normal']),
             Paragraph(f'CUENTA DE COBRO #{escape(str(cuenta.number))}', title_style),
             Paragraph(f'FECHA {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style),
         ]],
@@ -1225,6 +1207,7 @@ def dashboard_cuenta_pdf(request, pk):
                     signature_image = RLImage(BytesIO(sig_file.read()))
                 signature_image.drawWidth = 2.35 * inch
                 signature_image.drawHeight = 0.62 * inch
+                signature_image.hAlign = 'LEFT'
                 break
             except Exception:
                 pass
