@@ -11,7 +11,7 @@ from apps.invoices.models import Invoice
 from apps.clients.models import Client
 from apps.services.models import Service, ClientService
 from apps.accounts.models import User
-from apps.store.models import Product, ProductCategory
+from apps.store.models import Product, ProductCategory, Order
 from .models import HomeClientLogo, HomeTestimonial
 from apps.core.emails import send_admin_notification, send_generic_notification
 
@@ -96,12 +96,19 @@ def dashboard(request):
         quote_count=Count('quoteitem')
     ).order_by('-quote_count')[:5]
     
-    # Ingresos del último mes
+    # Ingresos del último mes (facturas pagadas + compras aprobadas)
     one_month_ago = timezone.now() - timedelta(days=30)
-    monthly_revenue = Invoice.objects.filter(
+    invoices_revenue = Invoice.objects.filter(
         status='paid',
         paid_date__gte=one_month_ago
     ).aggregate(total=Sum('total'))['total'] or 0
+    orders_revenue = Order.objects.filter(
+        payment_status='approved'
+    ).filter(
+        Q(paid_at__gte=one_month_ago) |
+        Q(paid_at__isnull=True, updated_at__gte=one_month_ago)
+    ).aggregate(total=Sum('total'))['total'] or 0
+    monthly_revenue = invoices_revenue + orders_revenue
     
     context = {
         'total_quotes': total_quotes,

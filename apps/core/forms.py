@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import get_user_model
 from apps.accounts.models import Country, State, City, UserAddress
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService
+from apps.services.models import Service, ClientService, ClientEmailAccount
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.store.models import ProductCategory, Product, Order, OrderItem
@@ -260,7 +260,7 @@ class ClientServiceForm(forms.ModelForm):
     class Meta:
         model = ClientService
         fields = ['client', 'service', 'billing_type', 'status', 'start_date', 'end_date',
-                  'monthly_price', 'renewal_price', 'notes']
+                  'monthly_price', 'renewal_price', 'email_accounts_limit', 'notes']
         widgets = {
             'client': forms.Select(attrs=_select),
             'service': forms.Select(attrs=_select),
@@ -268,8 +268,43 @@ class ClientServiceForm(forms.ModelForm):
             'status': forms.Select(attrs=_select),
             'monthly_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00'}),
             'renewal_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00 (0 = igual al valor)'}),
+            'email_accounts_limit': forms.NumberInput(attrs={**_number, 'step': '1', 'min': '0', 'placeholder': '0'}),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas sobre este servicio...'}),
         }
+
+
+class ClientEmailAccountForm(forms.ModelForm):
+    class Meta:
+        model = ClientEmailAccount
+        fields = ['email', 'display_name', 'is_active', 'notes']
+        widgets = {
+            'email': forms.EmailInput(attrs={**_input, 'placeholder': 'nombre@tudominio.com'}),
+            'display_name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre para mostrar'}),
+            'is_active': forms.CheckboxInput(attrs=_checkbox),
+            'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas de la cuenta de correo...'}),
+        }
+
+
+class ClientEmailPasswordChangeForm(forms.Form):
+    new_password = forms.CharField(
+        label='Nueva contraseña',
+        min_length=8,
+        widget=forms.PasswordInput(attrs={**_input, 'autocomplete': 'new-password'}),
+        help_text='Mínimo 8 caracteres.',
+    )
+    confirm_password = forms.CharField(
+        label='Confirmar contraseña',
+        min_length=8,
+        widget=forms.PasswordInput(attrs={**_input, 'autocomplete': 'new-password'}),
+    )
+
+    def clean(self):
+        cleaned = super().clean()
+        p1 = cleaned.get('new_password')
+        p2 = cleaned.get('confirm_password')
+        if p1 and p2 and p1 != p2:
+            self.add_error('confirm_password', 'Las contraseñas no coinciden.')
+        return cleaned
 
 
 # ══════════════════════════════════════════════════════════════════════

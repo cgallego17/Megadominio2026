@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 
@@ -107,6 +106,11 @@ class ClientService(models.Model):
         verbose_name="Valor renovación",
         help_text="Si es 0, se asumirá el mismo valor del campo 'Valor'",
     )
+    email_accounts_limit = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Cuentas de correo habilitadas",
+        help_text="Aplica para servicios de correo/email. 0 = sin habilitar.",
+    )
     notes = models.TextField(
         blank=True, 
         verbose_name="Notas"
@@ -122,3 +126,61 @@ class ClientService(models.Model):
     
     def __str__(self):
         return f"{self.client.name} - {self.service.name}"
+
+    @property
+    def is_email_service(self):
+        """Determina si este servicio es de tipo correo/email."""
+        text = (
+            f"{self.service.name} {self.service.description}".lower()
+        )
+        keywords = (
+            "email", "correo", "mail", "workspace",
+            "google workspace", "smtp", "imap", "pop3",
+            "buzon", "buzón", "cuenta de correo",
+        )
+        return any(word in text for word in keywords)
+
+
+class ClientEmailAccount(models.Model):
+    """Cuentas de correo administradas por el cliente para un servicio email."""
+
+    client_service = models.ForeignKey(
+        ClientService,
+        on_delete=models.CASCADE,
+        related_name="email_accounts",
+        verbose_name="Servicio del cliente",
+    )
+    email = models.EmailField(
+        max_length=255,
+        verbose_name="Correo",
+    )
+    display_name = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name="Nombre para mostrar",
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Activa",
+    )
+    notes = models.TextField(
+        blank=True,
+        verbose_name="Notas",
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Fecha de creación",
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Fecha de actualización",
+    )
+
+    class Meta:
+        verbose_name = "Cuenta de correo del cliente"
+        verbose_name_plural = "Cuentas de correo de clientes"
+        ordering = ["email"]
+        unique_together = ["client_service", "email"]
+
+    def __str__(self):
+        return f"{self.client_service.client.name} - {self.email}"

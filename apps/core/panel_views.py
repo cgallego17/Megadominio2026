@@ -1,15 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from io import BytesIO
+import zipfile
 from django.db.models import Sum
 from apps.clients.models import Client
-from apps.services.models import ClientService
+from apps.services.models import ClientService, ClientEmailAccount
 from apps.store.models import Order
 from apps.invoices.models import CuentaDeCobro
 from apps.accounts.models import UserAddress, State, City
-from .forms import ProfileForm, PasswordChangeForm, UserAddressForm
+from .forms import (
+    ProfileForm, PasswordChangeForm, UserAddressForm,
+    ClientEmailAccountForm, ClientEmailPasswordChangeForm,
+)
+from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
 
 
 def get_client_for_user(user):
@@ -84,6 +91,339 @@ def panel_servicios(request):
 
 
 @login_required
+def panel_servicio_emails(request, pk):
+    """Administración de cuentas de correo para un servicio del cliente."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a este servicio.")
+
+    client_service = get_object_or_404(
+        ClientService.objects.select_related('service', 'client'),
+        pk=pk,
+        client=client,
+    )
+    if not client_service.is_email_service:
+        messages.warning(
+            request,
+            'Este servicio no corresponde a correo electrónico.',
+        )
+        return redirect('core:panel_servicios')
+
+    accounts = client_service.email_accounts.all().order_by('email')
+    limit = client_service.email_accounts_limit
+    can_add_more = (limit == 0) or (accounts.count() < limit)
+
+    if request.method == 'POST':
+        if not can_add_more:
+            messages.error(
+                request,
+                'Ya alcanzaste el límite de cuentas habilitadas para este servicio.',
+            )
+            return redirect('core:panel_servicio_emails', pk=pk)
+
+        form = ClientEmailAccountForm(request.POST)
+        if form.is_valid():
+            email_account = form.save(commit=False)
+            email_account.client_service = client_service
+            email_account.save()
+            messages.success(request, 'Cuenta de correo creada correctamente.')
+            return redirect('core:panel_servicio_emails', pk=pk)
+    else:
+        form = ClientEmailAccountForm()
+
+    return render(request, 'panel/panel_servicio_emails.html', {
+        'client_service': client_service,
+        'accounts': accounts,
+        'limit': limit,
+        'can_add_more': can_add_more,
+        'form': form,
+    })
+
+
+@login_required
+def panel_servicio_email_delete(request, pk, email_pk):
+    """Eliminar una cuenta de correo de un servicio del cliente."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a este servicio.")
+
+    client_service = get_object_or_404(ClientService, pk=pk, client=client)
+    email_account = get_object_or_404(
+        ClientEmailAccount,
+        pk=email_pk,
+        client_service=client_service,
+    )
+
+    if request.method == 'POST':
+        email_account.delete()
+        messages.success(request, 'Cuenta de correo eliminada.')
+
+    return redirect('core:panel_servicio_emails', pk=pk)
+
+
+@login_required
+def panel_servicio_email_password(request, pk, email_pk):
+    """Cambiar contraseña de una cuenta de correo desde el panel del cliente."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a este servicio.")
+
+    client_service = get_object_or_404(ClientService, pk=pk, client=client)
+    email_account = get_object_or_404(
+        ClientEmailAccount,
+        pk=email_pk,
+        client_service=client_service,
+    )
+
+    if request.method == 'POST':
+        form = ClientEmailPasswordChangeForm(request.POST)
+        if form.is_valid():
+            if not getattr(settings, "CPANEL_SYNC_ENABLED", False):
+                messages.error(
+                    request,
+                    "La sincronización con cPanel está desactivada. Contacta soporte.",
+                )
+                return redirect('core:panel_servicio_emails', pk=pk)
+
+            required = (
+                getattr(settings, "CPANEL_HOST", ""),
+                getattr(settings, "CPANEL_USERNAME", ""),
+                getattr(settings, "CPANEL_API_TOKEN", ""),
+            )
+            if not all(required):
+                messages.error(
+                    request,
+                    "No se puede actualizar: faltan variables de conexión con cPanel.",
+                )
+                return redirect('core:panel_servicio_emails', pk=pk)
+
+            cpanel = CpanelAPI(
+                host=settings.CPANEL_HOST,
+                username=settings.CPANEL_USERNAME,
+                api_token=settings.CPANEL_API_TOKEN,
+                use_https=getattr(settings, "CPANEL_USE_HTTPS", True),
+                port=getattr(settings, "CPANEL_PORT", 2083),
+                timeout=getattr(settings, "CPANEL_TIMEOUT", 20),
+            )
+            try:
+                cpanel.update_mailbox_password(
+                    email=email_account.email,
+                    new_password=form.cleaned_data['new_password'],
+                )
+                messages.success(
+                    request,
+                    f'Contraseña actualizada para {email_account.email}.',
+                )
+                return redirect('core:panel_servicio_emails', pk=pk)
+            except CpanelAPIError as exc:
+                messages.error(
+                    request,
+                    f'No se pudo actualizar la contraseña en cPanel: {exc}',
+                )
+    else:
+        form = ClientEmailPasswordChangeForm()
+
+    return render(request, 'panel/panel_servicio_email_password.html', {
+        'client_service': client_service,
+        'email_account': email_account,
+        'form': form,
+    })
+
+
+@login_required
+def panel_servicio_email_outlook_prf(request, pk, email_pk):
+    """Descarga un archivo .prf para autoconfigurar Outlook clásico."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a este servicio.")
+
+    client_service = get_object_or_404(ClientService, pk=pk, client=client)
+    email_account = get_object_or_404(
+        ClientEmailAccount,
+        pk=email_pk,
+        client_service=client_service,
+    )
+
+    account_name = email_account.email
+    display_name = email_account.display_name or client.name or account_name
+    local_part, domain = account_name.split('@', 1)
+
+    imap_host = getattr(settings, 'OUTLOOK_IMAP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
+    smtp_host = getattr(settings, 'OUTLOOK_SMTP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
+    imap_port = int(getattr(settings, 'OUTLOOK_IMAP_PORT', 993))
+    smtp_port = int(getattr(settings, 'OUTLOOK_SMTP_PORT', 465))
+    imap_ssl = bool(getattr(settings, 'OUTLOOK_IMAP_SSL', True))
+    smtp_ssl = bool(getattr(settings, 'OUTLOOK_SMTP_SSL', True))
+
+    # Nota: por seguridad no se incluye contraseña en el archivo.
+    prf_content = f"""[General]
+Custom=1
+ProfileName=Megadominio-{local_part}
+DefaultProfile=Yes
+OverwriteProfile=Yes
+ModifyDefaultProfileIfPresent=True
+
+[Service List]
+Service1=Microsoft Outlook Client
+Service2=Outlook Address Book
+Service3=Internet E-mail
+
+[Service3]
+AccountName={account_name}
+DisplayName={display_name}
+EmailAddress={account_name}
+ReplyAddress={account_name}
+ReplyE-Mail={account_name}
+MailAccountType=IMAP
+IncomingServer={imap_host}
+IncomingUserName={account_name}
+IncomingPort={imap_port}
+IncomingUseSSL={1 if imap_ssl else 0}
+OutgoingServer={smtp_host}
+OutgoingUserName={account_name}
+OutgoingPort={smtp_port}
+OutgoingUseSSL={1 if smtp_ssl else 0}
+SMTPUseAuth=1
+SPA=0
+Domain={domain}
+LeaveOnServer=1
+"""
+
+    filename = f"outlook-autoconfig-{local_part}.prf"
+    response = HttpResponse(prf_content, content_type='application/octet-stream')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+@login_required
+def panel_servicio_email_outlook_pack(request, pk, email_pk):
+    """Descarga ZIP con .prf + .bat para importación 1 clic en Outlook clásico."""
+    client = get_client_for_user(request.user)
+    if not client:
+        return HttpResponseForbidden("No tienes acceso a este servicio.")
+
+    client_service = get_object_or_404(ClientService, pk=pk, client=client)
+    email_account = get_object_or_404(
+        ClientEmailAccount,
+        pk=email_pk,
+        client_service=client_service,
+    )
+
+    account_name = email_account.email
+    local_part, _domain = account_name.split('@', 1)
+    display_name = email_account.display_name or client.name or account_name
+
+    imap_host = getattr(settings, 'OUTLOOK_IMAP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
+    smtp_host = getattr(settings, 'OUTLOOK_SMTP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
+    imap_port = int(getattr(settings, 'OUTLOOK_IMAP_PORT', 993))
+    smtp_port = int(getattr(settings, 'OUTLOOK_SMTP_PORT', 465))
+    imap_ssl = bool(getattr(settings, 'OUTLOOK_IMAP_SSL', True))
+    smtp_ssl = bool(getattr(settings, 'OUTLOOK_SMTP_SSL', True))
+
+    prf_filename = f"outlook-autoconfig-{local_part}.prf"
+    bat_filename = "instalar-outlook.bat"
+    readme_filename = "LEEME.txt"
+
+    prf_content = f"""[General]
+Custom=1
+ProfileName=Megadominio-{local_part}
+DefaultProfile=Yes
+OverwriteProfile=Yes
+ModifyDefaultProfileIfPresent=True
+
+[Service List]
+Service1=Microsoft Outlook Client
+Service2=Outlook Address Book
+Service3=Internet E-mail
+
+[Service3]
+AccountName={account_name}
+DisplayName={display_name}
+EmailAddress={account_name}
+ReplyAddress={account_name}
+ReplyE-Mail={account_name}
+MailAccountType=IMAP
+IncomingServer={imap_host}
+IncomingUserName={account_name}
+IncomingPort={imap_port}
+IncomingUseSSL={1 if imap_ssl else 0}
+OutgoingServer={smtp_host}
+OutgoingUserName={account_name}
+OutgoingPort={smtp_port}
+OutgoingUseSSL={1 if smtp_ssl else 0}
+SMTPUseAuth=1
+SPA=0
+LeaveOnServer=1
+"""
+
+    bat_content = f"""@echo off
+setlocal
+set PRF=%~dp0{prf_filename}
+set OUTLOOK_EXE=
+
+if not exist "%PRF%" (
+  echo No se encontro el archivo PRF: %PRF%
+  pause
+  exit /b 1
+)
+
+rem Buscar Outlook en rutas comunes (365/2021/2019/2016, x64/x86)
+for %%P in (
+  "%ProgramFiles%\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE"
+  "%ProgramFiles(x86)%\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE"
+  "%ProgramFiles%\\Microsoft Office\\Office16\\OUTLOOK.EXE"
+  "%ProgramFiles(x86)%\\Microsoft Office\\Office16\\OUTLOOK.EXE"
+  "%ProgramFiles%\\Microsoft Office\\Office15\\OUTLOOK.EXE"
+  "%ProgramFiles(x86)%\\Microsoft Office\\Office15\\OUTLOOK.EXE"
+  "%ProgramFiles%\\Microsoft Office\\Office14\\OUTLOOK.EXE"
+  "%ProgramFiles(x86)%\\Microsoft Office\\Office14\\OUTLOOK.EXE"
+) do (
+  if exist %%~P (
+    set OUTLOOK_EXE=%%~P
+    goto :found
+  )
+)
+
+echo No se encontro OUTLOOK.EXE en rutas comunes.
+echo Abre Outlook clasico manualmente e importa el archivo:
+echo %PRF%
+pause
+exit /b 1
+
+:found
+echo Importando perfil con:
+echo %OUTLOOK_EXE%
+"%OUTLOOK_EXE%" /importprf "%PRF%"
+
+echo.
+echo Si Outlook no abre, inicia Outlook clasico manualmente.
+echo Luego ingresa la contrasena del correo cuando te la solicite.
+pause
+"""
+
+    readme_content = (
+        "Pasos:\r\n"
+        "1) Descomprime este ZIP en una carpeta.\r\n"
+        "2) Ejecuta instalar-outlook.bat como usuario normal.\r\n"
+        "3) Abre Outlook clasico (no el nuevo Outlook).\r\n"
+        f"4) Usuario de correo: {account_name}\r\n"
+        "5) Ingresa la contrasena cuando Outlook la solicite.\r\n"
+    )
+
+    zip_buffer = BytesIO()
+    with zipfile.ZipFile(zip_buffer, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr(prf_filename, prf_content)
+        zf.writestr(bat_filename, bat_content)
+        zf.writestr(readme_filename, readme_content)
+
+    zip_buffer.seek(0)
+    zip_name = f"outlook-1clic-{local_part}.zip"
+    response = HttpResponse(zip_buffer.getvalue(), content_type='application/zip')
+    response['Content-Disposition'] = f'attachment; filename="{zip_name}"'
+    return response
+
+
+@login_required
 def panel_compras(request):
     """Listado de compras/órdenes del usuario."""
     orders = Order.objects.filter(
@@ -143,8 +483,8 @@ def panel_cuenta_pdf(request, pk):
         return HttpResponseForbidden("No tienes acceso a esta cuenta de cobro.")
 
     # Reutiliza la misma generación PDF del dashboard.
-    from . import dashboard_views as dv
-    return dv.dashboard_cuenta_pdf.__wrapped__.__wrapped__(request, pk)
+    from apps.core.dashboard_views import dashboard_cuenta_pdf
+    return dashboard_cuenta_pdf.__wrapped__.__wrapped__(request, pk)
 
 
 @login_required

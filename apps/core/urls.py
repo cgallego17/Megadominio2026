@@ -148,6 +148,11 @@ urlpatterns = [
     # ── Panel de usuario (Mi Cuenta) ──
     path('mi-cuenta/', pv.panel_home, name='panel_home'),
     path('mi-cuenta/servicios/', pv.panel_servicios, name='panel_servicios'),
+    path('mi-cuenta/servicios/<int:pk>/emails/', pv.panel_servicio_emails, name='panel_servicio_emails'),
+    path('mi-cuenta/servicios/<int:pk>/emails/<int:email_pk>/password/', pv.panel_servicio_email_password, name='panel_servicio_email_password'),
+    path('mi-cuenta/servicios/<int:pk>/emails/<int:email_pk>/outlook-prf/', pv.panel_servicio_email_outlook_prf, name='panel_servicio_email_outlook_prf'),
+    path('mi-cuenta/servicios/<int:pk>/emails/<int:email_pk>/outlook-pack/', pv.panel_servicio_email_outlook_pack, name='panel_servicio_email_outlook_pack'),
+    path('mi-cuenta/servicios/<int:pk>/emails/<int:email_pk>/eliminar/', pv.panel_servicio_email_delete, name='panel_servicio_email_delete'),
     path('mi-cuenta/compras/', pv.panel_compras, name='panel_compras'),
     path('mi-cuenta/compras/<int:pk>/', pv.panel_compra_detail, name='panel_compra_detail'),
     path('mi-cuenta/cuentas-cobro/', pv.panel_cuentas, name='panel_cuentas'),
