@@ -17,6 +17,7 @@ from .forms import (
     ClientEmailAccountForm, ClientEmailPasswordChangeForm,
 )
 from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
+from apps.services.cpanel_config import get_cpanel_config
 
 
 def get_client_for_user(user):
@@ -178,32 +179,28 @@ def panel_servicio_email_password(request, pk, email_pk):
     if request.method == 'POST':
         form = ClientEmailPasswordChangeForm(request.POST)
         if form.is_valid():
-            if not getattr(settings, "CPANEL_SYNC_ENABLED", False):
+            cfg = get_cpanel_config()
+            if not cfg.sync_enabled:
                 messages.error(
                     request,
                     "La sincronización con cPanel está desactivada. Contacta soporte.",
                 )
                 return redirect('core:panel_servicio_emails', pk=pk)
 
-            required = (
-                getattr(settings, "CPANEL_HOST", ""),
-                getattr(settings, "CPANEL_USERNAME", ""),
-                getattr(settings, "CPANEL_API_TOKEN", ""),
-            )
-            if not all(required):
+            if not cfg.cpanel_ready:
                 messages.error(
                     request,
-                    "No se puede actualizar: faltan variables de conexión con cPanel.",
+                    "No se puede actualizar: faltan Host, Usuario o API Token de cPanel.",
                 )
                 return redirect('core:panel_servicio_emails', pk=pk)
 
             cpanel = CpanelAPI(
-                host=settings.CPANEL_HOST,
-                username=settings.CPANEL_USERNAME,
-                api_token=settings.CPANEL_API_TOKEN,
-                use_https=getattr(settings, "CPANEL_USE_HTTPS", True),
-                port=getattr(settings, "CPANEL_PORT", 2083),
-                timeout=getattr(settings, "CPANEL_TIMEOUT", 20),
+                host=cfg.host,
+                username=cfg.username,
+                api_token=cfg.api_token,
+                use_https=cfg.use_https,
+                port=cfg.port,
+                timeout=cfg.timeout,
             )
             try:
                 cpanel.update_mailbox_password(
@@ -248,12 +245,14 @@ def panel_servicio_email_outlook_prf(request, pk, email_pk):
     display_name = email_account.display_name or client.name or account_name
     local_part, domain = account_name.split('@', 1)
 
-    imap_host = getattr(settings, 'OUTLOOK_IMAP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
-    smtp_host = getattr(settings, 'OUTLOOK_SMTP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
-    imap_port = int(getattr(settings, 'OUTLOOK_IMAP_PORT', 993))
-    smtp_port = int(getattr(settings, 'OUTLOOK_SMTP_PORT', 465))
-    imap_ssl = bool(getattr(settings, 'OUTLOOK_IMAP_SSL', True))
-    smtp_ssl = bool(getattr(settings, 'OUTLOOK_SMTP_SSL', True))
+    cfg = get_cpanel_config()
+    email_host = getattr(settings, 'EMAIL_HOST', '') or ''
+    imap_host = cfg.outlook_imap_host or email_host
+    smtp_host = cfg.outlook_smtp_host or email_host
+    imap_port = cfg.outlook_imap_port
+    smtp_port = cfg.outlook_smtp_port
+    imap_ssl = cfg.outlook_imap_ssl
+    smtp_ssl = cfg.outlook_smtp_ssl
 
     # Nota: por seguridad no se incluye contraseña en el archivo.
     prf_content = f"""[General]
@@ -313,12 +312,14 @@ def panel_servicio_email_outlook_pack(request, pk, email_pk):
     local_part, _domain = account_name.split('@', 1)
     display_name = email_account.display_name or client.name or account_name
 
-    imap_host = getattr(settings, 'OUTLOOK_IMAP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
-    smtp_host = getattr(settings, 'OUTLOOK_SMTP_HOST', '') or getattr(settings, 'EMAIL_HOST', '')
-    imap_port = int(getattr(settings, 'OUTLOOK_IMAP_PORT', 993))
-    smtp_port = int(getattr(settings, 'OUTLOOK_SMTP_PORT', 465))
-    imap_ssl = bool(getattr(settings, 'OUTLOOK_IMAP_SSL', True))
-    smtp_ssl = bool(getattr(settings, 'OUTLOOK_SMTP_SSL', True))
+    cfg = get_cpanel_config()
+    email_host = getattr(settings, 'EMAIL_HOST', '') or ''
+    imap_host = cfg.outlook_imap_host or email_host
+    smtp_host = cfg.outlook_smtp_host or email_host
+    imap_port = cfg.outlook_imap_port
+    smtp_port = cfg.outlook_smtp_port
+    imap_ssl = cfg.outlook_imap_ssl
+    smtp_ssl = cfg.outlook_smtp_ssl
 
     prf_filename = f"outlook-autoconfig-{local_part}.prf"
     bat_filename = "instalar-outlook.bat"

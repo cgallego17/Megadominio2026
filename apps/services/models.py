@@ -204,3 +204,64 @@ class ClientEmailAccount(models.Model):
 
     def __str__(self):
         return f"{self.client_service.client.name} - {self.email}"
+
+
+class CpanelConfig(models.Model):
+    """
+    Configuración de cPanel para cuentas de correo (editable desde el admin).
+    Solo debe existir un registro; si hay varios, se usa el primero.
+    """
+    sync_enabled = models.BooleanField(
+        default=False,
+        verbose_name="Sincronizar con cPanel",
+        help_text="Crear/actualizar/eliminar buzones en cPanel al gestionar cuentas.",
+    )
+    host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Host cPanel",
+        help_text="Ej: cpanel.tudominio.com",
+    )
+    username = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="Usuario cPanel",
+    )
+    api_token = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="API Token cPanel",
+        help_text="Token desde cPanel > Seguridad > API Tokens.",
+    )
+    use_https = models.BooleanField(default=True, verbose_name="Usar HTTPS")
+    port = models.PositiveIntegerField(default=2083, verbose_name="Puerto")
+    timeout = models.PositiveIntegerField(default=20, verbose_name="Timeout (seg)")
+    mailbox_quota_mb = models.PositiveIntegerField(
+        default=2048,
+        verbose_name="Cuota buzón (MB)",
+    )
+    # Outlook autoconfig (.prf)
+    outlook_imap_host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="IMAP (Outlook)",
+        help_text="Servidor entrante para archivos .prf. Vacío = usar host de correo.",
+    )
+    outlook_imap_port = models.PositiveIntegerField(default=993, verbose_name="Puerto IMAP")
+    outlook_imap_ssl = models.BooleanField(default=True, verbose_name="IMAP SSL")
+    outlook_smtp_host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="SMTP (Outlook)",
+        help_text="Servidor saliente para archivos .prf.",
+    )
+    outlook_smtp_port = models.PositiveIntegerField(default=465, verbose_name="Puerto SMTP")
+    outlook_smtp_ssl = models.BooleanField(default=True, verbose_name="SMTP SSL")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Actualizado")
+
+    class Meta:
+        verbose_name = "Configuración cPanel / correo"
+        verbose_name_plural = "Configuración cPanel / correo"
+
+    def __str__(self):
+        return "Configuración cPanel y correo"

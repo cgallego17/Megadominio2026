@@ -2,6 +2,7 @@
 from functools import wraps
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.utils import timezone
@@ -10,7 +11,7 @@ from datetime import date
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService
+from apps.services.models import Service, ClientService, CpanelConfig
 from apps.store.models import ProductCategory, Product, Order, OrderItem
 from .forms import (
     ClientForm, ServiceForm,
@@ -22,6 +23,7 @@ from .forms import (
     ProductCategoryForm, ProductForm,
     OrderForm, OrderItemFormSet,
     HomeClientLogoForm, HomeTestimonialForm,
+    CpanelConfigForm,
 )
 from .models import HomeClientLogo, HomeTestimonial
 
@@ -1340,6 +1342,35 @@ def dashboard_client_service_delete(request, pk):
         'back_url': 'core:dashboard_client_service_detail',
         'back_pk': pk,
         'list_url': 'core:dashboard_client_services',
+    })
+
+
+# ============ CONFIGURACIÓN CPANEL / CORREO ============
+
+@login_required
+@dashboard_required
+def dashboard_cpanel_config(request):
+    """Configuración de cPanel y Outlook (correo) desde el dashboard."""
+    config_obj = CpanelConfig.objects.first()
+    if config_obj is None:
+        config_obj = CpanelConfig.objects.create()
+
+    if request.method == 'POST':
+        form = CpanelConfigForm(request.POST, instance=config_obj)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            # No sobrescribir API token si dejaron el campo vacío al editar
+            if obj.pk and not form.cleaned_data.get('api_token'):
+                obj.api_token = CpanelConfig.objects.get(pk=obj.pk).api_token
+            obj.save()
+            messages.success(request, 'Configuración cPanel / correo guardada correctamente.')
+            return redirect('core:dashboard_cpanel_config')
+    else:
+        form = CpanelConfigForm(instance=config_obj)
+
+    return render(request, 'core/dashboard_cpanel_config.html', {
+        'form': form,
+        'config': config_obj,
     })
 
 

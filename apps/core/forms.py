@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import get_user_model
 from apps.accounts.models import Country, State, City, UserAddress
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService, ClientEmailAccount
+from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.store.models import ProductCategory, Product, Order, OrderItem
@@ -282,6 +282,34 @@ class ClientEmailAccountForm(forms.ModelForm):
             'display_name': forms.TextInput(attrs={**_input, 'placeholder': 'Nombre para mostrar'}),
             'is_active': forms.CheckboxInput(attrs=_checkbox),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas de la cuenta de correo...'}),
+        }
+
+
+class CpanelConfigForm(forms.ModelForm):
+    """Formulario para configurar cPanel y Outlook desde el dashboard."""
+    class Meta:
+        model = CpanelConfig
+        fields = [
+            'sync_enabled', 'host', 'username', 'api_token',
+            'use_https', 'port', 'timeout', 'mailbox_quota_mb',
+            'outlook_imap_host', 'outlook_imap_port', 'outlook_imap_ssl',
+            'outlook_smtp_host', 'outlook_smtp_port', 'outlook_smtp_ssl',
+        ]
+        widgets = {
+            'sync_enabled': forms.CheckboxInput(attrs=_checkbox),
+            'host': forms.TextInput(attrs={**_input, 'placeholder': 'cpanel.tudominio.com'}),
+            'username': forms.TextInput(attrs={**_input, 'placeholder': 'Usuario cPanel'}),
+            'api_token': forms.PasswordInput(attrs={**_input, 'placeholder': 'Dejar vacío para no cambiar', 'autocomplete': 'new-password'}),
+            'use_https': forms.CheckboxInput(attrs=_checkbox),
+            'port': forms.NumberInput(attrs={**_input, 'min': '1', 'max': '65535'}),
+            'timeout': forms.NumberInput(attrs={**_input, 'min': '5'}),
+            'mailbox_quota_mb': forms.NumberInput(attrs={**_input, 'min': '0'}),
+            'outlook_imap_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
+            'outlook_imap_port': forms.NumberInput(attrs={**_input}),
+            'outlook_imap_ssl': forms.CheckboxInput(attrs=_checkbox),
+            'outlook_smtp_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
+            'outlook_smtp_port': forms.NumberInput(attrs={**_input}),
+            'outlook_smtp_ssl': forms.CheckboxInput(attrs=_checkbox),
         }
 
 

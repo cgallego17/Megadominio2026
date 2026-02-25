@@ -1,8 +1,59 @@
 from django import forms
-from django.conf import settings
 from django.contrib import admin, messages
-from .models import Service, ClientService, ClientEmailAccount
+from django.shortcuts import redirect
+from django.urls import reverse
+
+from .models import Service, ClientService, ClientEmailAccount, CpanelConfig
 from .cpanel_api import CpanelAPI, CpanelAPIError
+from .cpanel_config import get_cpanel_config
+
+
+@admin.register(CpanelConfig)
+class CpanelConfigAdmin(admin.ModelAdmin):
+    """Configuración de cPanel y correo (Outlook .prf). Una sola entrada."""
+    list_display = (
+        "sync_enabled",
+        "host",
+        "username",
+        "outlook_imap_host",
+        "outlook_smtp_host",
+        "updated_at",
+    )
+    fieldsets = (
+        ("Conexión cPanel", {
+            "fields": (
+                "sync_enabled",
+                "host",
+                "username",
+                "api_token",
+                "use_https",
+                "port",
+                "timeout",
+                "mailbox_quota_mb",
+            ),
+            "description": "Usado al crear/editar/eliminar cuentas de correo en Admin.",
+        }),
+        ("Outlook (.prf)", {
+            "fields": (
+                "outlook_imap_host",
+                "outlook_imap_port",
+                "outlook_imap_ssl",
+                "outlook_smtp_host",
+                "outlook_smtp_port",
+                "outlook_smtp_ssl",
+            ),
+            "description": "Servidores para el archivo de autoconfiguración Outlook que descarga el cliente.",
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not CpanelConfig.objects.exists()
+
+    def changelist_view(self, request, extra_context=None):
+        obj = CpanelConfig.objects.first()
+        if obj is not None:
+            return redirect(reverse("admin:services_cpanelconfig_change", args=(obj.pk,)))
+        return super().changelist_view(request, extra_context)
 
 
 @admin.register(Service)
@@ -94,8 +145,8 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
         def clean(self):
             cleaned_data = super().clean()
             is_new = self.instance.pk is None
-            sync_enabled = getattr(settings, "CPANEL_SYNC_ENABLED", False)
-            if is_new and sync_enabled and not cleaned_data.get("cpanel_password"):
+            cfg = get_cpanel_config()
+            if is_new and cfg.sync_enabled and not cleaned_data.get("cpanel_password"):
                 self.add_error(
                     "cpanel_password",
                     "Este campo es obligatorio cuando la sincronización cPanel está activa.",
@@ -108,22 +159,18 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
         js = ("admin/js/cpanel_password_generator.js",)
 
     def _cpanel_client(self):
+        cfg = get_cpanel_config()
         return CpanelAPI(
-            host=getattr(settings, "CPANEL_HOST", ""),
-            username=getattr(settings, "CPANEL_USERNAME", ""),
-            api_token=getattr(settings, "CPANEL_API_TOKEN", ""),
-            use_https=getattr(settings, "CPANEL_USE_HTTPS", True),
-            port=getattr(settings, "CPANEL_PORT", 2083),
-            timeout=getattr(settings, "CPANEL_TIMEOUT", 20),
+            host=cfg.host,
+            username=cfg.username,
+            api_token=cfg.api_token,
+            use_https=cfg.use_https,
+            port=cfg.port,
+            timeout=cfg.timeout,
         )
 
     def _cpanel_ready(self):
-        required = (
-            getattr(settings, "CPANEL_HOST", ""),
-            getattr(settings, "CPANEL_USERNAME", ""),
-            getattr(settings, "CPANEL_API_TOKEN", ""),
-        )
-        return all(required)
+        return get_cpanel_config().cpanel_ready
 
     def save_model(self, request, obj, form, change):
         previous = None
@@ -132,13 +179,15 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
 
         super().save_model(request, obj, form, change)
 
-        if not getattr(settings, "CPANEL_SYNC_ENABLED", False):
+        cfg = get_cpanel_config()
+        if not cfg.sync_enabled:
             return
 
         if not self._cpanel_ready():
             self.message_user(
                 request,
-                "Sincronización cPanel activa, pero faltan variables CPANEL_HOST/CPANEL_USERNAME/CPANEL_API_TOKEN.",
+                "Sincronización cPanel activa, pero faltan Host, Usuario o API Token. "
+                "Configúralos en Servicios > Configuración cPanel / correo.",
                 level=messages.WARNING,
             )
             return
@@ -151,7 +200,7 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
                 client.create_mailbox(
                     email=obj.email,
                     password=raw_password,
-                    quota_mb=getattr(settings, "CPANEL_MAILBOX_QUOTA_MB", 2048),
+                    quota_mb=cfg.mailbox_quota_mb,
                 )
                 self.message_user(
                     request,
@@ -196,7 +245,8 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
 
     def delete_model(self, request, obj):
         email = obj.email
-        should_sync = getattr(settings, "CPANEL_SYNC_ENABLED", False)
+        cfg = get_cpanel_config()
+        should_sync = cfg.sync_enabled
         ready = self._cpanel_ready()
 
         super().delete_model(request, obj)

@@ -65,7 +65,7 @@
         <div class="px-5 py-4 border-b border-gray-800">
             <h3 class="text-sm font-bold text-white">Nueva cuenta</h3>
         </div>
-        <div class="p-5">
+        <div class="p-5 panel-form">
             {% if can_add_more %}
             <form method="post">
                 {% csrf_token %}
@@ -84,7 +84,20 @@
         </div>
     </div>
 </div>
-<p class="text-xs text-gray-500 mt-4">
-    <strong>Outlook 1 clic</strong> descarga ZIP con instalador automático para Outlook clásico de Windows. Por seguridad, la contraseña se solicita al abrir Outlook.
+<p class="text-xs text-gray-400 mt-4">
+    <strong class="text-gray-300">Outlook 1 clic</strong> descarga ZIP con instalador automático para Outlook clásico de Windows. Por seguridad, la contraseña se solicita al abrir Outlook.
 </p>
+
+<style>
+.panel-form label,
+.panel-form .form-check-label { color: #e5e7eb !important; font-weight: 600; }
+.panel-form .asteriskField { color: #f87171 !important; }
+.panel-form input, .panel-form select, .panel-form textarea {
+    background: #1f2937 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
+}
+.panel-form input::placeholder { color: #6b7280 !important; }
+.panel-form .form-text, .panel-form small, .panel-form .text-muted { color: #9ca3af !important; }
+.panel-form .invalid-feedback { color: #f87171 !important; }
+.panel-form div[id^="div_id"] { color: inherit; }
+</style>
 {% endblock %}
