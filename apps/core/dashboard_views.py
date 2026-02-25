@@ -1104,8 +1104,16 @@ def dashboard_cuenta_pdf(request, pk):
     ]
     if cuenta.client.address:
         client_info_lines.append(escape(cuenta.client.address))
+    if cuenta.client.phone:
+        client_info_lines.append(f"Tel: {escape(cuenta.client.phone)}")
     if cuenta.client.email:
         client_info_lines.append(escape(cuenta.client.email))
+    client_info_lines.append(f"Estado: {escape(cuenta.get_status_display())}")
+    client_info_lines.append(
+        f"Vence: {escape(cuenta.due_date.strftime('%d/%m/%Y'))}"
+    )
+    if cuenta.quote:
+        client_info_lines.append(f"Cotización: {escape(cuenta.quote.number)}")
 
     emisor_lines = [
         f"<b>{escape(emisor_nombre)}</b>",
@@ -1133,7 +1141,10 @@ def dashboard_cuenta_pdf(request, pk):
     # Items table
     table_data = [["Descripción", "Cantidad", "Valor Unitario", "Subtotal"]]
     for item in cuenta.items.all():
-        description = item.description or (item.service.name if item.service else "")
+        service_name = item.service.name if item.service else ""
+        description = item.description or service_name
+        if service_name and item.description and item.description != service_name:
+            description = f"{service_name} ({item.description})"
         table_data.append([
             str(description),
             str(int(item.quantity or 0)),
@@ -1166,7 +1177,23 @@ def dashboard_cuenta_pdf(request, pk):
     elements.append(items_table)
     elements.append(Spacer(1, 0.26 * inch))
 
-    elements.append(Paragraph(f"TOTAL A PAGAR: {format_money(cuenta.total)}", total_style))
+    if cuenta.discount_amount or cuenta.tax_amount:
+        totals_meta = []
+        if cuenta.discount_amount:
+            totals_meta.append(
+                f"Descuento: {format_money(cuenta.discount_amount)}"
+            )
+        if cuenta.tax_amount:
+            totals_meta.append(
+                f"Impuesto ({cuenta.tax_percentage}%): {format_money(cuenta.tax_amount)}"
+            )
+        meta_text = " | ".join(totals_meta)
+        elements.append(Paragraph(escape(meta_text), right_info_style))
+        elements.append(Spacer(1, 0.04 * inch))
+
+    elements.append(
+        Paragraph(f"TOTAL A PAGAR: {format_money(cuenta.total)}", total_style)
+    )
     elements.append(Spacer(1, 0.42 * inch))
 
     obs_text = detect_observation_text()
