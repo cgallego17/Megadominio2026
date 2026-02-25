@@ -1187,7 +1187,7 @@ def dashboard_cuenta_pdf(request, pk):
 
     obs_text = detect_observation_text()
     elements.append(Paragraph(f"<b>OBSERVACIONES:</b> {escape(obs_text)}", obs_style))
-    elements.append(Spacer(1, 0.60 * inch))
+    elements.append(Spacer(1, 0.85 * inch))
 
     # Firma: usar imagen si existe; fallback a linea manual
     signature_image = None
