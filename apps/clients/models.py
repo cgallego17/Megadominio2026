@@ -6,7 +6,9 @@ class Client(models.Model):
     """Modelo para gestionar clientes"""
     
     DOCUMENT_TYPE_CHOICES = [
-        ('dni', 'DNI'),
+        ('nit', 'NIT (Empresa)'),
+        ('cc', 'Cédula de Ciudadanía'),
+        ('ce', 'Cédula de Extranjería'),
         ('passport', 'Pasaporte'),
         ('rtn', 'RTN'),
         ('other', 'Otro'),
@@ -30,7 +32,7 @@ class Client(models.Model):
     document_type = models.CharField(
         max_length=10,
         choices=DOCUMENT_TYPE_CHOICES,
-        default='dni',
+        default='cc',
         verbose_name="Tipo de documento"
     )
     document_number = models.CharField(

@@ -29,9 +29,34 @@
                     {% endfor %}
                 </div>
                 <div class="mt-4">
-                    <button type="button" class="add-form-row inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+                    <button type="button" class="add-form-row inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition">
                         <i class="fas fa-plus"></i> Agregar item
                     </button>
+                </div>
+            </div>
+            
+            <!-- Totalizador -->
+            <div class="mt-6 pt-6 border-t border-gray-800">
+                <div class="bg-gray-800/60 rounded-xl p-6 max-w-md ml-auto">
+                    <h3 class="text-sm font-bold text-white mb-4"><i class="fas fa-calculator mr-2 text-red-400"></i>Resumen</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Subtotal:</span>
+                            <span id="calc-subtotal" class="font-bold">$0 COP</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Descuento:</span>
+                            <span id="calc-discount" class="font-bold text-green-400">$0 COP</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>IVA:</span>
+                            <span id="calc-tax" class="font-bold">$0 COP</span>
+                        </div>
+                        <div class="pt-3 border-t border-gray-700 flex justify-between text-white text-lg">
+                            <span class="font-bold">TOTAL:</span>
+                            <span id="calc-total" class="font-bold text-red-400">$0 COP</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex items-center gap-3 mt-6 pt-6 border-t border-gray-800">
@@ -69,6 +94,72 @@
             const m = (totalInput.getAttribute('name') || '').match(/^(.+)-TOTAL_FORMS$/);
             prefix = m ? m[1] : null;
         }
+        
+        // Función para formatear números como moneda
+        function formatMoney(value) {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+        
+        // Función para calcular totales
+        function calculateTotals() {
+            let subtotal = 0;
+            
+            container.querySelectorAll('.formset-row').forEach(row => {
+                const deleteCheckbox = row.querySelector('input[name$="-DELETE"]');
+                if (deleteCheckbox && deleteCheckbox.checked) return;
+                if (row.style.display === 'none') return;
+                
+                const quantityInput = row.querySelector('input[name$="-quantity"]');
+                const priceInput = row.querySelector('input[name$="-unit_price"]');
+                
+                if (quantityInput && priceInput) {
+                    const quantity = parseFloat(quantityInput.value) || 0;
+                    const price = parseFloat(priceInput.value) || 0;
+                    subtotal += quantity * price;
+                }
+            });
+            
+            const discountPercentInput = document.querySelector('input[name="discount_percentage"]');
+            const taxPercentInput = document.querySelector('input[name="tax_percentage"]');
+            
+            const discountPercent = parseFloat(discountPercentInput?.value) || 0;
+            const taxPercent = parseFloat(taxPercentInput?.value) || 0;
+            
+            const discountAmount = (subtotal * discountPercent) / 100;
+            const subtotalAfterDiscount = subtotal - discountAmount;
+            const taxAmount = (subtotalAfterDiscount * taxPercent) / 100;
+            const total = subtotalAfterDiscount + taxAmount;
+            
+            document.getElementById('calc-subtotal').textContent = formatMoney(subtotal);
+            document.getElementById('calc-discount').textContent = formatMoney(discountAmount);
+            document.getElementById('calc-tax').textContent = formatMoney(taxAmount);
+            document.getElementById('calc-total').textContent = formatMoney(total);
+        }
+        
+        function addCalculationListeners() {
+            container.querySelectorAll('input[name$="-quantity"], input[name$="-unit_price"]').forEach(input => {
+                input.addEventListener('input', calculateTotals);
+                input.addEventListener('change', calculateTotals);
+            });
+            
+            const discountInput = document.querySelector('input[name="discount_percentage"]');
+            const taxInput = document.querySelector('input[name="tax_percentage"]');
+            
+            if (discountInput) {
+                discountInput.addEventListener('input', calculateTotals);
+                discountInput.addEventListener('change', calculateTotals);
+            }
+            if (taxInput) {
+                taxInput.addEventListener('input', calculateTotals);
+                taxInput.addEventListener('change', calculateTotals);
+            }
+        }
+        
         function clearRowValues(row, index) {
             const re = new RegExp(`${prefix}-\\d+`, 'g');
             row.querySelectorAll('input, select, textarea, label').forEach(el => {
@@ -94,6 +185,7 @@
             });
             row.querySelectorAll('.invalid-feedback, .text-danger, .text-red-400').forEach(n => n.remove());
         }
+        
         if (addBtn && container && totalInput && prefix) {
             addBtn.addEventListener('click', function() {
                 const count = parseInt(totalInput.value, 10) || 0;
@@ -103,8 +195,13 @@
                 clearRowValues(newRow, count);
                 container.appendChild(newRow);
                 totalInput.value = count + 1;
+                addCalculationListeners();
+                calculateTotals();
             });
         }
+        
+        addCalculationListeners();
+        calculateTotals();
     });
 </script>
 {% endblock %}

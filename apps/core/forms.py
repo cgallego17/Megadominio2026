@@ -158,7 +158,7 @@ class QuoteItemForm(forms.ModelForm):
 
 QuoteItemFormSet = inlineformset_factory(
     Quote, QuoteItem, form=QuoteItemForm,
-    extra=1, can_delete=True,
+    extra=3, can_delete=True, min_num=1, validate_min=True,
 )
 
 
@@ -200,7 +200,7 @@ class InvoiceItemForm(forms.ModelForm):
 
 InvoiceItemFormSet = inlineformset_factory(
     Invoice, InvoiceItem, form=InvoiceItemForm,
-    extra=1, can_delete=True,
+    extra=3, can_delete=True, min_num=1, validate_min=True,
 )
 
 
@@ -238,7 +238,7 @@ class CuentaDeCobroItemForm(forms.ModelForm):
 
 CuentaDeCobroItemFormSet = inlineformset_factory(
     CuentaDeCobro, CuentaDeCobroItem, form=CuentaDeCobroItemForm,
-    extra=1, can_delete=True,
+    extra=3, can_delete=True, min_num=1, validate_min=True,
 )
 
 
@@ -483,7 +483,7 @@ class OrderItemForm(forms.ModelForm):
 
 OrderItemFormSet = inlineformset_factory(
     Order, OrderItem, form=OrderItemForm,
-    extra=1, can_delete=True,
+    extra=3, can_delete=True, min_num=1, validate_min=True,
 )
 
 
