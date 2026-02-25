@@ -1052,22 +1052,21 @@ def dashboard_cuenta_pdf(request, pk):
     # Header (sin logo)
     header_table = Table(
         [[
-            Paragraph('', styles['Normal']),
             Paragraph(f'CUENTA DE COBRO #{escape(str(cuenta.number))}', title_style),
             Paragraph(f'FECHA {cuenta.issue_date.strftime("%d/%m/%Y")}', date_style),
         ]],
-        colWidths=[0.85 * inch, 4.1 * inch, 2.0 * inch],
+        colWidths=[4.95 * inch, 2.0 * inch],
     )
     header_table.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('ALIGN', (0, 0), (0, 0), 'LEFT'),
-        ('ALIGN', (1, 0), (1, 0), 'LEFT'),
-        ('ALIGN', (2, 0), (2, 0), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, 0), 'RIGHT'),
         ('LEFTPADDING', (0, 0), (-1, -1), 0),
         ('RIGHTPADDING', (0, 0), (-1, -1), 0),
         ('TOPPADDING', (0, 0), (-1, -1), 0),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
     ]))
+    header_table.hAlign = 'LEFT'
     elements.append(header_table)
     elements.append(Spacer(1, 0.34 * inch))
 
@@ -1229,6 +1228,7 @@ def dashboard_cuenta_pdf(request, pk):
             ('TOPPADDING', (0, 0), (-1, -1), 0),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
         ]))
+        signature_block.hAlign = 'LEFT'
         elements.append(signature_block)
     else:
         signature_line = Table([[""], [signature_name]], colWidths=[2.5 * inch])
@@ -1240,6 +1240,7 @@ def dashboard_cuenta_pdf(request, pk):
             ('TOPPADDING', (0, 0), (-1, -1), 0),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
         ]))
+        signature_line.hAlign = 'LEFT'
         elements.append(signature_line)
     elements.append(Spacer(1, 0.22 * inch))
 
