@@ -82,9 +82,13 @@ def dashboard_client_detail(request, pk):
     client_services = ClientService.objects.filter(
         client=client
     ).select_related('service')
+    cuentas_cobro = CuentaDeCobro.objects.filter(
+        client=client
+    ).order_by('-created_at')
     return render(request, 'core/dashboard_client_detail.html', {
         'client': client,
         'client_services': client_services,
+        'cuentas_cobro': cuentas_cobro,
     })
 
 
