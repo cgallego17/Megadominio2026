@@ -105,6 +105,11 @@
     }
     </script>
 
+    <!-- Estilos para captcha (django-simple-captcha): imagen + campo de código visibles -->
+    <style>
+        .captcha-block img { display: block !important; margin-bottom: 0.5rem; border-radius: 0.5rem; max-width: 100%; }
+        .captcha-block input[type="text"] { min-width: 180px !important; padding: 0.5rem 0.75rem !important; border: 1px solid #d1d5db !important; border-radius: 0.5rem !important; color: #111827 !important; font-size: 1rem !important; background: #fff !important; }
+    </style>
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>

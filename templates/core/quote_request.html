@@ -137,11 +137,13 @@
                     </div>
                 </div>
                 
-                {% if "captcha" in form.fields %}
-                <div>
+                {% if form.captcha %}
+                <div class="captcha-block border border-gray-300 rounded-lg p-4 bg-white">
                     <label class="block text-sm font-semibold text-gray-700 mb-2">{{ form.captcha.label }} <span class="text-red-600">*</span></label>
-                    {{ form.captcha }}
-                    {% if form.captcha.errors %}<p class="mt-1 text-sm text-red-600">{{ form.captcha.errors.0 }}</p>{% endif %}
+                    <div class="flex flex-wrap items-center gap-3">
+                        {{ form.captcha }}
+                    </div>
+                    {% if form.captcha.errors %}<p class="mt-2 text-sm text-red-600">{{ form.captcha.errors.0 }}</p>{% endif %}
                 </div>
                 {% endif %}
                 
