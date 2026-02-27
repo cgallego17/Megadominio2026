@@ -7,12 +7,13 @@ from django.conf import settings
 from django.urls import reverse
 from datetime import timedelta
 from apps.quotes.models import Quote, QuoteItem
-from apps.invoices.models import Invoice
+from apps.invoices.models import Invoice, CuentaDeCobro
 from apps.clients.models import Client
 from apps.services.models import Service, ClientService
 from apps.accounts.models import User
 from apps.store.models import Product, ProductCategory, Order
 from .models import HomeClientLogo, HomeTestimonial
+from .forms import ContactForm
 from apps.core.emails import send_admin_notification, send_generic_notification
 
 
@@ -96,11 +97,15 @@ def dashboard(request):
         quote_count=Count('quoteitem')
     ).order_by('-quote_count')[:5]
     
-    # Ingresos del último mes (facturas pagadas + compras aprobadas)
+    # Ingresos del último mes (facturas pagadas + cuentas de cobro pagadas + compras aprobadas)
     one_month_ago = timezone.now() - timedelta(days=30)
     invoices_revenue = Invoice.objects.filter(
         status='paid',
         paid_date__gte=one_month_ago
+    ).aggregate(total=Sum('total'))['total'] or 0
+    cuentas_revenue = CuentaDeCobro.objects.filter(
+        status='paid',
+        paid_date__gte=one_month_ago,
     ).aggregate(total=Sum('total'))['total'] or 0
     orders_revenue = Order.objects.filter(
         payment_status='approved'
@@ -108,7 +113,7 @@ def dashboard(request):
         Q(paid_at__gte=one_month_ago) |
         Q(paid_at__isnull=True, updated_at__gte=one_month_ago)
     ).aggregate(total=Sum('total'))['total'] or 0
-    monthly_revenue = invoices_revenue + orders_revenue
+    monthly_revenue = invoices_revenue + cuentas_revenue + orders_revenue
     
     context = {
         'total_quotes': total_quotes,
@@ -137,12 +142,13 @@ def contact(request):
     """
     Página de contacto
     """
-    if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        email = request.POST.get('email', '').strip()
-        phone = request.POST.get('phone', '').strip()
-        subject = request.POST.get('subject', '').strip() or 'Contacto desde el sitio'
-        message = request.POST.get('message', '').strip()
+    form = ContactForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        phone = form.cleaned_data.get('phone') or ''
+        subject = form.cleaned_data.get('subject') or 'Contacto desde el sitio'
+        message = form.cleaned_data['message']
 
         # Notificar al administrador
         try:
@@ -181,9 +187,9 @@ def contact(request):
                 pass
 
         messages.success(request, '¡Mensaje enviado! Te contactaremos muy pronto.')
-        return render(request, 'core/contact.html')
+        return render(request, 'core/contact.html', {'form': ContactForm()})
 
-    return render(request, 'core/contact.html')
+    return render(request, 'core/contact.html', {'form': form})
 
 
 def terms(request):

@@ -44,6 +44,7 @@ urlpatterns = [
     ), name='robots_txt'),
     path('', include('apps.store.urls')),
     path('', include('apps.core.urls')),
+    path('captcha/', include('captcha.urls')),
     path('webhooks/wompi/', wompi_webhook, name='wompi_webhook'),
     path('accounts/registro/', signup, name='signup'),
     path('accounts/login/', SecureLoginView.as_view(),

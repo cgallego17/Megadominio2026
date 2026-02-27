@@ -9,6 +9,11 @@ from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCo
 from apps.store.models import ProductCategory, Product, Order, OrderItem
 from .models import HomeClientLogo, HomeTestimonial
 
+try:
+    from captcha.fields import CaptchaField
+except ImportError:
+    CaptchaField = None
+
 User = get_user_model()
 
 # ── Shared widget attrs ──────────────────────────────────────────────
@@ -510,11 +515,59 @@ class QuoteRequestForm(forms.Form):
         })
     )
     
+    if CaptchaField:
+        captcha = CaptchaField(label='Código de verificación')
+    
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email:
             email = email.lower()
         return email
+
+
+class ContactForm(forms.Form):
+    """Formulario de contacto público (con captcha)."""
+    _cls = (
+        'w-full px-4 py-3 rounded-lg border border-gray-300 '
+        'focus:border-red-500 focus:ring-2 focus:ring-red-200 transition text-gray-900'
+    )
+    name = forms.CharField(
+        max_length=200,
+        label='Nombre completo',
+        widget=forms.TextInput(attrs={'class': _cls, 'placeholder': 'Tu nombre'}),
+    )
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={'class': _cls, 'placeholder': 'tu@email.com'}),
+    )
+    phone = forms.CharField(
+        max_length=50,
+        required=False,
+        label='Teléfono',
+        widget=forms.TextInput(attrs={'class': _cls, 'placeholder': '+57 324 4011967'}),
+    )
+    subject = forms.ChoiceField(
+        label='Asunto',
+        required=False,
+        choices=[
+            ('', 'Selecciona un asunto'),
+            ('cotizacion', 'Solicitar cotización'),
+            ('soporte', 'Soporte técnico'),
+            ('alianza', 'Alianza comercial'),
+            ('otro', 'Otro'),
+        ],
+        widget=forms.Select(attrs={'class': _cls}),
+    )
+    message = forms.CharField(
+        label='Mensaje',
+        widget=forms.Textarea(attrs={
+            'class': _cls + ' resize-none',
+            'placeholder': 'Cuéntanos sobre tu proyecto...',
+            'rows': 5,
+        }),
+    )
+    if CaptchaField:
+        captcha = CaptchaField(label='Código de verificación')
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -681,6 +734,8 @@ class SignupForm(forms.Form):
             'required': 'Debes aceptar los t\u00e9rminos para registrarte.',
         },
     )
+    if CaptchaField:
+        captcha = CaptchaField(label='Código de verificación')
 
     CUSTOMER_TYPE_CHOICES = (
         ('person', 'Persona natural'),
