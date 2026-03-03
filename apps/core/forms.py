@@ -301,7 +301,7 @@ class ClientEmailAccountPanelForm(forms.ModelForm):
             'placeholder': 'Mínimo 8 caracteres',
             'autocomplete': 'new-password',
         }),
-        help_text='Requerida para crear el buzón en el servidor. No se guarda; solo se usa al crear.',
+        help_text='Requerida para crear el buzón en el servidor. Se guarda cifrada para que el administrador pueda verla en el dashboard.',
     )
     confirm_password = forms.CharField(
         label='Confirmar contraseña',

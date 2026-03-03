@@ -118,8 +118,8 @@
         {% if cs.email_accounts.all %}
         <ul class="divide-y divide-gray-800">
             {% for acc in cs.email_accounts.all %}
-            <li class="py-3 first:pt-0 last:pb-0 flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-3 min-w-0">
+            <li class="py-4 first:pt-0 last:pb-0 flex flex-wrap gap-4">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
                     <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center text-red-400">
                         <i class="fas fa-envelope text-sm"></i>
                     </span>
@@ -138,9 +138,44 @@
                     {% endif %}
                     <span class="text-gray-500 text-xs">Creada {{ acc.created_at|date:"d/m/Y" }}</span>
                 </div>
+                <div class="w-full sm:w-auto flex items-center gap-2 flex-shrink-0">
+                    <span class="text-gray-500 text-xs font-medium">Contraseña:</span>
+                    {% if acc.decrypted_password %}
+                    <span class="password-display font-mono text-sm text-gray-300 bg-gray-800/50 px-2 py-1 rounded" data-password="{{ acc.decrypted_password }}">••••••••</span>
+                    <button type="button" class="toggle-password inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition" data-masked="true" aria-label="Mostrar u ocultar contraseña">
+                        <i class="fas fa-eye"></i> <span class="btn-text">Ver</span>
+                    </button>
+                    {% else %}
+                    <span class="text-gray-500 text-xs">—</span>
+                    {% endif %}
+                </div>
             </li>
             {% endfor %}
         </ul>
+        <script>
+        (function(){
+            document.querySelectorAll('.toggle-password').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var row = this.closest('li');
+                    var span = row.querySelector('.password-display');
+                    if (!span) return;
+                    var masked = this.getAttribute('data-masked') === 'true';
+                    var pwd = span.getAttribute('data-password') || '';
+                    if (masked) {
+                        span.textContent = pwd;
+                        this.setAttribute('data-masked', 'false');
+                        this.querySelector('.btn-text').textContent = 'Ocultar';
+                        this.querySelector('i').className = 'fas fa-eye-slash';
+                    } else {
+                        span.textContent = '••••••••';
+                        this.setAttribute('data-masked', 'true');
+                        this.querySelector('.btn-text').textContent = 'Ver';
+                        this.querySelector('i').className = 'fas fa-eye';
+                    }
+                });
+            });
+        })();
+        </script>
         {% else %}
         <p class="text-gray-500 text-sm">El cliente aún no ha creado cuentas de correo para este servicio.</p>
         {% endif %}

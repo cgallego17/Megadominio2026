@@ -132,6 +132,9 @@ def panel_servicio_emails(request, pk):
             email_account.client_service = client_service
             email_account.save()
             password = form.cleaned_data.get('password')
+            if password:
+                email_account.set_encrypted_password(password)
+                email_account.save(update_fields=['password_encrypted'])
 
             if cfg.sync_enabled and cfg.cpanel_ready and password:
                 try:

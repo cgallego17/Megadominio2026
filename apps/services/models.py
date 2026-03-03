@@ -187,6 +187,12 @@ class ClientEmailAccount(models.Model):
         blank=True,
         verbose_name="Notas",
     )
+    password_encrypted = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name="Contraseña (cifrada)",
+        help_text="Se guarda cifrada para poder mostrarla en el dashboard.",
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Fecha de creación",
@@ -204,6 +210,27 @@ class ClientEmailAccount(models.Model):
 
     def __str__(self):
         return f"{self.client_service.client.name} - {self.email}"
+
+    def set_encrypted_password(self, raw_password):
+        """Guarda la contraseña cifrada (solo si hay valor)."""
+        if not raw_password:
+            self.password_encrypted = ""
+            return
+        from django.core.signing import Signer
+        signer = Signer(salt="clientemailaccount-password")
+        self.password_encrypted = signer.sign(raw_password)
+
+    @property
+    def decrypted_password(self):
+        """Devuelve la contraseña en claro o None si no hay o falla el descifrado."""
+        if not self.password_encrypted:
+            return None
+        try:
+            from django.core.signing import Signer
+            signer = Signer(salt="clientemailaccount-password")
+            return signer.unsign(self.password_encrypted)
+        except Exception:
+            return None
 
 
 class CpanelConfig(models.Model):

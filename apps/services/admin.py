@@ -121,8 +121,7 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
             ),
             label="Password cPanel",
             help_text=(
-                "Solo para crear el buzón en cPanel. "
-                "No se guarda en base de datos."
+                "Para crear el buzón en cPanel. Se guarda cifrada para mostrarla en el dashboard."
             ),
         )
         cpanel_new_password = forms.CharField(
@@ -133,8 +132,7 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
             ),
             label="Nueva password cPanel",
             help_text=(
-                "Opcional al editar. Si la escribes, se cambia la contraseña "
-                "del buzón en cPanel."
+                "Opcional al editar. Si la escribes, se cambia en cPanel y se guarda cifrada para el dashboard."
             ),
         )
 
@@ -178,6 +176,14 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
             previous = ClientEmailAccount.objects.filter(pk=obj.pk).first()
 
         super().save_model(request, obj, form, change)
+
+        # Guardar contraseña cifrada para mostrarla en el dashboard (admin)
+        if not change and form.cleaned_data.get("cpanel_password"):
+            obj.set_encrypted_password(form.cleaned_data["cpanel_password"])
+            obj.save(update_fields=["password_encrypted"])
+        elif change and form.cleaned_data.get("cpanel_new_password"):
+            obj.set_encrypted_password(form.cleaned_data["cpanel_new_password"])
+            obj.save(update_fields=["password_encrypted"])
 
         cfg = get_cpanel_config()
         if not cfg.sync_enabled:
