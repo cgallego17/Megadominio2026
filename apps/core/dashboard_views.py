@@ -1285,7 +1285,8 @@ def dashboard_client_services(request):
 @dashboard_required
 def dashboard_client_service_detail(request, pk):
     cs = get_object_or_404(
-        ClientService.objects.select_related('client', 'service'), pk=pk
+        ClientService.objects.select_related('client', 'service').prefetch_related('email_accounts'),
+        pk=pk,
     )
     return render(request, 'core/dashboard_client_service_detail.html', {
         'cs': cs,
