@@ -73,4 +73,35 @@
         {% endif %}
     </div>
 </div>
+
+<!-- Detalle del servicio contratado (catálogo) -->
+<div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Detalle del servicio contratado</h3>
+        <p class="text-gray-400 text-xs mt-0.5">Información del servicio en catálogo</p>
+    </div>
+    <div class="p-6">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+            <a href="{% url 'core:dashboard_service_detail' cs.service.pk %}" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">{{ cs.service.name }}</a>
+            <span class="text-gray-500">·</span>
+            <a href="{{ cs.service.get_absolute_url }}" target="_blank" rel="noopener" class="text-gray-400 hover:text-gray-300 text-xs">Ver ficha en el sitio <i class="fas fa-external-link-alt ml-0.5"></i></a>
+        </div>
+        {% if cs.service.description %}
+        <div class="mb-4">
+            <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">Descripción</p>
+            <p class="text-gray-300 text-sm whitespace-pre-wrap">{{ cs.service.description }}</p>
+        </div>
+        {% endif %}
+        <div class="flex flex-wrap gap-6 text-sm">
+            <div>
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-0.5">Precio en catálogo</p>
+                <p class="text-white font-semibold">${{ cs.service.price|floatformat:0|intcomma }} COP</p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-0.5">Tipo de facturación (catálogo)</p>
+                <p class="text-gray-300">{{ cs.service.get_billing_type_display }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
