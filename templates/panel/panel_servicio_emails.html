@@ -44,12 +44,17 @@
                         <i class="fas fa-key"></i> Clave
                     </a>
                     {% if account.decrypted_password %}
-                    <span class="inline-flex items-center gap-1">
-                        <span class="pwd-view font-mono text-xs text-gray-400 bg-gray-800/50 px-2 py-1 rounded" data-password="{{ account.decrypted_password }}">••••••••</span>
-                        <button type="button" class="toggle-pwd-view inline-flex items-center px-2 py-1 text-xs font-medium text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 rounded transition" data-masked="true" title="Ver contraseña">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </span>
+                    <div class="pwd-field inline-flex items-center rounded-lg border border-gray-700/80 bg-gray-800/60 overflow-hidden flex-shrink-0">
+                        <span class="pwd-view font-mono text-xs text-gray-300 px-3 py-1.5 min-w-[5rem] select-none" data-password="{{ account.decrypted_password }}">••••••••</span>
+                        <div class="flex border-l border-gray-700/80">
+                            <button type="button" class="toggle-pwd-view inline-flex items-center justify-center w-8 h-8 text-amber-400/80 hover:text-amber-300 hover:bg-amber-500/10 transition" data-masked="true" title="Ver contraseña">
+                                <i class="fas fa-eye text-xs"></i>
+                            </button>
+                            <button type="button" class="pwd-copy inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition border-l border-gray-700/80" title="Copiar contraseña" data-password="{{ account.decrypted_password }}">
+                                <i class="fas fa-copy text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
                     {% endif %}
                     <form method="post" action="{% url 'core:panel_servicio_email_delete' client_service.pk account.pk %}" class="delete-account-form" data-email="{{ account.email }}">
                         {% csrf_token %}
@@ -118,6 +123,8 @@
 .panel-form .form-text, .panel-form small, .panel-form .text-muted { color: #9ca3af !important; }
 .panel-form .invalid-feedback { color: #f87171 !important; }
 .panel-form div[id^="div_id"] { color: inherit; }
+.pwd-field { transition: border-color 0.2s, box-shadow 0.2s; }
+.pwd-field:focus-within { border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.2); }
 </style>
 <script>
 (function () {
@@ -184,21 +191,54 @@
 (function () {
     document.querySelectorAll('.toggle-pwd-view').forEach(function (btn) {
         btn.addEventListener('click', function () {
-            var span = this.previousElementSibling;
-            if (!span || !span.classList.contains('pwd-view')) return;
+            var field = this.closest('.pwd-field');
+            var span = field ? field.querySelector('.pwd-view') : null;
+            if (!span) return;
             var masked = btn.getAttribute('data-masked') === 'true';
             var pwd = span.getAttribute('data-password') || '';
             var icon = btn.querySelector('i');
             if (masked) {
                 span.textContent = pwd;
+                span.classList.remove('select-none');
                 btn.setAttribute('data-masked', 'false');
                 btn.setAttribute('title', 'Ocultar contraseña');
-                if (icon) icon.className = 'fas fa-eye-slash';
+                if (icon) icon.className = 'fas fa-eye-slash text-xs';
             } else {
                 span.textContent = '••••••••';
+                span.classList.add('select-none');
                 btn.setAttribute('data-masked', 'true');
                 btn.setAttribute('title', 'Ver contraseña');
-                if (icon) icon.className = 'fas fa-eye';
+                if (icon) icon.className = 'fas fa-eye text-xs';
+            }
+        });
+    });
+
+    document.querySelectorAll('.pwd-copy').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var pwd = btn.getAttribute('data-password') || '';
+            if (!pwd) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(pwd).then(function () {
+                    var icon = btn.querySelector('i');
+                    var orig = icon ? icon.className : '';
+                    if (icon) icon.className = 'fas fa-check text-xs text-emerald-400';
+                    btn.setAttribute('title', '¡Copiado!');
+                    setTimeout(function () {
+                        if (icon) icon.className = orig || 'fas fa-copy text-xs';
+                        btn.setAttribute('title', 'Copiar contraseña');
+                    }, 1500);
+                });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = pwd;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                var icon = btn.querySelector('i');
+                if (icon) { icon.className = 'fas fa-check text-xs text-emerald-400'; setTimeout(function () { icon.className = 'fas fa-copy text-xs'; }, 1500); }
             }
         });
     });
