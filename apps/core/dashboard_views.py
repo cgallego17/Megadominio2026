@@ -12,6 +12,8 @@ from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.clients.models import Client
 from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig
+from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
+from apps.services.cpanel_config import get_cpanel_config
 from apps.store.models import ProductCategory, Product, Order, OrderItem
 from .forms import (
     ClientForm, ServiceForm,
@@ -24,6 +26,7 @@ from .forms import (
     OrderForm, OrderItemFormSet,
     HomeClientLogoForm, HomeTestimonialForm,
     CpanelConfigForm,
+    ClientEmailPasswordChangeForm,
 )
 from .models import HomeClientLogo, HomeTestimonial
 
@@ -1369,6 +1372,73 @@ def dashboard_emails(request):
         'object_list': accounts,
         'title': 'Correos de clientes',
         'search': search,
+    })
+
+
+@login_required
+@dashboard_required
+def dashboard_email_password(request, pk):
+    """Asignar o cambiar contraseña de una cuenta de correo desde el dashboard."""
+    account = get_object_or_404(
+        ClientEmailAccount.objects.select_related('client_service__client', 'client_service__service'),
+        pk=pk,
+    )
+    cfg = get_cpanel_config()
+
+    if request.method == 'POST':
+        form = ClientEmailPasswordChangeForm(request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            had_password = bool(account.password_encrypted)
+            account.set_encrypted_password(new_password)
+            account.save(update_fields=['password_encrypted'])
+
+            if cfg.sync_enabled and cfg.cpanel_ready:
+                try:
+                    cpanel = CpanelAPI(
+                        host=cfg.host,
+                        username=cfg.username,
+                        api_token=cfg.api_token,
+                        use_https=cfg.use_https,
+                        port=cfg.port,
+                        timeout=cfg.timeout,
+                    )
+                    if had_password:
+                        cpanel.update_mailbox_password(
+                            email=account.email,
+                            new_password=new_password,
+                        )
+                        messages.success(
+                            request,
+                            f'Contraseña actualizada para {account.email}. Sincronizada con cPanel.',
+                        )
+                    else:
+                        cpanel.create_mailbox(
+                            email=account.email,
+                            password=new_password,
+                            quota_mb=cfg.mailbox_quota_mb,
+                        )
+                        messages.success(
+                            request,
+                            f'Contraseña asignada para {account.email}. Buzón creado en cPanel.',
+                        )
+                except CpanelAPIError as exc:
+                    messages.warning(
+                        request,
+                        f'Contraseña guardada, pero error en cPanel: {exc}',
+                    )
+            else:
+                messages.success(
+                    request,
+                    f'Contraseña asignada para {account.email}.',
+                )
+            return redirect('core:dashboard_emails')
+    else:
+        form = ClientEmailPasswordChangeForm()
+
+    return render(request, 'core/dashboard_email_password.html', {
+        'account': account,
+        'form': form,
     })
 
 

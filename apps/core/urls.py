@@ -118,6 +118,7 @@ urlpatterns = [
     path('dashboard/servicios-clientes/<int:pk>/editar/', dv.dashboard_client_service_edit, name='dashboard_client_service_edit'),
     path('dashboard/servicios-clientes/<int:pk>/eliminar/', dv.dashboard_client_service_delete, name='dashboard_client_service_delete'),
     path('dashboard/correos/', dv.dashboard_emails, name='dashboard_emails'),
+    path('dashboard/correos/<int:pk>/asignar-password/', dv.dashboard_email_password, name='dashboard_email_password'),
     path('dashboard/configuracion-cpanel/', dv.dashboard_cpanel_config, name='dashboard_cpanel_config'),
 
     # ── Usuarios CRUD ──
