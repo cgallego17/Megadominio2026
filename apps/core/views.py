@@ -61,7 +61,8 @@ def dashboard(request):
     total_clients = Client.objects.count()
     total_services = Service.objects.filter(is_active=True).count()
     total_invoices = Invoice.objects.count()
-    
+    total_emails = ClientEmailAccount.objects.count()
+
     # Cotizaciones por estado (con etiquetas para el template)
     quotes_status_data = Quote.objects.values('status').annotate(
         count=Count('id')
@@ -721,7 +722,7 @@ def quote_request(request, service_id=None):
             valid_until = datetime.now().date() + timedelta(days=15)
             
             # Obtener el primer usuario admin o crear un usuario sistema
-            admin_user = User.objects.filter(is_admin=True).first()
+            admin_user = User.objects.filter(role='admin').first()
             if not admin_user:
                 admin_user = User.objects.filter(is_superuser=True).first()
             
