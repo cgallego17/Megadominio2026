@@ -291,28 +291,7 @@ class ClientEmailAccountForm(forms.ModelForm):
 
 
 class ClientEmailAccountPanelForm(forms.ModelForm):
-    """Formulario para crear cuenta de correo desde el panel del cliente, con contraseña segura."""
-    password = forms.CharField(
-        label='Contraseña',
-        required=False,
-        min_length=8,
-        widget=forms.PasswordInput(attrs={
-            **_input,
-            'placeholder': 'Mínimo 8 caracteres',
-            'autocomplete': 'new-password',
-        }),
-        help_text='Requerida para crear el buzón en el servidor. Se guarda cifrada para que el administrador pueda verla en el dashboard.',
-    )
-    confirm_password = forms.CharField(
-        label='Confirmar contraseña',
-        required=False,
-        min_length=8,
-        widget=forms.PasswordInput(attrs={
-            **_input,
-            'placeholder': 'Repetir contraseña',
-            'autocomplete': 'new-password',
-        }),
-    )
+    """Formulario para crear cuenta de correo desde el panel del cliente. La contraseña la genera el administrador."""
 
     class Meta:
         model = ClientEmailAccount
@@ -327,21 +306,6 @@ class ClientEmailAccountPanelForm(forms.ModelForm):
     def __init__(self, cpanel_sync_enabled=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._cpanel_sync_enabled = cpanel_sync_enabled
-        if cpanel_sync_enabled:
-            self.fields['password'].required = True
-            self.fields['confirm_password'].required = True
-
-    def clean(self):
-        data = super().clean()
-        p1 = data.get('password')
-        p2 = data.get('confirm_password')
-        if self._cpanel_sync_enabled and not p1:
-            self.add_error('password', 'La contraseña es obligatoria para crear el buzón.')
-        if p1 and p2 and p1 != p2:
-            self.add_error('confirm_password', 'Las contraseñas no coinciden.')
-        if p1 and len(p1) < 8:
-            self.add_error('password', 'La contraseña debe tener al menos 8 caracteres.')
-        return data
 
 
 class CpanelConfigForm(forms.ModelForm):

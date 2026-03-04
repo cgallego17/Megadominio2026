@@ -14,7 +14,7 @@ from apps.invoices.models import CuentaDeCobro
 from apps.accounts.models import UserAddress, State, City
 from .forms import (
     ProfileForm, PasswordChangeForm, UserAddressForm,
-    ClientEmailAccountForm, ClientEmailAccountPanelForm, ClientEmailPasswordChangeForm,
+    ClientEmailAccountForm, ClientEmailAccountPanelForm,
 )
 from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
 from apps.services.cpanel_config import get_cpanel_config
@@ -199,67 +199,11 @@ def panel_servicio_email_delete(request, pk, email_pk):
 
 @login_required
 def panel_servicio_email_password(request, pk, email_pk):
-    """Cambiar contraseña de una cuenta de correo desde el panel del cliente."""
-    client = get_client_for_user(request.user)
-    if not client:
-        return HttpResponseForbidden("No tienes acceso a este servicio.")
-
-    client_service = get_object_or_404(ClientService, pk=pk, client=client)
-    email_account = get_object_or_404(
-        ClientEmailAccount,
-        pk=email_pk,
-        client_service=client_service,
+    """Cambio de contraseña deshabilitado: solo el administrador puede generarla o cambiarla."""
+    return HttpResponseForbidden(
+        "No puedes cambiar la contraseña. Solo un administrador puede generarla o modificarla. "
+        "Puedes verla con el botón de ojo en la lista de cuentas."
     )
-
-    if request.method == 'POST':
-        form = ClientEmailPasswordChangeForm(request.POST)
-        if form.is_valid():
-            cfg = get_cpanel_config()
-            if not cfg.sync_enabled:
-                messages.error(
-                    request,
-                    "La sincronización con cPanel está desactivada. Contacta soporte.",
-                )
-                return redirect('core:panel_servicio_emails', pk=pk)
-
-            if not cfg.cpanel_ready:
-                messages.error(
-                    request,
-                    "No se puede actualizar: faltan Host, Usuario o API Token de cPanel.",
-                )
-                return redirect('core:panel_servicio_emails', pk=pk)
-
-            cpanel = CpanelAPI(
-                host=cfg.host,
-                username=cfg.username,
-                api_token=cfg.api_token,
-                use_https=cfg.use_https,
-                port=cfg.port,
-                timeout=cfg.timeout,
-            )
-            try:
-                cpanel.update_mailbox_password(
-                    email=email_account.email,
-                    new_password=form.cleaned_data['new_password'],
-                )
-                messages.success(
-                    request,
-                    f'Contraseña actualizada para {email_account.email}.',
-                )
-                return redirect('core:panel_servicio_emails', pk=pk)
-            except CpanelAPIError as exc:
-                messages.error(
-                    request,
-                    f'No se pudo actualizar la contraseña en cPanel: {exc}',
-                )
-    else:
-        form = ClientEmailPasswordChangeForm()
-
-    return render(request, 'panel/panel_servicio_email_password.html', {
-        'client_service': client_service,
-        'email_account': email_account,
-        'form': form,
-    })
 
 
 @login_required

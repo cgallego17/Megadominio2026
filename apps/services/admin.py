@@ -233,15 +233,29 @@ class ClientEmailAccountAdmin(admin.ModelAdmin):
 
             new_password = form.cleaned_data.get("cpanel_new_password")
             if change and new_password:
-                client.update_mailbox_password(
-                    email=obj.email,
-                    new_password=new_password,
-                )
-                self.message_user(
-                    request,
-                    f"Password de {obj.email} actualizada en cPanel.",
-                    level=messages.SUCCESS,
-                )
+                # Si la cuenta no tenía contraseña (creada por cliente), crear buzón; si no, actualizar
+                had_password = previous and previous.password_encrypted
+                if had_password:
+                    client.update_mailbox_password(
+                        email=obj.email,
+                        new_password=new_password,
+                    )
+                    self.message_user(
+                        request,
+                        f"Password de {obj.email} actualizada en cPanel.",
+                        level=messages.SUCCESS,
+                    )
+                else:
+                    client.create_mailbox(
+                        email=obj.email,
+                        password=new_password,
+                        quota_mb=cfg.mailbox_quota_mb,
+                    )
+                    self.message_user(
+                        request,
+                        f"Cuenta {obj.email} creada en cPanel con la contraseña asignada.",
+                        level=messages.SUCCESS,
+                    )
         except CpanelAPIError as exc:
             self.message_user(
                 request,
