@@ -1307,7 +1307,7 @@ def dashboard_client_service_create(request):
             return redirect('core:dashboard_client_services')
     else:
         form = ClientServiceForm()
-    return render(request, 'core/dashboard_form.html', {
+    return render(request, 'core/dashboard_client_service_form.html', {
         'form': form,
         'title': 'Asignar servicio a cliente',
         'back_url': 'core:dashboard_client_services',
@@ -1325,7 +1325,7 @@ def dashboard_client_service_edit(request, pk):
             return redirect('core:dashboard_client_service_detail', pk=pk)
     else:
         form = ClientServiceForm(instance=cs)
-    return render(request, 'core/dashboard_form.html', {
+    return render(request, 'core/dashboard_client_service_form.html', {
         'form': form,
         'title': f'Editar: {cs}',
         'back_url': 'core:dashboard_client_service_detail',

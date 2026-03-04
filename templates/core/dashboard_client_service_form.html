@@ -1,0 +1,120 @@
+{% extends 'core/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block dashboard_title %}{{ title }}{% endblock %}
+{% block dashboard_heading %}{{ title }}{% endblock %}
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+{% endblock %}
+
+{% block dashboard_actions %}
+<a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">
+    <i class="fas fa-arrow-left"></i> Volver
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="p-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="dash-form space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-white mb-3">Asignación</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{ form.client|as_crispy_field }}
+                        {{ form.service|as_crispy_field }}
+                        {{ form.billing_type|as_crispy_field }}
+                        {{ form.status|as_crispy_field }}
+                        {{ form.start_date|as_crispy_field }}
+                        {{ form.end_date|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-6">
+                    <h3 class="text-sm font-bold text-white mb-3">Precios y límites</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{ form.monthly_price|as_crispy_field }}
+                        {{ form.renewal_price|as_crispy_field }}
+                        {{ form.email_accounts_limit|as_crispy_field }}
+                    </div>
+                    {{ form.notes|as_crispy_field }}
+                </div>
+                <div class="border-t border-gray-800 pt-6">
+                    <h3 class="text-sm font-bold text-white mb-3">Configuración de correo (IMAP/SMTP)</h3>
+                    <p class="text-gray-500 text-xs mb-4">El cliente verá estos datos en su panel para configurar su cliente de correo (Outlook, Thunderbird, etc.). Déjalo vacío si no aplica.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-gray-400 text-xs font-semibold uppercase mb-2">IMAP</p>
+                            <div class="space-y-3">
+                                {{ form.mail_imap_host|as_crispy_field }}
+                                {{ form.mail_imap_port|as_crispy_field }}
+                                {{ form.mail_imap_ssl|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-xs font-semibold uppercase mb-2">SMTP</p>
+                            <div class="space-y-3">
+                                {{ form.mail_smtp_host|as_crispy_field }}
+                                {{ form.mail_smtp_port|as_crispy_field }}
+                                {{ form.mail_smtp_ssl|as_crispy_field }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form.mail_config_notes|as_crispy_field }}
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-6 pt-6 border-t border-gray-800">
+                <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <a href="{% if back_pk %}{% url back_url back_pk %}{% else %}{% url back_url %}{% endif %}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-800 text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-700 transition">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .dash-form label { color: #d1d5db; font-size: 0.875rem; font-weight: 600; }
+    .dash-form input, .dash-form select, .dash-form textarea {
+        background: #1f2937 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
+        border-radius: 0.5rem !important; padding: 0.6rem 0.75rem !important; font-size: 0.875rem !important;
+    }
+    .dash-form input:focus, .dash-form select:focus, .dash-form textarea:focus {
+        border-color: #dc2626 !important; box-shadow: 0 0 0 2px rgba(220,38,38,0.15) !important; outline: none !important;
+    }
+    .dash-form .form-check-input { accent-color: #dc2626; }
+    .dash-form .text-muted, .dash-form .form-text { color: #6b7280 !important; font-size: 0.75rem !important; }
+    .dash-form .asteriskField { color: #ef4444; }
+    .choices { margin-bottom: 0.25rem; }
+    .choices__inner {
+        background: #1f2937 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
+        border-radius: 0.5rem !important; min-height: 42px !important; padding: 0.35rem 0.65rem !important;
+    }
+    .choices__input { background: transparent !important; color: #f3f4f6 !important; }
+    .choices__list--dropdown, .choices__list[aria-expanded] {
+        background: #111827 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
+    }
+    .choices__list--dropdown .choices__item--selectable.is-highlighted,
+    .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+        background: #dc2626 !important;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script>
+    (function () {
+        var clientSelect = document.getElementById('id_client');
+        var serviceSelect = document.getElementById('id_service');
+        function initAutocomplete(selectEl, placeholder) {
+            if (!selectEl || selectEl.dataset.autocompleteReady === '1') return;
+            new Choices(selectEl, {
+                searchEnabled: true, shouldSort: false, itemSelectText: '',
+                searchPlaceholderValue: 'Escribe para buscar...',
+                placeholder: true, placeholderValue: placeholder
+            });
+            selectEl.dataset.autocompleteReady = '1';
+        }
+        initAutocomplete(clientSelect, 'Selecciona un cliente');
+        initAutocomplete(serviceSelect, 'Selecciona un servicio');
+    })();
+</script>
+{% endblock %}

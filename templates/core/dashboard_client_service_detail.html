@@ -105,14 +105,19 @@
     </div>
 </div>
 
-<!-- Configuración de correo (visible para el cliente) -->
-{% if cs.is_email_service and cs.mail_imap_host or cs.mail_smtp_host %}
+<!-- Configuración de correo (visible para el cliente) - siempre visible para poder editar desde el dashboard -->
 <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-800">
-        <h3 class="text-sm font-bold text-white">Configuración de correo</h3>
-        <p class="text-gray-400 text-xs mt-0.5">El cliente verá estos datos en su panel para configurar su cliente de correo</p>
+    <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between flex-wrap gap-2">
+        <div>
+            <h3 class="text-sm font-bold text-white">Configuración de correo</h3>
+            <p class="text-gray-400 text-xs mt-0.5">El cliente verá estos datos en su panel para configurar su cliente de correo (Outlook, Thunderbird, etc.)</p>
+        </div>
+        <a href="{% url 'core:dashboard_client_service_edit' cs.pk %}" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition">
+            <i class="fas fa-cog"></i> Editar configuración
+        </a>
     </div>
     <div class="p-6">
+        {% if cs.mail_imap_host or cs.mail_smtp_host %}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             {% if cs.mail_imap_host %}
             <div>
@@ -130,9 +135,11 @@
         {% if cs.mail_config_notes %}
         <p class="text-gray-400 text-xs mt-3">{{ cs.mail_config_notes }}</p>
         {% endif %}
+        {% else %}
+        <p class="text-gray-500 text-sm">Sin configurar. Haz clic en <strong>Editar configuración</strong> para definir IMAP/SMTP que verá el cliente.</p>
+        {% endif %}
     </div>
 </div>
-{% endif %}
 
 <!-- Correos asociados (creados por el cliente) -->
 <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
