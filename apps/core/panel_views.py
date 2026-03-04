@@ -250,12 +250,21 @@ def panel_servicio_email_outlook_prf(request, pk, email_pk):
 
     cfg = get_cpanel_config()
     email_host = getattr(settings, 'EMAIL_HOST', '') or ''
-    imap_host = cfg.outlook_imap_host or email_host
-    smtp_host = cfg.outlook_smtp_host or email_host
-    imap_port = cfg.outlook_imap_port
-    smtp_port = cfg.outlook_smtp_port
-    imap_ssl = cfg.outlook_imap_ssl
-    smtp_ssl = cfg.outlook_smtp_ssl
+    # Prioridad: configuración del servicio (ClientService) > CpanelConfig > settings
+    if client_service.mail_imap_host or client_service.mail_smtp_host:
+        imap_host = client_service.mail_imap_host or email_host
+        smtp_host = client_service.mail_smtp_host or email_host
+        imap_port = client_service.mail_imap_port
+        smtp_port = client_service.mail_smtp_port
+        imap_ssl = client_service.mail_imap_ssl
+        smtp_ssl = client_service.mail_smtp_ssl
+    else:
+        imap_host = cfg.outlook_imap_host or email_host
+        smtp_host = cfg.outlook_smtp_host or email_host
+        imap_port = cfg.outlook_imap_port
+        smtp_port = cfg.outlook_smtp_port
+        imap_ssl = cfg.outlook_imap_ssl
+        smtp_ssl = cfg.outlook_smtp_ssl
 
     # Nota: por seguridad no se incluye contraseña en el archivo.
     prf_content = f"""[General]
@@ -317,12 +326,21 @@ def panel_servicio_email_outlook_pack(request, pk, email_pk):
 
     cfg = get_cpanel_config()
     email_host = getattr(settings, 'EMAIL_HOST', '') or ''
-    imap_host = cfg.outlook_imap_host or email_host
-    smtp_host = cfg.outlook_smtp_host or email_host
-    imap_port = cfg.outlook_imap_port
-    smtp_port = cfg.outlook_smtp_port
-    imap_ssl = cfg.outlook_imap_ssl
-    smtp_ssl = cfg.outlook_smtp_ssl
+    # Prioridad: configuración del servicio (ClientService) > CpanelConfig > settings
+    if client_service.mail_imap_host or client_service.mail_smtp_host:
+        imap_host = client_service.mail_imap_host or email_host
+        smtp_host = client_service.mail_smtp_host or email_host
+        imap_port = client_service.mail_imap_port
+        smtp_port = client_service.mail_smtp_port
+        imap_ssl = client_service.mail_imap_ssl
+        smtp_ssl = client_service.mail_smtp_ssl
+    else:
+        imap_host = cfg.outlook_imap_host or email_host
+        smtp_host = cfg.outlook_smtp_host or email_host
+        imap_port = cfg.outlook_imap_port
+        smtp_port = cfg.outlook_smtp_port
+        imap_ssl = cfg.outlook_imap_ssl
+        smtp_ssl = cfg.outlook_smtp_ssl
 
     prf_filename = f"outlook-autoconfig-{local_part}.prf"
     bat_filename = "instalar-outlook.bat"
