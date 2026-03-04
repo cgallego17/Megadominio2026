@@ -6,6 +6,18 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
+def _get_default_from_email() -> str:
+    """Remitente por defecto: EmailConfig si está configurado, sino settings."""
+    try:
+        from apps.services.models import EmailConfig
+        cfg = EmailConfig.objects.first()
+        if cfg and cfg.default_from_email:
+            return cfg.default_from_email
+    except Exception:
+        pass
+    return getattr(settings, "DEFAULT_FROM_EMAIL", "")
+
+
 def send_html_email(
     subject: str,
     template: str,
@@ -30,7 +42,7 @@ def send_html_email(
     msg = EmailMultiAlternatives(
         subject=subject,
         body=text,
-        from_email=from_email or getattr(settings, "DEFAULT_FROM_EMAIL", None),
+        from_email=from_email or _get_default_from_email(),
         to=list(to or []),
         cc=list(cc or []),
         bcc=list(bcc or []),

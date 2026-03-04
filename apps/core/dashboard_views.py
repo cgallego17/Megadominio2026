@@ -11,7 +11,7 @@ from datetime import date
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig
+from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig, EmailConfig
 from apps.services.cpanel_api import CpanelAPI, CpanelAPIError
 from apps.services.cpanel_config import get_cpanel_config
 from apps.store.models import ProductCategory, Product, Order, OrderItem
@@ -26,6 +26,7 @@ from .forms import (
     OrderForm, OrderItemFormSet,
     HomeClientLogoForm, HomeTestimonialForm,
     CpanelConfigForm,
+    EmailConfigForm,
     ClientEmailPasswordChangeForm,
 )
 from .models import HomeClientLogo, HomeTestimonial
@@ -1439,6 +1440,35 @@ def dashboard_email_password(request, pk):
     return render(request, 'core/dashboard_email_password.html', {
         'account': account,
         'form': form,
+    })
+
+
+# ============ CONFIGURACIÓN SMTP / ENVÍO DE CORREOS ============
+
+@login_required
+@dashboard_required
+def dashboard_email_config(request):
+    """Configuración SMTP para envío de correos (notificaciones, reset password, etc.)."""
+    config_obj = EmailConfig.objects.first()
+    if config_obj is None:
+        config_obj = EmailConfig.objects.create()
+
+    if request.method == 'POST':
+        form = EmailConfigForm(request.POST, instance=config_obj)
+        if form.is_valid():
+            obj = form.save()
+            pwd = form.cleaned_data.get('smtp_password')
+            if pwd:
+                obj.set_encrypted_password(pwd)
+                obj.save(update_fields=['smtp_password_encrypted'])
+            messages.success(request, 'Configuración SMTP guardada correctamente.')
+            return redirect('core:dashboard_email_config')
+    else:
+        form = EmailConfigForm(instance=config_obj)
+
+    return render(request, 'core/dashboard_email_config.html', {
+        'form': form,
+        'config': config_obj,
     })
 
 

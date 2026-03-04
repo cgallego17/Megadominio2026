@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import get_user_model
 from apps.accounts.models import Country, State, City, UserAddress
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig
+from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig, EmailConfig
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.store.models import ProductCategory, Product, Order, OrderItem
@@ -333,6 +333,34 @@ class CpanelConfigForm(forms.ModelForm):
             'outlook_smtp_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
             'outlook_smtp_port': forms.NumberInput(attrs={**_input}),
             'outlook_smtp_ssl': forms.CheckboxInput(attrs=_checkbox),
+        }
+
+
+class EmailConfigForm(forms.ModelForm):
+    """Formulario para configurar SMTP desde el dashboard."""
+    smtp_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={
+            **_input,
+            'placeholder': 'Dejar vacío para no cambiar',
+            'autocomplete': 'new-password',
+        }),
+        label='Contraseña SMTP',
+    )
+
+    class Meta:
+        model = EmailConfig
+        fields = [
+            'smtp_host', 'smtp_port', 'smtp_use_ssl', 'smtp_use_tls',
+            'smtp_user', 'default_from_email',
+        ]
+        widgets = {
+            'smtp_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
+            'smtp_port': forms.NumberInput(attrs={**_input, 'min': '1', 'max': '65535'}),
+            'smtp_use_ssl': forms.CheckboxInput(attrs=_checkbox),
+            'smtp_use_tls': forms.CheckboxInput(attrs=_checkbox),
+            'smtp_user': forms.TextInput(attrs={**_input, 'placeholder': 'soporte@tudominio.com'}),
+            'default_from_email': forms.TextInput(attrs={**_input, 'placeholder': 'Megadominio <soporte@tudominio.com>'}),
         }
 
 

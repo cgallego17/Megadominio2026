@@ -292,3 +292,71 @@ class CpanelConfig(models.Model):
 
     def __str__(self):
         return "Configuración cPanel y correo"
+
+
+class EmailConfig(models.Model):
+    """
+    Configuración SMTP para envío de correos (notificaciones, reset password, etc.).
+    Un solo registro. Si está vacío, se usan las variables EMAIL_* de settings.
+    """
+    smtp_host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Host SMTP",
+        help_text="Ej: mail.tudominio.com o smtp.gmail.com",
+    )
+    smtp_port = models.PositiveIntegerField(
+        default=465,
+        verbose_name="Puerto SMTP",
+    )
+    smtp_use_ssl = models.BooleanField(
+        default=True,
+        verbose_name="Usar SSL",
+    )
+    smtp_use_tls = models.BooleanField(
+        default=False,
+        verbose_name="Usar TLS",
+    )
+    smtp_user = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Usuario SMTP",
+    )
+    smtp_password_encrypted = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name="Contraseña SMTP (cifrada)",
+    )
+    default_from_email = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Remitente por defecto",
+        help_text="Ej: Megadominio <soporte@tudominio.com>",
+    )
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Actualizado")
+
+    class Meta:
+        verbose_name = "Configuración SMTP"
+        verbose_name_plural = "Configuración SMTP"
+
+    def __str__(self):
+        return "Configuración SMTP"
+
+    def set_encrypted_password(self, raw_password):
+        if not raw_password:
+            self.smtp_password_encrypted = ""
+            return
+        from django.core.signing import Signer
+        signer = Signer(salt="emailconfig-smtp-password")
+        self.smtp_password_encrypted = signer.sign(raw_password)
+
+    @property
+    def decrypted_password(self):
+        if not self.smtp_password_encrypted:
+            return None
+        try:
+            from django.core.signing import Signer
+            signer = Signer(salt="emailconfig-smtp-password")
+            return signer.unsign(self.smtp_password_encrypted)
+        except Exception:
+            return None
