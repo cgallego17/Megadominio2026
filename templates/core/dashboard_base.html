@@ -72,8 +72,11 @@
                 <a href="{% url 'core:dashboard_client_services' %}" class="dash-link {% if '/dashboard/servicios-clientes' in request.path %}active{% endif %}">
                     <i class="fas fa-link"></i> Servicios de clientes
                 </a>
+                <a href="{% url 'core:dashboard_emails' %}" class="dash-link {% if '/dashboard/correos' in request.path %}active{% endif %}">
+                    <i class="fas fa-envelope-open-text"></i> Correos de clientes
+                </a>
                 <a href="{% url 'core:dashboard_cpanel_config' %}" class="dash-link {% if '/dashboard/configuracion-cpanel' in request.path %}active{% endif %}">
-                    <i class="fas fa-envelope"></i> Configuración cPanel / correo
+                    <i class="fas fa-cog"></i> Configuración cPanel / correo
                 </a>
 
                 <p class="dash-section-title mt-4">Contenido</p>

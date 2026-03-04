@@ -12,7 +12,7 @@
 
 {% block dashboard_content %}
 <!-- Metric Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-8">
     <a href="{% url 'core:dashboard_quotes' %}" class="group bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-blue-500/40 transition-all duration-300">
         <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Cotizaciones</span>
@@ -55,6 +55,17 @@
         </div>
         <p class="text-3xl font-extrabold text-white">{{ monthly_revenue|floatformat:2 }}</p>
         <p class="text-gray-500 text-xs mt-1">Últimos 30 días</p>
+    </a>
+
+    <a href="{% url 'core:dashboard_emails' %}" class="group bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-indigo-500/40 transition-all duration-300">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Correos</span>
+            <div class="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-envelope-open-text text-indigo-400"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-extrabold text-white">{{ total_emails }}</p>
+        <p class="text-gray-500 text-xs mt-1">Cuentas de correo</p>
     </a>
 </div>
 

@@ -9,7 +9,7 @@ from datetime import timedelta
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, CuentaDeCobro
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService
+from apps.services.models import Service, ClientService, ClientEmailAccount
 from apps.accounts.models import User
 from apps.store.models import Product, ProductCategory, Order
 from .models import HomeClientLogo, HomeTestimonial
@@ -120,6 +120,7 @@ def dashboard(request):
         'total_clients': total_clients,
         'total_services': total_services,
         'total_invoices': total_invoices,
+        'total_emails': total_emails,
         'quotes_by_status': quotes_by_status,
         'invoices_by_status': invoices_by_status,
         'recent_quotes': recent_quotes,

@@ -4,14 +4,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.utils import timezone
 from datetime import date
 
 from apps.quotes.models import Quote, QuoteItem
 from apps.invoices.models import Invoice, InvoiceItem, CuentaDeCobro, CuentaDeCobroItem
 from apps.clients.models import Client
-from apps.services.models import Service, ClientService, CpanelConfig
+from apps.services.models import Service, ClientService, ClientEmailAccount, CpanelConfig
 from apps.store.models import ProductCategory, Product, Order, OrderItem
 from .forms import (
     ClientForm, ServiceForm,
@@ -1343,6 +1343,32 @@ def dashboard_client_service_delete(request, pk):
         'back_url': 'core:dashboard_client_service_detail',
         'back_pk': pk,
         'list_url': 'core:dashboard_client_services',
+    })
+
+
+# ============ CORREOS (TODOS LOS USUARIOS) ============
+
+@login_required
+@dashboard_required
+def dashboard_emails(request):
+    """Tabla con todos los correos de todos los clientes."""
+    accounts = ClientEmailAccount.objects.select_related(
+        'client_service__client', 'client_service__service'
+    ).order_by('client_service__client__name', 'email')
+
+    search = request.GET.get('search', '').strip()
+    if search:
+        accounts = accounts.filter(
+            Q(email__icontains=search)
+            | Q(display_name__icontains=search)
+            | Q(client_service__client__name__icontains=search)
+            | Q(client_service__service__name__icontains=search)
+        )
+
+    return render(request, 'core/dashboard_emails_list.html', {
+        'object_list': accounts,
+        'title': 'Correos de clientes',
+        'search': search,
     })
 
 
