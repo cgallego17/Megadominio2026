@@ -102,12 +102,42 @@
 .panel-form input, .panel-form select, .panel-form textarea {
     background: #1f2937 !important; border: 1px solid #374151 !important; color: #f3f4f6 !important;
 }
+.panel-form .pwd-wrapper { position: relative; }
+.panel-form .pwd-wrapper input { padding-right: 2.75rem !important; }
+.panel-form .toggle-pw { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0.25rem; transition: color 0.2s; }
+.panel-form .toggle-pw:hover { color: #f3f4f6; }
 .panel-form input::placeholder { color: #6b7280 !important; }
 .panel-form .form-text, .panel-form small, .panel-form .text-muted { color: #9ca3af !important; }
 .panel-form .invalid-feedback { color: #f87171 !important; }
 .panel-form div[id^="div_id"] { color: inherit; }
 </style>
 <script>
+(function () {
+    document.querySelectorAll('.panel-form input[type="password"]').forEach(function (input) {
+        var parent = input.parentElement;
+        if (!parent || parent.classList.contains('pwd-wrapper')) return;
+        parent.classList.add('pwd-wrapper');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'toggle-pw';
+        btn.setAttribute('data-target', input.id);
+        btn.setAttribute('tabindex', '-1');
+        btn.setAttribute('title', 'Mostrar/ocultar contraseña');
+        btn.innerHTML = '<i class="fas fa-eye"></i>';
+        btn.addEventListener('click', function () {
+            var inp = document.getElementById(btn.dataset.target);
+            var icon = btn.querySelector('i');
+            if (inp && icon) {
+                var isPwd = inp.type === 'password';
+                inp.type = isPwd ? 'text' : 'password';
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            }
+        });
+        parent.appendChild(btn);
+    });
+})();
+
 (function () {
     var btn = document.getElementById('generate-password-btn');
     var pwdField = document.getElementById('id_password');
