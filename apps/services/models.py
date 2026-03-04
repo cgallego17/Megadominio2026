@@ -115,6 +115,40 @@ class ClientService(models.Model):
         blank=True, 
         verbose_name="Notas"
     )
+    # Configuración de correo que el cliente puede ver (IMAP/SMTP)
+    mail_imap_host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Servidor IMAP",
+        help_text="Ej: mail.tudominio.com. El cliente verá esta configuración.",
+    )
+    mail_imap_port = models.PositiveIntegerField(
+        default=993,
+        verbose_name="Puerto IMAP",
+    )
+    mail_imap_ssl = models.BooleanField(
+        default=True,
+        verbose_name="IMAP SSL",
+    )
+    mail_smtp_host = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Servidor SMTP",
+        help_text="Ej: mail.tudominio.com",
+    )
+    mail_smtp_port = models.PositiveIntegerField(
+        default=465,
+        verbose_name="Puerto SMTP",
+    )
+    mail_smtp_ssl = models.BooleanField(
+        default=True,
+        verbose_name="SMTP SSL",
+    )
+    mail_config_notes = models.TextField(
+        blank=True,
+        verbose_name="Notas de configuración",
+        help_text="Instrucciones adicionales que verá el cliente (ej: usar autenticación).",
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     reminder_15_sent_at = models.DateTimeField(

@@ -166,6 +166,29 @@ def panel_servicio_emails(request, pk):
     else:
         form = ClientEmailAccountPanelForm(cpanel_sync_enabled=cfg.sync_enabled)
 
+    # Configuración de correo para mostrar al cliente (del servicio o global)
+    mail_config = {}
+    if client_service.mail_imap_host or client_service.mail_smtp_host:
+        mail_config = {
+            'imap_host': client_service.mail_imap_host,
+            'imap_port': client_service.mail_imap_port,
+            'imap_ssl': client_service.mail_imap_ssl,
+            'smtp_host': client_service.mail_smtp_host,
+            'smtp_port': client_service.mail_smtp_port,
+            'smtp_ssl': client_service.mail_smtp_ssl,
+            'notes': client_service.mail_config_notes,
+        }
+    elif cfg.outlook_imap_host or cfg.outlook_smtp_host:
+        mail_config = {
+            'imap_host': cfg.outlook_imap_host,
+            'imap_port': cfg.outlook_imap_port,
+            'imap_ssl': cfg.outlook_imap_ssl,
+            'smtp_host': cfg.outlook_smtp_host,
+            'smtp_port': cfg.outlook_smtp_port,
+            'smtp_ssl': cfg.outlook_smtp_ssl,
+            'notes': '',
+        }
+
     return render(request, 'panel/panel_servicio_emails.html', {
         'client_service': client_service,
         'accounts': accounts,
@@ -173,6 +196,7 @@ def panel_servicio_emails(request, pk):
         'can_add_more': can_add_more,
         'form': form,
         'cpanel_sync_enabled': cfg.sync_enabled,
+        'mail_config': mail_config,
     })
 
 

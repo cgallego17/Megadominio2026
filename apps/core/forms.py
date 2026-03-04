@@ -264,8 +264,13 @@ class ClientServiceForm(forms.ModelForm):
 
     class Meta:
         model = ClientService
-        fields = ['client', 'service', 'billing_type', 'status', 'start_date', 'end_date',
-                  'monthly_price', 'renewal_price', 'email_accounts_limit', 'notes']
+        fields = [
+            'client', 'service', 'billing_type', 'status', 'start_date', 'end_date',
+            'monthly_price', 'renewal_price', 'email_accounts_limit', 'notes',
+            'mail_imap_host', 'mail_imap_port', 'mail_imap_ssl',
+            'mail_smtp_host', 'mail_smtp_port', 'mail_smtp_ssl',
+            'mail_config_notes',
+        ]
         widgets = {
             'client': forms.Select(attrs=_select),
             'service': forms.Select(attrs=_select),
@@ -275,6 +280,13 @@ class ClientServiceForm(forms.ModelForm):
             'renewal_price': forms.NumberInput(attrs={**_number, 'placeholder': '0.00 (0 = igual al valor)'}),
             'email_accounts_limit': forms.NumberInput(attrs={**_number, 'step': '1', 'min': '0', 'placeholder': '0'}),
             'notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Notas sobre este servicio...'}),
+            'mail_imap_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
+            'mail_imap_port': forms.NumberInput(attrs={**_number, 'min': '1', 'max': '65535'}),
+            'mail_imap_ssl': forms.CheckboxInput(attrs=_checkbox),
+            'mail_smtp_host': forms.TextInput(attrs={**_input, 'placeholder': 'mail.tudominio.com'}),
+            'mail_smtp_port': forms.NumberInput(attrs={**_number, 'min': '1', 'max': '65535'}),
+            'mail_smtp_ssl': forms.CheckboxInput(attrs=_checkbox),
+            'mail_config_notes': forms.Textarea(attrs={**_textarea, 'placeholder': 'Instrucciones adicionales para el cliente...', 'rows': '3'}),
         }
 
 

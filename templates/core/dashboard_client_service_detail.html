@@ -105,6 +105,35 @@
     </div>
 </div>
 
+<!-- Configuración de correo (visible para el cliente) -->
+{% if cs.is_email_service and cs.mail_imap_host or cs.mail_smtp_host %}
+<div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Configuración de correo</h3>
+        <p class="text-gray-400 text-xs mt-0.5">El cliente verá estos datos en su panel para configurar su cliente de correo</p>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            {% if cs.mail_imap_host %}
+            <div>
+                <p class="text-gray-500 text-xs font-semibold uppercase mb-1">IMAP</p>
+                <p class="text-gray-300 font-mono">{{ cs.mail_imap_host }}:{{ cs.mail_imap_port }} (SSL: {{ cs.mail_imap_ssl|yesno:"Sí,No" }})</p>
+            </div>
+            {% endif %}
+            {% if cs.mail_smtp_host %}
+            <div>
+                <p class="text-gray-500 text-xs font-semibold uppercase mb-1">SMTP</p>
+                <p class="text-gray-300 font-mono">{{ cs.mail_smtp_host }}:{{ cs.mail_smtp_port }} (SSL: {{ cs.mail_smtp_ssl|yesno:"Sí,No" }})</p>
+            </div>
+            {% endif %}
+        </div>
+        {% if cs.mail_config_notes %}
+        <p class="text-gray-400 text-xs mt-3">{{ cs.mail_config_notes }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
 <!-- Correos asociados (creados por el cliente) -->
 <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
     <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between flex-wrap gap-2">

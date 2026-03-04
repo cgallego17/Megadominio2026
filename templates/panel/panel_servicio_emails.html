@@ -97,6 +97,39 @@
         </div>
     </div>
 </div>
+{% if mail_config.imap_host or mail_config.smtp_host %}
+<div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <div class="px-5 py-4 border-b border-gray-800">
+        <h3 class="text-sm font-bold text-white">Configuración del servidor de correo</h3>
+        <p class="text-gray-500 text-xs mt-0.5">Usa estos datos para configurar tu cliente de correo (Outlook, Gmail app, etc.)</p>
+    </div>
+    <div class="p-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% if mail_config.imap_host %}
+            <div class="space-y-1">
+                <p class="text-gray-500 text-xs font-semibold uppercase">Entrante (IMAP)</p>
+                <p class="text-gray-300 text-sm font-mono">Servidor: {{ mail_config.imap_host }}</p>
+                <p class="text-gray-300 text-sm font-mono">Puerto: {{ mail_config.imap_port }} • SSL: {{ mail_config.imap_ssl|yesno:"Sí,No" }}</p>
+            </div>
+            {% endif %}
+            {% if mail_config.smtp_host %}
+            <div class="space-y-1">
+                <p class="text-gray-500 text-xs font-semibold uppercase">Saliente (SMTP)</p>
+                <p class="text-gray-300 text-sm font-mono">Servidor: {{ mail_config.smtp_host }}</p>
+                <p class="text-gray-300 text-sm font-mono">Puerto: {{ mail_config.smtp_port }} • SSL: {{ mail_config.smtp_ssl|yesno:"Sí,No" }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% if mail_config.notes %}
+        <div class="mt-4 pt-4 border-t border-gray-800">
+            <p class="text-gray-500 text-xs font-semibold uppercase mb-1">Notas</p>
+            <p class="text-gray-300 text-sm whitespace-pre-wrap">{{ mail_config.notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
 <p class="text-xs text-gray-400 mt-4">
     <strong class="text-gray-300">Outlook 1 clic</strong> descarga ZIP con instalador automático para Outlook clásico de Windows. Por seguridad, la contraseña se solicita al abrir Outlook.
 </p>

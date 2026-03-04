@@ -96,6 +96,14 @@ class ClientServiceAdmin(admin.ModelAdmin):
         ('Información adicional', {
             'fields': ('notes',)
         }),
+        ('Configuración de correo (visible para el cliente)', {
+            'fields': (
+                'mail_imap_host', 'mail_imap_port', 'mail_imap_ssl',
+                'mail_smtp_host', 'mail_smtp_port', 'mail_smtp_ssl',
+                'mail_config_notes',
+            ),
+            'description': 'El cliente verá estos datos en su panel para configurar su cliente de correo.',
+        }),
     )
 
 
