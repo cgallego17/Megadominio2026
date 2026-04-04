@@ -9,7 +9,7 @@ class ProductCategory(models.Model):
     slug = models.SlugField('Slug', max_length=120, unique=True, blank=True)
     icon = models.CharField(
         'Icono FontAwesome', max_length=50, default='fa-tag',
-        help_text='Clase FA, ej: fa-tshirt, fa-coffee, fa-sticky-note'
+        help_text='Clase FA, ej: fa-tshirt, fa-mug-hot, fa-sticky-note'
     )
     order = models.PositiveIntegerField('Orden', default=0)
     is_active = models.BooleanField('Activa', default=True)

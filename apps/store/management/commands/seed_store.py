@@ -9,7 +9,7 @@ class Command(BaseCommand):
         # Categorías
         cats = {
             'ropa': ('Ropa', 'fa-tshirt', 1),
-            'tazas': ('Tazas', 'fa-coffee', 2),
+            'tazas': ('Tazas', 'fa-mug-hot', 2),
             'stickers': ('Stickers', 'fa-sticky-note', 3),
             'accesorios': ('Accesorios', 'fa-mouse', 4),
         }
@@ -62,7 +62,7 @@ class Command(BaseCommand):
             },
             {
                 'slug': 'taza-console',
-                'name': 'Taza console.log("café")',
+                'name': 'Taza console.log("code")',
                 'category': 'tazas',
                 'description': 'Cerámica 350ml. Diseño minimalista con código real.',
                 'price': '14.99',
@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 'category': 'tazas',
                 'description': 'Cerámica premium 400ml con logo rojo. "Fuel your code".',
                 'price': '12.99',
-                'icon': 'fa-coffee',
+                'icon': 'fa-mug-hot',
                 'icon_color': 'text-red-500',
                 'badge': '',
                 'stock': 45,

@@ -46,8 +46,8 @@
             <a href="#productos" class="inline-flex items-center px-8 py-4 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-red-600/30">
                 <i class="fas fa-shopping-bag mr-2"></i> Ver productos
             </a>
-            <a href="{% url 'core:coffee' %}" class="inline-flex items-center px-8 py-4 border-2 border-amber-500/50 text-amber-400 font-bold rounded-xl hover:bg-amber-500/10 transition-all duration-300">
-                <i class="fas fa-mug-hot mr-2"></i> Mega Coffee
+            <a href="{% url 'core:quote_request' %}" class="inline-flex items-center px-8 py-4 border-2 border-gray-600 text-gray-300 font-bold rounded-xl hover:bg-gray-800 transition-all duration-300">
+                <i class="fas fa-file-invoice mr-2"></i> Cotizar servicio
             </a>
         </div>
     </div>
@@ -120,22 +120,6 @@
             {% endfor %}
 
         </div>
-    </div>
-</section>
-
-<!-- Mega Coffee CTA -->
-<section class="py-20 bg-gradient-to-r from-amber-900 via-amber-800 to-yellow-900 text-white relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-orange-400 rounded-full blur-3xl"></div>
-    </div>
-    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-        <i class="fas fa-mug-hot text-7xl text-amber-400 block mb-6"></i>
-        <h2 class="text-3xl md:text-5xl font-extrabold mb-6">¿Ya probaste Mega Coffee?</h2>
-        <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">Café 100% colombiano de especialidad, tostado artesanalmente para mentes creativas.</p>
-        <a href="{% url 'core:coffee' %}" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold bg-white text-amber-900 rounded-xl shadow-xl hover:bg-amber-50 transition-all duration-300 transform hover:scale-105">
-            <i class="fas fa-coffee mr-3"></i> Descubre Mega Coffee
-        </a>
     </div>
 </section>
 

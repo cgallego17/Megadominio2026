@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='Nombre')),
                 ('slug', models.SlugField(blank=True, max_length=120, unique=True, verbose_name='Slug')),
-                ('icon', models.CharField(default='fa-tag', help_text='Clase FA, ej: fa-tshirt, fa-coffee, fa-sticky-note', max_length=50, verbose_name='Icono FontAwesome')),
+                ('icon', models.CharField(default='fa-tag', help_text='Clase FA, ej: fa-tshirt, fa-mug-hot, fa-sticky-note', max_length=50, verbose_name='Icono FontAwesome')),
                 ('order', models.PositiveIntegerField(default=0, verbose_name='Orden')),
                 ('is_active', models.BooleanField(default=True, verbose_name='Activa')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

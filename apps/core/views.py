@@ -462,13 +462,6 @@ def product_detail(request, slug):
     })
 
 
-def coffee(request):
-    """
-    Landing page Mega Coffee
-    """
-    return render(request, 'core/coffee.html')
-
-
 def services(request):
     """
     Página con todos los servicios

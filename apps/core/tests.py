@@ -230,68 +230,9 @@ class PublicPagesTests(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, 'Tienda')
 
-    def test_coffee_page(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, 'Mega')
-        self.assertContains(resp, 'COFFEE')
-
-    def test_coffee_has_parallax(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'parallax-layer')
-        self.assertContains(resp, 'data-coffee-speed')
-
-    def test_coffee_has_products(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'Deploy Dark')
-        self.assertContains(resp, 'Sprint Medium')
-        self.assertContains(resp, 'Agile Light')
-
-    def test_coffee_has_jsonld(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'application/ld+json')
-        self.assertContains(resp, 'Mega Coffee')
-
-    def test_coffee_has_accessories(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'V60 Dripper')
-        self.assertContains(resp, 'Grinder Manual')
-
-    def test_coffee_has_subscriptions(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'Junior Dev')
-        self.assertContains(resp, 'Senior Dev')
-        self.assertContains(resp, 'Tech Lead')
-
-    def test_store_links_to_coffee(self):
+    def test_store_has_quote_cta(self):
         resp = self.client.get(reverse('core:store'))
-        self.assertContains(resp, '/coffee/')
-
-    def test_coffee_has_cart_drawer(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'cart-drawer')
-        self.assertContains(resp, 'cart-close')
-        self.assertContains(resp, 'cart-items')
-
-    def test_coffee_has_add_to_cart_buttons(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'add-to-cart')
-        self.assertContains(resp, 'data-id')
-        self.assertContains(resp, 'data-price')
-
-    def test_coffee_has_cart_badge(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'cart-badge-desktop')
-        self.assertContains(resp, 'cart-badge-mobile')
-
-    def test_coffee_has_cart_js(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'megacoffee_cart')
-        self.assertContains(resp, 'localStorage')
-
-    def test_coffee_cart_checkout_whatsapp(self):
-        resp = self.client.get(reverse('core:coffee'))
-        self.assertContains(resp, 'wa.me')
+        self.assertContains(resp, 'Cotizar servicio')
 
     def test_404_page(self):
         resp = self.client.get('/pagina-que-no-existe/')
@@ -374,12 +315,9 @@ class SEOTests(TestCase):
         resp = self.client.get(reverse('core:home'))
         self.assertContains(resp, 'aria-label')
 
-    def test_home_has_coffee_float(self):
+    def test_home_has_footer(self):
         resp = self.client.get(reverse('core:home'))
-        self.assertContains(resp, 'coffee-intro')
-        self.assertContains(resp, 'coffee-parked')
-        self.assertContains(resp, 'Es hora de un caf')
-        self.assertContains(resp, '/coffee/')
+        self.assertContains(resp, 'Todos los derechos reservados')
 
 
 class ServiceDetailTests(TestCase):

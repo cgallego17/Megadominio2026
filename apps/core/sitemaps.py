@@ -15,7 +15,6 @@ class StaticViewSitemap(Sitemap):
             'core:about',
             'core:contact',
             'core:store',
-            'core:coffee',
             'core:quote_request',
         ]
 
