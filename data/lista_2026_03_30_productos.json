@@ -1,0 +1,2263 @@
+{
+  "fuente": "LISTA 30 DE MARZO DE 2026.pdf",
+  "total": 230,
+  "carpeta_imagenes_pdf": "data/pdf_assets/lista_30_de_marzo_de_2026",
+  "nota_imagenes": "imagen: ruta relativa al repo hacia la extracción PyMuPDF; se elige la imagen más pesada de la misma pagina_pdf que el texto del producto (varios productos en una página pueden compartir la misma foto: revisar manualmente). Las imágenes con transparencia se guardan compuestas sobre fondo blanco (Pillow). Sin --sin-imagenes se vuelcan todas las imágenes en carpeta_imagenes_pdf; ver imagenes_por_pagina.",
+  "advertencia": "Extracción automática: hay precios tipo +270.000 (complemento de otro ítem) y leyendas promocionales (ej. ANTES:/AHORA:). Revisa y unifica nombres manualmente donde haga falta.",
+  "moneda": "COP",
+  "imagenes_por_pagina": {
+    "01": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p01_i01.jpg"
+    ],
+    "02": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i12.jpg"
+    ],
+    "03": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p03_i14.jpg"
+    ],
+    "04": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i04.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i17.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i18.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i19.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i20.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i21.jpg"
+    ],
+    "05": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i12.jpg"
+    ],
+    "06": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i07.jpg"
+    ],
+    "07": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i02.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i06.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i08.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i10.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i12.jpg"
+    ],
+    "08": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i04.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i06.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i10.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i11.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i17.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i18.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i19.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i20.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i21.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i22.jpg"
+    ],
+    "09": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i13.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i17.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i18.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i19.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i20.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg"
+    ],
+    "10": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i10.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i13.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i14.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i17.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i18.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i19.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i20.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i21.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i22.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i23.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i24.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i25.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i26.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i27.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i28.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i29.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i30.jpg"
+    ],
+    "11": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i01.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i03.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i06.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i10.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i13.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i15.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i17.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i18.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i19.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i20.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i21.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i22.jpg"
+    ],
+    "12": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i05.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i17.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i18.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i19.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i20.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i21.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i22.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i23.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i24.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i25.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i26.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i27.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i28.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i29.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i30.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i31.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i32.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i33.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i34.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i35.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i36.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i37.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i38.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i39.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i40.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i41.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i42.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i43.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i44.jpg"
+    ],
+    "13": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i07.jpg"
+    ],
+    "14": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i10.jpg"
+    ],
+    "15": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i14.jpg"
+    ],
+    "16": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i04.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i05.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i06.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i08.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg"
+    ],
+    "17": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i03.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i05.jpg"
+    ],
+    "18": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i01.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i07.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i11.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i13.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i14.jpg"
+    ],
+    "19": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i05.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i10.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i14.jpg"
+    ],
+    "20": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i09.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i11.png",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i13.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i14.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i15.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i16.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i17.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png"
+    ],
+    "21": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i11.jpg"
+    ],
+    "22": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i11.jpg"
+    ],
+    "23": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i05.jpg"
+    ],
+    "24": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i12.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i13.jpg"
+    ],
+    "25": [
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i01.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i02.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i03.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i05.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i06.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i07.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i08.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i09.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i10.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i11.jpg",
+      "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i12.jpg"
+    ]
+  },
+  "productos": [
+    {
+      "nombre": "CHASIS GAMER — L18",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "CHASIS GAMER POWER GROUP Malla frontal de corte recto y elegante 4 ventiladores ARGB + Controlador Medidas: 42 X 20 X 46 cm Fuente de poder POWER GROUP 350W L18",
+      "precio": 299000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "Malla frontal con — L25",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "Malla frontal con diseño de panal geométrico 4 Ventiladores ARGB + Controlador Medidas: 42 X 20 X 46 cm L25",
+      "precio": 299000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "POWER GROUP 350W",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "Fuente de poder POWER GROUP 350W IVA INCLUIDO",
+      "precio": 359000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "F911 — F913B",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "F911 Frontal Vidrio templado 8 Ventiladores RGB + Controlador Medidas: 625 x 565 x 270 mm F913B",
+      "precio": 375000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "Controlador (Medidas: 610 x 545 x 275 mm)",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "Frontal con vidrio templado Iluminación LED ARGB + Controlador Medidas: 610 x 545 x 275 mm",
+      "precio": 259000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "Power Group 600W 80 PLUS BRONCE",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "CAJA ATX GIGABYTE C200 GLASS Elegante luz RGB en el panel frontal de vidrio templado negro con interruptor LED RGB y 2 USB 3.0 en el panel de E / S - Panel lateral de vidrio templado - Diseño de cubierta de PSU / Filtro de polvo desmontable Compatible con refrigeración líquida con Fuente de poder: Power Group 600W 80 PLUS BRONCE",
+      "precio": 460000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "Compatible con refrigeración líquida",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "CAJA ATX GIGABYTE C200 GLASS FUENTE DE PODER 600W 80 PLUS BRONCE+ Elegante luz RGB en el panel frontal de vidrio templado negro con interruptor LED RGB y 2 USB 3.0 en el panel de E / S - Panel lateral de vidrio templado - Diseño de cubierta de PSU / Filtro de polvo desmontable Compatible con refrigeración líquida",
+      "precio": 459000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "6 Ventiladores ARGB + Controlador (Medidas: 55 x 23 x 55 cm)",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "F-937 + FUENTE DE PODER 600W 80 PLUS BRONCE Novedosos diseño inspirado en la mitología y ficción 6 Ventiladores ARGB + Controlador Medidas: 55 x 23 x 55 cm",
+      "precio": 449000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "+ Controlador",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p02_i06.jpg",
+      "descripcion": "LANDER 500 POWER GROUP - XPG + XPG PROBE 600W 80 Plus Bronze Frontal Malla 4 Ventiladores ARGB + Controlador",
+      "precio": 549000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 2
+    },
+    {
+      "nombre": "el precio del equipo con MONITORES: ACER 21.5” IPS.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "W75 NEGRO + POWER GROUP 600W 80 PLUS BRONCE Frontal + 1 lateral de vidrio 7 Ventiladores ARGB + Controlador MODELOS DE CHASIS GAMER POWER GROUP Nuestros equipos Power Group pueden incluir cualquiera de los siguientes modelos de chasis, dependiendo de la referencia del equipo y la disponibilidad. W28 Fuente de poder POWER GROUP 350W / 750W Malla frontal de corte recto y elegante 5 ventiladores ARGB + Controlador W78 Fuente de poder POWER GROUP 600W Diseño inspirado en caja de cristal, con vidrio templado lateral y frontal 7 Ventiladores ARGB + Controlador W97 Fuente de poder POWER GROUP 750W Diseño inspirado en caja de cristal, con vidrio templado lateral y frontal 7 Ventiladores ARGB + Controlador Disponible en: blanco y Negro Medidas: 45 X 18 X 42 cm G93 Fuente de poder POWER GROUP 350W Puertos USB frontales Medidas: 42 x 20 x 46 cm L47 Fuente de poder POWER GROUP 600W Malla frontal de corte recto y elegante 4 ventiladores ARGB + Controlador Medidas: 42 x 20 x 46 cm L48 Fuente de poder POWER GROUP 600W Malla frontal de corte recto y elegante 4 ventiladores ARGB + Controlador Medidas: 42 x 20 x 46 cm X15 Fuente de poder POWER GROUP 350W Diseño sobrio y elegante, compuesto por 4 ventiladores ARGB frontal y (1) lateral de vidrio templado + Controlador Medidas: 42 x 20 x 46 cm L46 Fuente de poder POWER GROUP 600W Malla frontal de corte recto y elegante 4 ventiladores ARGB + Controlador Medidas: 46 x 23 x 40 cm X18 Fuente de poder POWER GROUP 350W / 600W Diseño sólido con malla frontal con corte en las bases de sus columnas laterales. 4 Ventiladores ARGB + Controlador Medidas: 42 x 20 x 48 cm LANDER 500 POWER GROUP - XPG + XPG PROBE 600W 80 Plus Bronze Frontal Malla 4 Ventiladores ARGB + Controlador W25 Fuente de poder POWER GROUP 350W / 750W Malla frontal de corte recto y elegante 5 ventiladores ARGB + Controlador W27 Fuente de poder POWER GROUP 350W / 750W Malla frontal de corte recto y elegante 5 ventiladores ARGB + Controlador Medidas: 46 x 23 x 40 cm L38 Fuente de poder POWER GROUP 350W / 600W Diseño sólido con malla frontal con corte en las bases de sus columnas laterales. 4 Ventiladores ARGB + Controlador OPCIONES DE MONITORES PARA COMPRA DE EQUIPOS Para la adición de precio se toma como referencia el precio del equipo con MONITORES: ACER 21.5” IPS.",
+      "precio": 410000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "/ Resolución: 1920 x 1080",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "27” ED270 CURVO 240Hz 1ms VRB CURVED 16:9 Speakers: 2Wx2 / AMD FreeSync™ Premium technology / Tipo de vanel: VA / Ángulos de visión: 178°(H),178°(V) / Resolución: 1920 x 1080",
+      "precio": 270000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "NITRO 23.8\" XV240Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "23,8” VG249QL3A Pivote Altura ajustable El monitor para juegos TUF Gaming VG249QL3A FHD de 23.8” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta. 1ms Tiempo de respuesta 180Hz Frecuencia de actualización PIVOT NITRO 23.8\" XV240Y 200Hz Frecuencia de actualización",
+      "precio": 230000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "+ DisplayPort(v1.2a) / Vesa: 100x100mm",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "0.5ms Tiempo de respuesta AMD FreeSync / Tipo de panel: IPS / 1920x1080 / 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) / Vesa: 100x100mm PIVOT 200Hz Frecuencia de actualización",
+      "precio": 370000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "NITRO 27\" XV270",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "0.5ms Tiempo de respuesta AMD FreeSync / Tipo de panel: IPS / 1920x1080 / 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) / Vesa: 100x100mm NITRO 27\" XV270 180Hz Frecuencia de actualización",
+      "precio": 699000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "Wide2K",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "2K 2560x1440 / Tipo de panel: VA 1ms VRB / 178°(H), 178°(V) 'HDMIx2+DisplayPort 1msVRB Tiempo de respuesta NITRO CURVO 31.5\" XZ322QU Ultra Wide2K 180Hz Frecuencia de actualización",
+      "precio": 929000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "ED340CU",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "3440x1440 / Tipo de panel: VA 1ms VRB / 178°(H), 178°(V) HDMIx2+DisplayPort 1msVRB Tiempo de respuesta NITRO CURVO 34” ED340CU 180Hz Frecuencia de actualización",
+      "precio": 490000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "AHORA:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "0.5ms Tiempo de respuesta AMD FreeSync / Tipo de panel: IPS 2560x144 / 178°(H),178°(V) '1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) + Audio out NITRO 27” KGB271U 2K AHORA:",
+      "precio": 230000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "ANTES:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "ANTES:",
+      "precio": 250000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "Resolución: 2560 x 1440",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Premium Acer VisionCare / Resolución: 1920 x 1080 FHD sRGB 99% 27” NITRO KG270 1ms(VRB) Tiempo de respuesta 180Hz Frecuencia de actualización VALIDO HASTA AGOTAR EXISTENCIAS Speakers: 2Wx2 / AMD FreeSync™ Premium technology / Tipo de vanel: VA / Ángulos de visión: 178°(H),178°(V) / Resolución: 2560 x 1440",
+      "precio": 370000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "27” KG272U — HDR10",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "27” KG272U 2K 170Hz 1ms VRB HDR10",
+      "precio": 390000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "suavidad absoluta.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "27” VG279QL3A Pivote Altura ajustable 1ms Tiempo de respuesta 180Hz Frecuencia de actualización El monitor para juegos TUF Gaming VG279QL3A FHD de 27” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta.",
+      "precio": 500000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "GameFast Input technology",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "27” VG27AQZ1A 2K Speakers: 2W x 2 / Trace Free Technology / GameVisual / GamePlus / Extreme Low Motion Blur / VRR Technology / GameFast Input technology 170Hz Frecuencia de actualización 180Hz Frecuencia de actualización",
+      "precio": 600000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "VG27AQ5A",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "27” XG27WCS CURVO Monitor gaming ROG Strix XG27WCS USB Tipo C: 27” 2560x1440, curvo, 180 Hz, 1 ms (GTG), Fast VA, sincronización de desenfoque de movimiento extremadamente bajo, USB Type-C, FreeSync, DisplayWidget Center, conector para trípode, HDR 2K VG27AQ5A 27” 0,3ms Tiempo de respuesta 210Hz Frecuencia de actualización (MAX.)",
+      "precio": 570000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "2K QHD",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Puertos: DisplayPort 1.4 x 1 (HBR2), HDMI (v2.0) x 2, concentrador USB: 1x USB 3.2 Gen 1 Tipo-C (puerto de servicio), conector para auriculares: Sí Tipo de panel: Fast IPS / 0,3 ms (GTG) mínimo / Tecnología ELMB Sync Compatible con FreeSync Premium y G-SYNC / Stereo speaker, DisplayWidget Center / Funciones Gaming AI 2560X1440 2K QHD",
+      "precio": 50000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "ANTES:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Modo de pantalla: Full HD Tecnología de paneles: In-plane Switching (IPS) Technology Ángulo de visión horizontal - vertical: 178° VisionCare / Bluelight Shield / Low Dimming / ComfyView 1ms Tiempo de respuesta 144Hz Frecuencia de actualización 23.8” KA242Y ANTES:",
+      "precio": 130000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "AHORA:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "AHORA:",
+      "precio": 120000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "Tipo de panel: IPS In-Plane-Switching — KG240Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Acer VisionCare / Resolución: 1920 x 1080 FHD sRGB 99% 1ms(VRB) Tiempo de respuesta 180Hz Frecuencia de actualización VALIDO HASTA AGOTAR EXISTENCIAS 23.8” NITRO KG240Y",
+      "precio": 75000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "certificadas por TÜV Rheinland",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "1ms (MPRT) Tiempo de respuesta 120Hz Frecuencia de actualización (Max) 24.5” VA259HGA Full HD (1920 x 1080) / Tecnología Adaptive-Sync Visión de 178° / Eye Care Eye Care cuentan con tecnologías Flicker-free y Low Blue Light certificadas por TÜV Rheinland",
+      "precio": 95000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "23,8” VG249QE5A",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Monitor para juegos Full HD (1920x1080) de 23,8 pulgadas - 60,45 cm con frecuencia de actualización de 146 Hz (OC). La tecnología ASUS Extreme Low Motion Blur Sync (ELMB Sync) permite que las tecnologías ELMB y de frecuencia de actualización variable funcionen simultáneamente. 146Hz Frecuencia de actualización 1ms MPRT IPS 23,8” VG249QE5A",
+      "precio": 120000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "1ms (MPRT)",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "1ms Tiempo de respuesta 144Hz Frecuencia de actualización 27” KA272 Pantalla: 27\" (68,6 cm) Resolución FHD / Panel IPS / Relación de aspecto 16:9 / Superficie Antirreflejo / 250 cd/m² (Brillo) Tecnología: AMD FreeSync Entradas de video: HDMI y DisplayPort (según versión/modelo) Diseño: Marcos delgados y estética moderna VG279QE5A 27” T 1ms (MPRT) iempo de respuesta 144Hz Frecuencia de actualización (MAX.)",
+      "precio": 160000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "ULTIMAS 7 UNDS EN CALI",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p04_i03.jpg",
+      "descripcion": "Puertos: DisplayPort x1 / HDMI 2.0 x1 / Salida de audífonos. Tipo de panel: IPS / 1 ms (MPRT) / 146 Hz (OC) / ELMB Sync (menos ghosting y tearing) / Adaptive-Sync / Overdrive variable / Shadow Boost (mejora zonas oscuras) / 125% sRGB (colores más vivos) / GamePlus / GameVisual / Tecnología sin parpadeo + filtro de luz azul / Altavoces estéreo / DisplayWidget Center. 1920X1080 FHD ULTIMAS 7 UNDS EN CALI",
+      "precio": 1770000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 4
+    },
+    {
+      "nombre": "(3) CALI",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "2K WQHD 2560X1440 Puertos: DP 1.4a x1 | HDMI 2.1 x2 | USB-C (DP Alt) | Jack 3.5 mm Tipo de panel: QD-OLED / 0,03 ms (GTG) mínimo / Color premium (Delta E ≤ 2) / VESA ClearMR 13000 / OLED Care 2.0 (anti quemado) / Modo consola (PS5 / Xbox) Cuenta con asistencia para juegos con opciones de relación de aspecto, Actualización de FW y visor OPTIX 27” MAG 272QP 0,03ms Tiempo de respuesta 240Hz Frecuencia de actualización (MAX) QD-OLED (3) CALI",
+      "precio": 50000,
+      "precio_es_complemento": true,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "Low Dimming / ComfyView",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "TECLADO Y MOUSE MECÁNICO X9 El teclado cuenta con un diseño delgado y un buen equilibrio, estabilidad y estilo. Ofrece teclas de juego, diseño de múltiples teclas sin conflictos; ninguna tecla se bloquea. Permite enviar habilidades y jugar sin perder comandos en momentos críticos. la retroiluminación se puede apagar o encender de acuerdo sus requerimientos. IVA INCLUIDO MONITORES GAMING Modo de pantalla: FHD Tecnología de paneles: In-plane Switching (IPS) Technology Ángulo de visión horizontal - vertical: 178° VisionCare / Bluelight Shield / Low Dimming / ComfyView T 1ms (VRB) iempo de respuesta 120Hz Frecuencia de actualización",
+      "precio": 369000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "23.8” KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "23.8” KA242Y",
+      "precio": 519000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "sRGB 99%",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "23.8” NITRO KG240Y Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Acer VisionCare Resolución: 1920 x 1080 FHD sRGB 99% 180Hz Frecuencia de actualización (MAX.) 1ms (VRB) Tiempo de respuesta",
+      "precio": 389000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "respuesta de 1 ms MPRT",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "24,5” VA259HGA Con un panel IPS de 24,5 pulgadas y resolución Full HD (1920 x 1080), que ofrece un ángulo de visión de 178° y una calidad de imagen vívida. Su rápida frecuencia de actualización de 120 Hz con tecnología Adaptive-Sync y tiempo de respuesta de 1 ms MPRT 120Hz Frecuencia de actualización 1ms IPS",
+      "precio": 439000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "250 cd/m² (Brillo)",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "23,8” VG249QE5A Monitor para juegos Full HD (1920x1080) de 23,8 pulgadas - 60,45 cm con frecuencia de actualización de 146 Hz (OC). La tecnología ASUS Extreme Low Motion Blur Sync (ELMB Sync) permite que las tecnologías ELMB y de frecuencia de actualización variable funcionen simultáneamente. 146Hz Frecuencia de actualización 1ms MPRT IPS Pantalla: 27\" (68,6 cm) Resolución FHD Panel IPS Relación de aspecto 16:9 Superficie Antirreflejo 250 cd/m² (Brillo) Tecnología: AMD FreeSync 1ms Tiempo de respuesta",
+      "precio": 529000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "Altura",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "Entradas de video: HDMI y DisplayPort (según versión/modelo) Diseño: Marcos delgados y estética moderna 144Hz Frecuencia de actualización (MAX.) 27” KA272 23,8” VG249QL3A Pivote Altura ajustable 1ms Tiempo de respuesta",
+      "precio": 599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "Vesa: 100x100mm",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "180Hz Frecuencia de actualización El monitor para juegos TUF Gaming VG249QL3A FHD de 23.8” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta. PIVOT AMD FreeSync Tipo de panel: IPS / 1920x1080 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) Vesa: 100x100mm 0.5ms Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
+      "precio": 749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "Vesa: 100x100mm",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "NITRO 27\" XV270 PIVOT AMD FreeSync Tipo de panel: IPS / 1920x1080 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) Vesa: 100x100mm 0.5ms Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
+      "precio": 569000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "NITRO 23.8\" XV240Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "NITRO 23.8\" XV240Y",
+      "precio": 675000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "sRGB 99%",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "descripcion": "27” NITRO KG270 Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Premium Acer VisionCare Resolución: 1920 x 1080 FHD sRGB 99% 180Hz Frecuencia de actualización (MAX.) 1ms (VRB) Tiempo de respuesta",
+      "precio": 569000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 5
+    },
+    {
+      "nombre": "Tipo de panel: Fast IPS — ALTURA.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "Tipo de panel: Fast IPS 0,3 ms (GTG) mínimo Tecnología ELMB Sync Compatible con FreeSync Premium DisplayWidget Center Funciones Gaming AI Puertos: DisplayPort x1 / HDMI 2.0 x1 / Salida de audífonos. 27” VG279QE5A 1ms (MPRT) Tiempo de respuesta 144Hz Frecuencia de actualización (MAX.) Tipo de panel: IPS / 1 ms (MPRT) / 146 Hz (OC) / ELMB Sync / Adaptive-Sync / Overdrive variable / Shadow Boost / 125% sRGB / GamePlus / GameVisual / Tecnología sin parpadeo + filtro de luz azul / Altavoces estéreo / DisplayWidget Center FHD 1920X1080 IVA INCLUIDO MONITORES GAMING AY-1 BASE DE FIBRA de carbón. TOPES DE SUELO regulador ILUMINACIÓN LED en sus laterales. PORTAVASOS SOPORTE DE DIADEMAP DE SISTEMA ELÉCTRICO ARA AJUSTAR LA MEDIDA DESDE 73CM HASTA 105CM ALTURA.",
+      "precio": 1199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "HDMIx2+DisplayPort",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "ESCRITORIO GAMER UltraWide2K 3440x1440 Tipo de panel: VA 1ms VRB 178°(H), 178°(V) HDMIx2+DisplayPort 1ms VRB Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
+      "precio": 1479000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "'HDMIx2+DisplayPort",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "NITRO CURVO 34” ED340CU UM.CE0AA.004 2K 2560x1440 Tipo de panel: VA 1ms VRB 178°(H), 178°(V) 'HDMIx2+DisplayPort 1ms VRB Tiempo de respuesta 180Hz Frecuencia de actualización (MAX.)",
+      "precio": 1099000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "31.5\" XZ322QU",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "NITRO CURVO 31.5\" XZ322QU 1ms Tiempo de respuesta",
+      "precio": 779000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "180Hz — ajustable",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "180Hz Frecuencia de actualización El monitor para juegos TUF Gaming VG279QL3A FHD de 27” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta. 27” VG279QL3A Pivote Altura ajustable",
+      "precio": 819000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "+ Audio out",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "1ms VRB Speakers: 2Wx2 AMD FreeSync™ Premium technology ipo de vanel: VA Ángulos de visión: 178°(H),178°(V) Resolución: 1920 x 1080 27” ED270 CURVO 240Hz CURVED 16:9 AMD FreeSync 178°(H),178°(V) '1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) + Audio out 0.5ms Tiempo de respuesta 180Hz Frecuencia de actualización (MAX.)",
+      "precio": 899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "Tipo de panel: IPS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "descripcion": "NITRO 27” KGB271U 2K 2560x1440 Tipo de panel: IPS",
+      "precio": 929000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 6
+    },
+    {
+      "nombre": "Core i5",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Tipo de panel: Fast IPS 0,3 ms (GTG) mínimo Tecnología ELMB Sync Compatible con FreeSync Premium DisplayWidget Center Funciones Gaming AIPuertos: DisplayPort 1.4 x 1 (HBR2), HDMI (v2.0) x 2, concentrador USB: 1x USB 3.2 Gen 1 Tipo-C (puerto de servicio), conector para auriculares: Sí 27” VG27AQ5A 0,3ms Tiempo de respuesta 210Hz Frecuencia de actualización (MAX.) Tipo de panel: Fast IPS 0,3 ms (GTG) mínimo Tecnología ELMB Sync Compatible con FreeSync Premium y G-SYNC Stereo speaker, DisplayWidget Center Funciones Gaming AI 2K QHD 2560X1440 NUC 10 GEN EQUIPOS POWER GROUP Core i5",
+      "precio": 1699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "HIKSEMI  512GB  SATA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G105162HST Caja ATX Power Group: G93 Procesador: INTEL CORE I5-10400T 2,0GHZ Board (2 opc): MSI PRO H510M PLUS II / ASUS PRIME H510M-F Combo: Teclado y Mouse OS: Linux Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ VENTILADOR A-400C POWER GROUP Almacenamiento (2 opc): BIWIN NV3500 / HIKSEMI 512GB SATA",
+      "precio": 1629000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "VENTILADOR A-400C POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G10580ST Caja ATX Power Group: X18 Procesador: INTEL CORE I5-10400T 2.0GHz Board (2 opc): MSI PRO H510M-B II / MSI PRO H510M-PLUS II Memoria: HIKSEMI ARMOR 8GB DDR4 3200MHZ Combo: Teclado y Mouse OS: Linux Almacenamiento: ADATA 250GB M.2 PCIe VENTILADOR A-400C POWER GROUP VENTILADOR A-400C POWER GROUP",
+      "precio": 1599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "VENTILADOR A-400C POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G10580HST Caja ATX Power Group: G93 Procesador: INTEL CORE I5-10400T 2,0GHZ Board (2 opc): MSI PRO H510M PLUS II / ASUS PRIME H510M-F Memoria: HIKSEMI ARMOR / HIKER 8GB DDR4 3200MHZ Combo: Teclado y Mouse OS: Linux Almacenamiento: SSD ADATA 250GB M.2 PCIe VENTILADOR A-400C POWER GROUP",
+      "precio": 1649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "(1) MEDELLÍN",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G10582HST Caja ATX Power Group: G93 Procesador: INTEL CORE I5-10400T 2,0GHZ Board(op 2): MSI PRO H510M PLUS II / ASUS PRIME H510M-F Memoria: HIKSEMI ARMOR / HIKER 8GB DDR4 3200MHZ Combo: Teclado y Mouse OS: Linux Almacenamiento (op 3): SSD HIKSEMI / WD GREEN / BIWIN NV3500 500GB (1) MEDELLÍN",
+      "precio": 2449000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "OS: Linux",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p07_i05.jpg",
+      "descripcion": "Monitor: 22” IPS INTEL NUC NUC11TNKV70001 Procesador: INTEL I7-1185G7 3GHZ Onboard Memoria: MINI ADATA DDR4 8GB 3200MHZ Almacenamiento (2 opc.): SSD ADATA / HIKVISION 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux",
+      "precio": 1349000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 7
+    },
+    {
+      "nombre": "PODRÁS ENCONTRARLO CON ALGUNO DE LOS SGTES VENTILADORES POWER GROUP:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "Monitor: 22” IPS ACER NUC VN1505G-13N0U-LD11 Almacenamiento: SSD 512GB M.2 Combo: Teclado y Mouse OS: Linux Memoria: 8GB DDR4 3200MHZ Procesador: INTEL N150 Puertos y Conectividad: Wi-Fi 6 (802.11ax), Bluetooth 5.1, 2 × RJ-45 (100/1000 Mbps),4 × USB 3.2 Gen 2 Type-A, 1 × USB 3.2 Gen 2 Type-C,1 × HDMI 2.1, 1 × DisplayPort 1.4a. 12 GEN EQUIPOS POWER GROUP Core i5 PODRÁS ENCONTRARLO CON ALGUNO DE LOS SGTES VENTILADORES POWER GROUP:",
+      "precio": 1949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP G125162HSD OPCIÓN #2G125162HSD Caja ATX Power Group: G93 Procesador: INTEL CORE I5-12400 2.5GHz Board (3 opc): MSI PRO H610M-S / ASUS PRIME H610M-F / ASUS PRIME PRO H610M-K Memoria: HIKSEMI 16GB DDR4 3200MHZ Almacenamiento (3 opc): SSD BIWIN NV3500 / ADATA / ACER FA100 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux A-400E A-400C Monitor: ASUS 22” VP229HF",
+      "precio": 1899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "VENTILADOR A-400C POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP G12582HSD Caja ATX Power Group: G93 Procesador: INTEL CORE I5-12400 2.5GHz Board (4 opcs): MSI PRO H610M-S / H610M-F / ASUS PRO H610M-F DDR4 / ASUS PRIME PRO H610M-K Combo: Teclado y Mouse OS: Linux Almacenamiento (2 opc): SSD ACER FA100 / BIWIN NV3500 512GB M.2PCIE G12582HSD OPCIÓN #2 PODRÁS ENCONTRARLO CON ALGUNO DE LOS SGTES VENTILADORES POWER GROUP: A-200C A-400B A-400E A-400LF A-400C Monitor: ASUS 22” VP229HF Memoria (2 opc): HIKSEMI ARMOR / HIKER 8GB DDR4 3200MHZ 14 GEN EQUIPOS POWER GROUP Core i5 12 GEN EQUIPOS POWER GROUP Core i7 Combo: Teclado y Mouse OS: Linux VENTILADOR A-400C POWER GROUP",
+      "precio": 2609000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "VENTILADOR A-400LF POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G127162HSD Caja ATX Power Group: G93 Procesador: INTEL CORE I7-12700 2.10GHz Board: ASUS PRIME H610M-K Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ Almacenamiento (3 opc.): HIKSEMI FUTURE LITE / ACER FA100 / BIWIN NV3500 512GB Combo: Teclado y Mouse OS: Linux VENTILADOR A-400LF POWER GROUP",
+      "precio": 2999000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "600W 80 PLUS BRONCE",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP G127162SB Caja ATX Power Group: W82 NEGRA Procesador: INTEL CORE I7-12700 2.10GHz Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: ACER FA100 512GB Board: MSI PRO B760M-G DDR4 Combo: Licencia Digital, Kaspersky Premium Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE",
+      "precio": 2429000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP G145161SRLL Caja ATX Power Group: W82 NEGRA Procesador: INTEL CORE I5-14400 2.5GHZ Board: ASUS PRIME PRO H610M-K DDR4 Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: REF. LIQUIDA RGB POWER GROUP LCF-240 SSD KINGSTON 1TB M.2PCIE Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Monitor: ASUS 22” VP229HF",
+      "precio": 2329000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p08_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP G145162SRLL Caja ATX Power Group: L46 Procesador: INTEL CORE I5-14400 2.5GHZ Board: ASUS PRIME PRO H610M-K DDR4 Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ REF. LIQUIDA RGB POWER GROUP LCF-240 Almacenamiento: ACER FA100 512GB M.2 Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Monitor: ASUS 22” VP229HF",
+      "precio": 2269000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 8
+    },
+    {
+      "nombre": "RTX 3050 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "EQUIPO POWER GROUP G145162HSN Procesador: INTEL CORE I5-14400 2.5GHZ Board: ASUS PRIME PRO H610M-K DDR4 Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ VENTILADOR POWER GROUP A-400C Almacenamiento: ACER FA100 512GB M.2 Combo: Teclado y Mouse OS: Linux Caja ATX Lander 500 Power Group - XPG Fuente de poder: XPG PROBE 600W 80 Plus Bronze Monitor: ASUS 22” VP229HF EQUIPOS TARJETA DE VIDEO EQUIPOS POWER GROUP CON 14 GEN EQUIPOS POWER GROUP Core i5 ASUS DUAL RTX 3050 6G",
+      "precio": 3699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "EQUIPO POWER GROUP G146162BKFS6 Caja ATX Power Group: L48 Procesador: INTEL CORE i5 14600KF 3,5GHZ Memoria: HIKSEMI FUTURE 16GB DDR5 RGB 6000MHZ Combo: Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Teclado y Mouse OS: Linux Almacenamiento: SSD BIWIN NV3500 512GB PCIE GEN3 VENTILADOR RGB A-600LF POWER GROUP TVIDEO: ASUS DUAL RTX 3050 6GB Board: ASUS PRIME B760M-A AX6-GSI Combo: Licencia Digital, Kaspersky Premium Monitor: ASUS 22” VP229HF",
+      "precio": 3749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "EQUIPO POWER GROUP — VENTUS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "EQUIPO POWER GROUP G146162BKFS6L Caja ATX Power Group: L48 Procesador: INTEL CORE I5 14600KF 3,5GHZ Memoria: HIKSEMI FUTURE 16GB DDR5 RGB 6000MHZ Combo: Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Teclado y Mouse OS: Linux Almacenamiento: SSD BIWIN NV3500 512GB M.2PCIE REFRIGERACION LIQUIDA RGB POWER GROUP LCF-240 TVIDEO: ASUS DUAL RTX 3050 6GB Board: ASUS PRIME B760M-A AX6-GSI Combo: Licencia Digital, Kaspersky Premium Monitor: ASUS 22” VP229HF MSI GEFORCE RTX 5050 8G VENTUS",
+      "precio": 4049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "EQUIPO POWER GROUP G146162BKFS0-P Caja ATX Power Group: L48 Procesador: INTEL CORE I5 14600KF 3,5GHZ Memoria: HIKSEMI FUTURE 16GB DDR5 RGB 6000MHZ Combo: Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Teclado y Mouse OS: Linux Almacenamiento: SSD HIKSEMI FUTURE LITE 512G REFRIGERACION LIQUIDA MC240-BLACK TVIDEO: MSI RTX 5050 8G VENTUS 2X Board: ASUS PRIME B760M-A AX6-GSI Combo: Licencia Digital, Kaspersky Premium Monitor: ASUS 22” VP229HF",
+      "precio": 3599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "Fuente de poder: MSI MAG A750 BRONCE",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162FSRM6 Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Board: MSI PRO B840M-B Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: MSI MAG A750 BRONCE",
+      "precio": 4049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "Fuente de poder: MSI MAG A750 BRONCE",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162MR0 Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Board: MSI PRO B840M-B Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 5050 8G 2X Fuente de poder: MSI MAG A750 BRONCE",
+      "precio": 3869000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p09_i21.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162MR76N Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 7 8700F 4,1GHZ Board: MSI PRO B840M-B Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Combo: Teclado y Mouse OS: Linux Tvideo: POWER COLOR RX7600 8G Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Almacenamiento: SSD BIWIN NV3500 512GB M.2 Monitor: ACER 23,8 KA242Y",
+      "precio": 3799000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 9
+    },
+    {
+      "nombre": "Monitor: MSI PRO — 5600GT5",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162FSRM6W Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: MSI MAG A750 BRONCE Board: MSI PRO B850M-P WIFI TARJETA DE VIDEO EQUIPOS POWER GROUP CON 5600GT5",
+      "precio": 3849000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162BR96 Caja ATX Power Group: L48 Procesador: AMD RYZEN 5 5600GT 3.6GHZ Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ Almacenamiento: HIKSEMI WAVE P 512GB M.2 PCIE 3X4 Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT 8GB Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: MSI B550M PRO-VDH WIFI Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y",
+      "precio": 3649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "3050 - 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162MR96 Caja ATX Power Group: L48 Procesador: AMD RYZEN 5 5600GT 3.6GHZ Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: HIKSEMI WAVE P 512GB M.2 PCIE 3X4 Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT 8GB Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: MSI PRO A520M-A Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y ASUS DUAL RADEON 9060XT 8G 3050 - 6G",
+      "precio": 3379000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "RX 7600 8G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56161B6 Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 5600GT 3.6GHZ Board: ASUS PRIME B550M-A AC WIFI Memoria: ADATA SPECTRIX D35G 16GB DDR4 RGB 3200MHZ Almacenamiento (2 opc.): ADATA / HIKSEMI 1TB Combo: Teclado y Mouse OS: Linux Tvideo: GIBABYTE 3050 -6G Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y (1) MEDELLÍN POWER COLOR RX 7600 8G",
+      "precio": 3399000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162M76N Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 5600GT 3.6GHZ Board: ASUS PRIME A520M-K Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: HIKSEMI WAVE PRO (P) 512GB M.2 PCIE Combo: Teclado y Mouse OS: Linux Tvideo: POWERCOLOR RX7600 8GB Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y",
+      "precio": 3629000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "EQUIPO POWER GROUP — Premium",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162B76 Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 5600GT 3.6GHZ Board: ASUS PRIME B550M-A AC WIFI Memoria: ADATA SPECTRIX D35G 16GB DDR4 RGB 3200MHZ Almacenamiento: HIKSEMI 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux Tvideo: POWER COLOR RX 7600 8G Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y (2) MEDELLÍN 5500X3D5 3050 - 6G EQUIPO POWER GROUP R55162SB6X Caja ATX Power Group: L46 Procesador: AMD RYZEN 5 5500X3D 3.0GHZ Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: SSD HIKSEMI WAPE 512GB Combo: Teclado y Mouse OS: Linux Tvideo: MSI RTX 3050 VENTUS 6GB 2X Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: ASUS PRIME B550M-A-AC Combo: Licencia Digital, Kaspersky Premium",
+      "precio": 3299000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "Monitor: ACER — Premium",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "Monitor: ACER 23,8 KA242Y REFRIGERACION LIQUIDA MC240-BLACK MSI GEFORCE RTX 5050 8G VENTUS EQUIPO POWER GROUP R55162SB0X Caja ATX Power Group: L46 Procesador: AMD RYZEN 5 5500X3D 3.0GHZ Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: SSD HIKSEMI WAPE 512GB Combo: Teclado y Mouse OS: Linux Tvideo: MSI RTX 5050 8G VENTUS 2X Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: ASUS PRIME B550M-A-AC Combo: Licencia Digital, Kaspersky Premium",
+      "precio": 3769000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "Monitor: ACER — Premium",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "descripcion": "Monitor: ACER 23,8 KA242Y REFRIGERACION LIQUIDA MC240-BLACK MSI GEFORCE RTX 5060 8G VENTUS EQUIPO POWER GROUP R55162SB5X Caja ATX Power Group: L46 Procesador: AMD RYZEN 5 5500X3D 3.0GHZ Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: SSD HIKSEMI WAPE 512GB Combo: Teclado y Mouse OS: Linux Tvideo: MSI RTX 5060 8G VENTUS 2X Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: ASUS PRIME B550M-A-AC Combo: Licencia Digital, Kaspersky Premium",
+      "precio": 4099000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 10
+    },
+    {
+      "nombre": "EQUIPOS POWER GROUP CON",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "Monitor: ACER 23,8 KA242Y REFRIGERACION LIQUIDA MC240-BLACK 5600X / XT5 TARJETA DE VIDEO EQUIPOS POWER GROUP CON",
+      "precio": 3749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "9060XT 8G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "EQUIPO POWER GROUP R57162MR96X Caja ATX Power Group: L48 Procesador: AMD RYZEN 7 5700X 3.4GHZ Board (2 opc): MSI PRO A520M-A / B550M-A Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento (2 opc): HIKSEMI / ADATA 512GB M.2 PCIE Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT 8GB Combo: Licencia Digital, Kaspersky Premium Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Monitor: ACER 23,8 KA242Y ASUS DUAL RADEON 9060XT 8G",
+      "precio": 3799000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "9060XT 8G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "EQUIPO POWER GROUP R57162MR96X-P Caja ATX Power Group: W27 Procesador: AMD RYZEN 7 5700X 3.4GHZ Board: MSI B550M-A PRO Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento (2 opc): ADATA / WD GREEM 500GB Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT Combo: Licencia Digital, Kaspersky Premium Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Monitor: ACER 23,8 KA242Y 5700 G/XT7 ASUS DUAL RADEON 9060XT 8G",
+      "precio": 3849000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162BR96X Caja ATX Power Group: L48 Procesador: AMD RYZEN 5 5600XT 3.6GHZ Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ Almacenamiento: HIKSEMI WAVE P 512GB M.2 PCIE 3X4 Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT 8GB Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: MSI B550M PRO-VDH WIFI Combo: Licencia Digital, Kaspersky Premium Monitor: ACER 23,8 KA242Y",
+      "precio": 3649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "3050 - 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162MR96X Caja ATX Power Group: L48 Procesador: AMD RYZEN 5 5600XT 3.6GHZ Almacenamiento: HIKSEMI WAVE P 512GB M.2 PCIE 3X4 Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RADEON 9060XT 8GB Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Board: MSI PRO A520M-A Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Monitor: ACER 23,8 KA242Y (3) CALI 3050 - 6G",
+      "precio": 3049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "RTX 3050 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p11_i11.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162MRX6X Combo: Teclado y Mouse OS: Linux Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Almacenamiento: SSD HIKSEMI / NV3500 / ACER FA100 512GB Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 5600XT 3.6GHZ Board: MSI PRO B550M-A PRO Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Monitor: ACER 23,8 KA242Y ASUS DUAL RTX 3050 6G",
+      "precio": 3049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 11
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R56162KRX6X Combo: Teclado y Mouse OS: Linux Tvideo: ASUS DUAL RTX 3050 6GB Fuente de poder: XPG PROBE 600W 80 Plus Bronze Combo: Licencia Digital, Kaspersky Premium Almacenamiento: SSD BIWIN NV3500 512GB M.2 Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 5600XT 3.6GHZ Board: ASUS PRIME A520M-K Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Monitor: ACER 23,8 KA242Y",
+      "precio": 4099000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR5 Chasis Power Group (3 opc): L47 / L46 / L48 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board (2 opc.): MSI PRO B840M-B / ASUS PRIME B650M-F Almacenamiento (2 opc.): SSD ADATA / HIKSEMI 512GB Combo: Teclado y Mouse OS: Linux Tvideo (2 opc): ASUS DUAL / MSI GEFORCE RTX 5060 8G Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria (2 opc.): HIKSEMI / ADATA 16GB DDR5 6000 RGB Monitor: ACER 23,8 KA242Y",
+      "precio": 4149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "EQUIPO POWER GROUP — 8700F7",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR5-P Chasis Power Group (2 opc): W27 / W25 /W28 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board (2 opc): MSI PRO B840M-B / ASUS PRIME B650M-F Almacenamiento (2 opc.): SSD ADATA / HIKSEMI 512GB Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria (2 opc): HIKSEMI / ADATA 16GB DDR5 6000 RGB Tvideo (2 opc): ASUS DUAL / MSI GEFORCE RTX 5060 8G Monitor: ACER 23,8 KA242Y MSI GEFORCE RTX 5060 8G TARJETA DE VIDEO EQUIPOS POWER GROUP CON 8700F7",
+      "precio": 4099000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR96 Caja ATX Power Group: L48 / L46 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board: MSI PRO B840M-B / ASUS PRIME B650M-F Almacenamiento: SSD HIKSEMI 512GB HS-SSD WAPE (P) Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 6000 RGB Tvideo: ASUS DUAL RADEON 9060XT 8GB Monitor: ACER 23,8 KA242Y",
+      "precio": 4149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "9060XT 8GB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR96-P Caja ATX Power Group (2 opc): W25 / W28 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board: MSI PRO B840M-B / ASUS PRIME B650M-F Almacenamiento: SSD HIKSEMI 512GB HS-SSD WAPE Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria (2 opc): HIKSEMI / ADATA 16GB DDR5 6000 RGB Tvideo: ASUS DUAL RADEON 9060XT 8GB Monitor: ACER 23,8 KA242Y ASUS DUAL RADEON 9060XT 8GB",
+      "precio": 4749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "Board: ASUS PRIME B650M-A AX6  WIFI",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "Monitor: ASUS 23,8 VG249QE5A EQUIPO POWER GROUP R87162FSR5W-PE Caja ATX Power Group: W97 NEGRA Procesador: AMD RYZEN 7 8700F 4,1GHZ Almacenamiento: SSD HIKSEMI FUTURE LITE 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE 16GB DDR5 6000 RGB Tvideo: ASUS PRIME RTX 5060 8G 3 FANS Board: ASUS PRIME B650M-A AX6 WIFI",
+      "precio": 4749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "3 FANS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "Monitor: ASUS 23,8 VG249QE5A EQUIPO POWER GROUP R87162FSR5W-PE2 Caja ATX Power Group: W97 BLANCA Procesador: AMD RYZEN 7 8700F 4,1GHZ Almacenamiento: SSD HIKSEMI FUTURE LITE 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE 16GB DDR5 6000 RGB Tvideo: ASUS PRIME RTX 5060 8G 3 FANS Board: ASUS PRIME B650M-A AX6 WIFI Tarjeta de Video: ASUS PRIME RTX 5060 8G 3 FANS",
+      "precio": 5149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "PROBE 600W 80 Plus Bronze",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87322FSR5-P Caja ATX Power Group: W28 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board: ASUS PRIME B650M-F Almacenamiento: SSD HIKSEMI 512GB HS-SSD WAPE (P) Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA 32GB XPG LANDER BLADE 5600 MT/S Tvideo: RTX 5060 SHADOW 8GB 2X Monitor: ACER 23,8 KA242Y Fuente de poder: XPG PROBE 600W 80 Plus Bronze",
+      "precio": 3949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "SHADOW3050 - 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162MR0N Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 7 8700F 4,1GHZ Board (2 opc): MSI PRO B650M ASUS PRIME B650M-F Almacenamiento (2 opc): SSD WD GREEM / HIKSEMI 500GB Combo: Teclado y Mouse OS: Linux Tvideo: MSI GEFORCE RTX 5050 8G Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE 16GB DDR5 6000 RGB Monitor: ACER 23,8 KA242Y MSI GEFORCE RTX 5050 8G SHADOW3050 - 6G",
+      "precio": 3499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR6N Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 7 8700F 4,1GHZ Memoria: HIKSEMI FUTURE 16GB DDR5 6000 RGB Almacenamiento (4 opc.): SSD ACER FA100 / ADATA / HIKSEMI / BIWIN NV3500 500GB Combo: Teclado y Mouse OS: Linux Combo: Licencia Digital, Kaspersky Premium Board: ASUS PRIME B650M-F Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: XPG PROBE 600W 80 Plus Bronze Monitor: ACER 23,8 KA242Y",
+      "precio": 3599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "23,8 KA242Y",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR67 Caja ATX Power Group: W78 NEGRA Procesador: AMD RYZEN 7 8700F 4.1GHZ Board (2 opc): MSI PRO B840M-B / ASUS PRIME B650M-F Almacenamiento (3 opc.): SSD BIWIN NV3500 / ADATA / HIKSEMI 512GB Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE / ADATA 16GB DDR5 6000 RGB Tvideo (2 opc): ASUS DUAL / MSI GEFORCE RTX 3050 6G Monitor: ACER 23,8 KA242Y",
+      "precio": 3699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "MSI GEFORCE RTX 3050 6G",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSRWN Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 7 8700F 4,1GHZ Memoria: HIKSEMI FUTURE / ADATA 16GB DDR5 6000 RGB Almacenamiento (4 opc.): SSD ADATA / HIKSEMI / ACER FA100 / BIWIN NV3500 512GB M.2PCIE Combo: Teclado y Mouse OS: Linux Combo: Licencia Digital, Kaspersky Premium Board (4 opc): MSI PRO B650-VC WIFI ASUS PRIME B650M-A AX6 WIFI / ASUS PRIME B650-A AX6 WIFI MSI PRO B850M-P WIFI Fuente de poder: XPG PROBE 600W 80 Plus Bronze Monitor: ACER 23,8 KA242Y Tvideo (2 opc): ASUS DUAL / MSI GEFORCE RTX 3050 6G",
+      "precio": 4199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "(1) MEDELLÍN",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p12_i14.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR5-PE Caja ATX Power Group: W28 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board (2 opc): ASUS PRIME B650M-F / MSI PRO B840M-B Almacenamiento: SSD HIKSEMI 512GB Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 750W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria (2 opc): ADATA / HIKSEMI 16GB DDR5 6000 RGB Tvideo: ASUS PRIME RTX 5060 8GB 3 FANS Monitor: ACER 23,8 KA242Y (1) MEDELLÍN",
+      "precio": 4149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 12
+    },
+    {
+      "nombre": "OS: LINUX",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "descripcion": "EQUIPO POWER GROUP R87162FSR5-2P Caja ATX Power Group: W82 Procesador: AMD RYZEN 7 8700F 4,1GHZ Board: ASUS PRIME B650M-F Almacenamiento: SSD HIKSEMI FUTURE LITE 512GB M.2 PCIE Combo: Teclado y Mouse OS: Linux Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Combo: Licencia Digital, Kaspersky Premium Memoria: HIKSEMI FUTURE 16GB DDR5 6000 MHz RGB Tvideo: RTX 5060 SHADOW 8GB 2X Monitor: ACER 23,8 KA242Y (2) B/QUILLA - (3) MEDELLÍN 5600(G/GT)5 EQUIPO POWER GROUP R7682SL Caja ATX Power Group: X15 Procesador: AMD RYZEN 5 7600 3.80GHZ Board: ASUS PRIME B650M-A WIFI Memoria: ADATA XPG 8GB DDR5 5200MHZ Almacenamiento: SSD ADATA LEGEND 700 512GB M.2PCIE Combo: POWER GROUP 901 OS: LINUX",
+      "precio": 2499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 13
+    },
+    {
+      "nombre": "R7682S R7681S",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF ALMACENAMIENTO: HIKVISION 512GB M.2 PCIe ALMACENAMIENTO: HIKVISION 1TB M.2 PCIe (1) B/QUILLA - (1) CALI - (1) BOGOTÁ MEMORIA: ADATA XPG BLACK HUNTER 8GB DDR5 5200MHZ BOARD: ASUS PRIME B650M-A WIFI INCLUYE ANTENA AMD RYZEN 5 7600 3.80GHZ PROCESADOR R7682S R7681S",
+      "precio": 2409000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 13
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 2489000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 13
+    },
+    {
+      "nombre": "R56162SKL",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "descripcion": "5 7000 SERIE Caja ATX Power Group: L38 Procesador: AMD RYZEN 5 5600GT 3.6GHZ Board: ASUS PRIME A520M-K Memoria: HIKSEMI ARMOR 16GB DDR4 3200MHZ Almacenamiento: SSD ACER FA100 BIWIN NV3500 512GB M.2PCIe Combo: Teclado y Mouse OS: Linux EQUIPO POWER GROUP R56162SKL",
+      "precio": 2099000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 13
+    },
+    {
+      "nombre": "Monitor: ASUS — R56162SKRL",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p13_i03.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF Caja ATX Power Group: L38 Procesador: AMD RYZEN 5 5600GT 3.6GHZ Board: ASUS PRIME A520M-K Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: SSD ACER FA100 / BIWIN NV3500 512GB M.2PCIe Combo: Teclado y Mouse OS: Linux EQUIPO POWER GROUP R56162SKRL",
+      "precio": 2129000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 13
+    },
+    {
+      "nombre": "OS: LINUX",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF 5700G7 8000G SERIES EQUIPOS POWER GROUP 8500G5 EQUIPO POWER GROUP R57162SKRL Caja ATX Power Group: L38 Procesador: AMD RYZEN 7 5700G 3.8GHZ Board: ASUS PRIME A520M-K Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: ACER FA100 512GB M.2 Combo: TECLADO Y MOUSE OS: LINUX",
+      "precio": 2399000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 14
+    },
+    {
+      "nombre": "Monitor: ASUS — R57162STRWE",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF Caja ATX Power Group: X18 Board: ASUS TUF GAMING A520M-A WIFI Memoria: HIKSEMI FUTURE 16GB DDR4 RGB 3200MHZ Almacenamiento: ACER FA100 512GB Combo: Teclado y Mouse OS: Linux EQUIPO POWER GROUP R57162STRWE",
+      "precio": 2499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 14
+    },
+    {
+      "nombre": "OS: LINUX",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "descripcion": "Procesador: AMD RYZEN 7 5700G Fuente de poder: POWER GROUP 600W 80 PLUS BRONCE Monitor: ASUS 22” VP229HF EQUIPO POWER GROUP R85162SMR-P Caja ATX Power Group (3 opc): W27 / W25 / W28 Procesador: AMD RYZEN 5 8500G 3.5GHZ Board (2 opc.): MSI PRO B840M-B / ASUS PRIME B650M-F Memoria: HIKSEMI FUTURE / ADATA 16GB DDR5 6000 RGB Almacenamiento (4 opc): SSD NV3500 / HIKSEMI / ADATA / WD GREEM 500GB Combo: TECLADO Y MOUSE OS: LINUX",
+      "precio": 2569000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 14
+    },
+    {
+      "nombre": "22” VP229HF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF",
+      "precio": 2699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 14
+    },
+    {
+      "nombre": "OS: Linux",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "descripcion": "EQUIPO POWER GROUP R85161SN Caja ATX Lander 500 Power Group - XPG Procesador: AMD RYZEN 5 8500G 3.5GHZ Board (3 opc.): MSI PRO B650M-B / B650M-E / B840M-B ASUS PRIME B650M-F Memoria (2 opc): HIKSEMI / ADATA 16GB DDR5 Almacenamiento: SSD HIKSEMI / WD GREEM 1TB Combo: Teclado y Mouse OS: Linux Fuente de poder: XPG PROBE 600W 80 Plus Bronze Monitor: ASUS 22” VP229HF (1) MEDELLÍN 9600X 5 EQUIPO POWER GROUP R96162SR-P Caja ATX Power Group: W28 Procesador: AMD RYZEN 5 9600X Board: ASUS PRIME B650M-F Memoria: ADATA DDR5 5600MHZ 16GB Almacenamiento: SSD NV3500 512GB M.2 Combo: Teclado y Mouse OS: Linux",
+      "precio": 2899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 14
+    },
+    {
+      "nombre": "Monitor: ASUS — A-400E",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "Monitor: ASUS 22” VP229HF (1) B/QUILLA 1 conector 4 PINES CPU FAN 1 conector ARGB 3 PINES compatible AORUS A-400E",
+      "precio": 79000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "1 conector — A-400LF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "1 conector 4 PINES CPU FAN 2 conectores ARGB 3 PINES compatible AORUS A-400LF",
+      "precio": 109000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 75000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "MAGIC X4 POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "1 conector - 4 PINES CPU FAN 1 conector ARGB 3 PINES compatible AORUS A-400B COMPATIBLE LGA775 / 115X / 1200 / 1700 754 / AM2 / AM2+ / AM3 / AM3+ / AM4 / FM1 / FM2+ VENTILADOR ARGB MAGIC X4 POWER GROUP",
+      "precio": 99000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "PAD MOUSE POWER GROUP RGB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "Iluminación RGB LED / Medidas: 600 x 300 x 3 mm Conexión USB / Panel de control / Diferentes modos de color PAD MOUSE POWER GROUP RGB",
+      "precio": 35000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "Micrófono digital  / antirruido  / USB 2.O  / Excelente compatibilidad",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "CÁMARA WEB 720P Vídeo chat / Grabación de vídeo /Mejora facial Micrófono digital / antirruido / USB 2.O / Excelente compatibilidad",
+      "precio": 49000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "SET CABLE ARGB POWER GROUP",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "24 PIN & 8 PIN Características: Diseño de doble capa / Material: cable plano / Fibra óptica / Calibre: 18 AWG Funcional con board de 5V SET CABLE ARGB POWER GROUP",
+      "precio": 169000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 95000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "USB para luces / Luces laterales LED  / Diadema ajustable",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "Videollamadas Full HD 1080p (1920 x 1080 píxeles) Grabación de vídeo (1920 x 1080 píxeles) Micrófono con aislamiento de ruido integrado Corrección automática de poca luz / Plug y play, USB 2.0 de alta velocidad CÁMARA WEB 1080P INCLUYE: 3 Plug + Micrófono + Audio USB para luces / Luces laterales LED / Diadema ajustable",
+      "precio": 37000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "MAGIC X1 POWER GROUP 6 PINES",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "AUDÍFONOS POWER GROUP COLORES DISPONIBLES: VENTILADOR ARGB MAGIC X1 POWER GROUP 6 PINES",
+      "precio": 20000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "REFRIGERACIÓN LIQUIDA POWER GROUP — BLINDADO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "REFRIGERACIÓN LIQUIDA POWER GROUP LCF-240 + CONTROL CABLE BLINDADO",
+      "precio": 289000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "DISIPADOR POWER GROUP A-600LF",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "DISIPADOR POWER GROUP A-600LF",
+      "precio": 199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "PARA BILLETES",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "AMD Socket AM4/ FM2/ FM1/ AM3+/ AM3/ AM2+/ AM2 AMD Socket AM4 / FM2 / FM1 / AM3+/ AM2+/ AM2 CPU Intel Socket LGA 775 / 115X / 1366 / 1200 / 1700 / 2011 LGA / 775 / 115X / 1366 / 1200 / 2011 (Core i3 / i5 / i7 CPU) SISTEMA DE COJINETES HIDRÁULICO. FLUJO DE AIRE MAXIMO 72CFM 8 5 CAJÓN MONEDERO XPOS Este cajón monedero está diseñado para brindar organización y seguridad en puntos de venta. COMPARTIMIENTOS PARA MONEDAS COMPARTIMIENTOS PARA BILLETES",
+      "precio": 140000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "+ CONTROLADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "descripcion": "VENTILADORES ARGB MIRROR M4 + CONTROL + CONTROLADORA",
+      "precio": 129000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 15
+    },
+    {
+      "nombre": "UPS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "ULTIMAS UNIDADES PARTES PARA PC UPS IVA INCLUIDO",
+      "precio": 179000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "FORZA 1000VA 600W",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "HIKVISION DS-UPS600-X 360W FORZA 750VA 450W FORZA 1000VA 600W IVA INCLUIDO",
+      "precio": 145000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "INCLUIDO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "INCLUIDO",
+      "precio": 139000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "BOARDS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "BOARDS IVA INCLUIDO",
+      "precio": 669000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "WIFI",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "ASUS PRIME B650M-A AX6 GSI WIFI ASUS PRIME B760M-A AX6 GSI WIFI IVA INCLUIDO",
+      "precio": 669000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 469000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Algunos pueden venir en bolsa o en caja.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "MSI PRO H610M-G WIFI IMPORTANTE: La presentación de las boards pueden variar. Algunos pueden venir en bolsa o en caja.",
+      "precio": 369000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "450B 450W",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "ASUS PRIME H610M-K D4 FUENTES DE PODER FUENTE DE PODER ASUS TUF-GAMING 450B 450W IVA INCLUIDO",
+      "precio": 219000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Promoción valida hasta agotar existencias.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "FUENTE DE PODER POWER GROUP 600W 80 PLUS BRONCE Promoción valida hasta agotar existencias.",
+      "precio": 219000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "AIV  INCLUIDO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "DVD PHILIPS LITE ON DH UNIDAD QUEMADORA DVD 22AFSH-UL14 SATA IHAS122-14 AIV INCLUIDO",
+      "precio": 55000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "OTROS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "OTROS IVA INCLUIDO",
+      "precio": 160000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Producto: 540G - Longitud Del Producto:1M",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "KASPERSKY PREMIUM LICENCIA DIGITAL ANTENA CELULAR QUADRIBAND AQUARIO CF-4000 Ganancia: 12 DBI - Frecuencia: 824 A 1990mhz/ Conector: “N” Hembra Impedancia: 50 Ω / Peso Del Producto: 540G - Longitud Del Producto:1M",
+      "precio": 119000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "AIV  INCLUIDO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "DISPONIBLE EN BOGOTÁ TARJETA DE VIDEO AIV INCLUIDO",
+      "precio": 149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Puertos: (1) VGA / (1) HDMI / (1) DVI",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "AFOX NVIDIA GEFORCE GT210 1GB PCI-E 2.0 - Energía Eficiente - HD VIDEO Puertos: (1) VGA / (1) HDMI / (1) DVI",
+      "precio": 20000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "sus dispositivos.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "INFRARROJO CORPORAL A DISTANCIA TERMÓMETRO MOUSE BLUETOOTH SILENCIOSO LENOVO WL310 GY51Q65622 Diseño ergonómico y cómodo / Ajuste de DPI automático de 800/1200/1600 / Bluetooth 5.0 / Inalámbrico / No incluye batería Este mouse es ideal para profesionales en entornos de oficina, estudiantes que asisten a clases, o cualquier persona que busque un accesorio fiable y eficiente para sus dispositivos. IVA INCLUIDO",
+      "precio": 65000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "AIRE ACONDICIONADO — 220V",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "AIRE ACONDICIONADO /gid00042/gid00077/gid00066/gid00075/gid00084/gid00088/gid00068/gid00001/gid00001/gid00083/gid00084/gid00065/gid00068/gid00081/gid00173/gid00064/gid00001/gid00067/gid00068/gid00001 /gid00066/gid00078/gid00077/gid00068/gid00087/gid00072/gid00178/gid00077/gid00001/gid00001/gid00067/gid00068/gid00001/gid00066/gid00078/gid00065/gid00081/gid00068/gid00001 /gid00067/gid00068/gid00001/gid00001/gid00020/gid00001/gid00076/gid00068/gid00083/gid00081/gid00078/gid00082/gid00001/gid00001/gid00079/gid00064/gid00081/gid00064/gid00001 /gid00084/gid00077/gid00064/gid00001/gid00072/gid00077/gid00082/gid00083/gid00064/gid00075/gid00064/gid00066/gid00072/gid00178/gid00077/gid00001 /gid00068/gid00195/gid00066/gid00072/gid00068/gid00077/gid00083/gid00068/gid00001/gid00088/gid00001/gid00082/gid00068/gid00070/gid00084/gid00081/gid00064/gid00015 MINI SPLIT CONVENCIONALES 12000 BTU 110V 18000 BTU 220V",
+      "precio": 1129000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 1559000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "Aleta Dorada Enfriamento — 220V",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "Aleta Dorada Enfriamento Rápido Refrigerante Ecológico R410A Súper Silencioso MINI SPLIT INVERTER 12000 BTU 220V",
+      "precio": 1399000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "facilitan su uso en cualquier entorno.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p16_i09.jpg",
+      "descripcion": "(2) B/QUILLA (2) B/QUILLA DISPONIBLE EN BARRANQUILLA (4) B/QUILLA ROTULADOR PORTÁTIL PERSONAL PTOUCH-N10 es una rotuladora electrónica portátil con teclado QWERTY y pantalla LCD, que permite crear etiquetas sin necesidad de computador. Es compatible con cintas Btag de 12 mm y ofrece opciones de personalización como fuentes, marcos y símbolos. Su diseño compacto y funcionamiento a pilas facilitan su uso en cualquier entorno. IVA INCLUIDO",
+      "precio": 89000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 16
+    },
+    {
+      "nombre": "TELEVISORES — 43G200A",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i02.jpg",
+      "descripcion": "TELEVISORES TV 43\" SMART TV GOOGLE 43G200A",
+      "precio": 949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 17
+    },
+    {
+      "nombre": "TV 55\" MiniLED QLED GAMING / GOOGLE TV — 55GM405",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i02.jpg",
+      "descripcion": "TV 55\" MiniLED QLED GAMING / GOOGLE TV 55GM405",
+      "precio": 2499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 17
+    },
+    {
+      "nombre": "Video (Skill de Amazon Alexa).",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i02.jpg",
+      "descripcion": "(3) BOGOTÁ TV 55\" SMART BASIC 55SB300 CONTROL POR VOZ - COMANDOS DE VOZ Comandos básicos sujetos a disponibilidad y soportados por Whale Video (Skill de Amazon Alexa).",
+      "precio": 1299000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 17
+    },
+    {
+      "nombre": "TV 32\" SMART TV GOOGLE — K-GTV32FHD",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p17_i02.jpg",
+      "descripcion": "TV 32\" SMART TV GOOGLE K-GTV32FHD",
+      "precio": 649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 17
+    },
+    {
+      "nombre": "1 a 3 A-RGB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "(1) BARRANQUILLA Cooler Splitter Cooler Master 1 a 3 A-RGB",
+      "precio": 21000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "3 PINES",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Cooler Splitter Cooler Master 1 a 5 A-RGB 3 PINES",
+      "precio": 22000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 30000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Grease: — OTROS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Grease: IC ESSENTIAL E2 1.5ml OTROS",
+      "precio": 65000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "CONTROLADOR — I71C",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "CONTROLADOR PEQUEÑO FANS RGB DISIPADORES I71C",
+      "precio": 75000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "MF120 S2",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "MF120 S2",
+      "precio": 35000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "White Matte",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Mouse MM711 White Matte",
+      "precio": 89000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Mouse — MM720",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Mouse MM720",
+      "precio": 65000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "NEGRO BLANCO — PERIFÉRICOS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "NEGRO BLANCO PERIFÉRICOS",
+      "precio": 219000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "/ Panel lateral transparente acrílico de borde a borde / Posición vertical y horizontal",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "MASTERBOX Q300L Alta flexibilidad para la construcción de sistemas / Dimensión minimizada con soporte ATX PSU / Filtro de polvo estampado / Espacio de enrutamiento limpio / Excelente rendimiento térmico / Panel lateral transparente acrílico de borde a borde / Posición vertical y horizontal",
+      "precio": 335000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Acto para mejoras - espacio para actualizaciones",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "MASTERBOX MB311L ARGB WITH HUB Panel frontal de malla fina / Entradas de malla / Ventiladores ARGB duales Flujo de aire optimizado / Panel lateral de vidrio templado / Jaula de transmisión adaptable - bandeja para discos duros movible y removible. / Opciones de enfriamiento versátiles Acto para mejoras - espacio para actualizaciones",
+      "precio": 329000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 339000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Soporte de radiador de hasta 280 mm",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p18_i06.jpg",
+      "descripcion": "TD300 MESH Formato Micro ATX Panel frontal de contorno 3D de malla poligonal / Panel superior extraíble / Panel lateral de vidrio templado / Ventiladores dobles Sickleflow 120 ARGB / Concentrador ARGB/PWM Jaula de transmisión adaptable - bandeja para discos duros movible y removible. Soporte de radiador de hasta 280 mm",
+      "precio": 439000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 18
+    },
+    {
+      "nombre": "Malla poligonal / Vidrio templado cristalino / Soporte de radiador dual de 360 mm. — B210",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "Malla poligonal / Vidrio templado cristalino / Soporte de radiador dual de 360 mm. Opciones de enfriamiento versátiles / Espacio para actualizaciones. MasterBox TD500 Mesh ALL IN ONE 4X40T84058 MORRAL CASUAL B210",
+      "precio": 79000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "4X30M56887 — ESSENTIAL",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "4X30M56887 DISPONIBLE EN AG. B/QUILLA MOUSE INALÁMBRICO THINKPAD ESSENTIAL",
+      "precio": 79000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "Core i5",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "Core i5",
+      "precio": 1949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "NO OS / LUNA GREY",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "ULTIMAS UNIDADES INTEL CORE i5 1235U 1.3GHz 8GB / 23.8\" / SSD 512GB Linux / NEGRO AIO 24-CB1028LA INTEL CORE I5-13420H Integrated Intel® UHD Graphics 8GB / 23.8\" FHD / SSD 512GB NO OS / LUNA GREY",
+      "precio": 1949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "AIO IdeaCentre — RJ45",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO IdeaCentre 24IRH9 F0HN00PLLD RJ45",
+      "precio": 1949000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "/ ACCESORIOS: BLANCO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "V440VAK-WPC1060 90PT03X1-M02BL0 INTEL CORE i5 8GB / 23,8” FHD / SSD 512GB NO OS / AIO: BLANCO Core i3 INTEL CORE I3 N305 1.8GHZ 8GB / 23,8” FHD / SSD 512GB FreeDos / AIO: GRIS PERLA / ACCESORIOS: BLANCO",
+      "precio": 1599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "FreeDos / NEGRO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO A100 F0J6002NLD AMD RYZEN 7 7730U 2.0GHz 8GB / 23,8” FHD / SSD 512GB FreeDos / NEGRO",
+      "precio": 2119000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "7",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO IDEACENTRE 3 24ALC6 F0G1010KLD 7",
+      "precio": 2049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "INTEL CORE i5-1334U — Celeron",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "INTEL CORE i5-1334U 16GB / 23.8\" / SSD 512GB Linux / NEGRO B88BKAT#ABM AIO 240 Celeron",
+      "precio": 1199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "FreeDos / NEGRO /",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO DG0011LA (N-series) INTEL N100 GRÁFICOS INTEL UHD 8GB DDR5 / 21.4\" FHD / SSD 256GB FreeDOS / NEGRO INTEL CORE N4020 8GB / 23,8” FHD / SSD 512GB FreeDos / NEGRO /",
+      "precio": 1279000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "AIO 24-CR0310LA — INTELLECT",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO 24-CR0310LA C36X3LA#ABM (2) CALI - (1) MEDELLÍN TSB966DI-70 MORRAL TARGUS INTELLECT",
+      "precio": 65000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "Producto",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "Producto según catálogo PDF (precio listado).",
+      "precio": 1929000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "Linux / BLANCO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AMD RYZEN™ 5 7520U 2.8 GHz 16GB / 23.8\" / SSD 512GB FreeDos / SILVER MINERAL ProOne 245 G10 AMD RYZEN 5 7430U 8GB / 23,8” FHD / SSD 256GB Linux / BLANCO",
+      "precio": 1599000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "12SC003JLD-E",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p19_i09.png",
+      "descripcion": "AIO IDEACENTRE 3 24ALC6 5 Core i7 INTEL CORE i7-13620H 8GB DDR5 / 23,8” / SSD 512GB NEGRO / RJ-45 Puertos Frontales / Laterales: 1x Headphone / Microphone combo jack (3.5mm) Puertos Traseros: 1x USB-A 3.2 Gen 2 / 2x USB-A 2.0 / 1x USB-C 3.2 Gen 2 (solo datos) / 1x HDMI-in 1.4 / 1x HDMI-out 2.1 / 1x Ethernet (RJ-45) / 1x Power Connector. ) Neo 50a 24 Gen 5 12SC003JLD-E",
+      "precio": 2449000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 19
+    },
+    {
+      "nombre": "PC CORPORATIVOS — TINY",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "PC CORPORATIVOS INTEL CORE i5-13420H 2.1GHz Integrado Intel UHD Graphics SSD 512GB / 21,5” / NEGRO Puerto: VESA (1) / Ethernet 100/1000 1 x Ethernet (RJ-45) Neo 50q Gen 4 TINY",
+      "precio": 2549000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "AK2F1UT#ABA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "12LM000VLS + 63FCKARBLA_X 16GB / Windows 11 Pro PUERTOS: 1 TIPO C / 6 USB tipo A SuperSpeed / 1 CONECTOR DE AUDIO / 1 DISPLAY PORT / 1 HDMI / 1 VGA / 1 RJ-45 CPU Pro Mini 260 G9 B5JH9LT#ABM Monitor HP Series 3 Pro 322pe AK2F1UT#ABA",
+      "precio": 1939000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "INTEL CORE i5 1335U — PROCESADOR",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "INTEL CORE i5 1335U 8GB / SSD 512GB / FREEDOS + MONITOR 21.5” HP SERIES 3 PRO 322PE TECLADO Y MOUSE ALAMBRICO 16GB / 512GB / TVIDEO INTEL UHD GRAPHICS 730 / OS: ESHELL / WIRELESS / CHASIS: HX240A MONITOR: ACER 23,8” KA242Y COMPACT TOWER VERITON 2000 VX2720G-LD11 INTEL CORE i3 12100 PROCESADOR",
+      "precio": 1649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "TECLADO Y MOUSE ALÁMBRICO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "PC LENOVO TINY THINKCENTRE NEO 50Q GEN 4 12LN008GLD MONITOR THINK VISION LENOVO S24 64B5KAR1LA-E INTEL CORE i5-13420H 8GB / SSD 512GB / LINUX / TECLADO Y MOUSE ALÁMBRICO",
+      "precio": 1789000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "INTEL CORE i5-13420H",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "TECLADO Y MOUSE ALÁMBRICO PC LENOVO TINY THINKCENTRE NEO 50Q GEN 4 12LM000VLS MONITOR 23,8” FHD LENOVO C24-40 63DCKAR6LA_X INTEL CORE i5-13420H",
+      "precio": 2589000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "16GB   SSD 512GB — PROCESADOR",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "16GB SSD 512GB Windows 11 Pro Monitor puertos: VGA / HDMI Puertos Frontales: 1x USB-C® 3.2 Gen 2 / 1x USB 3.2 Gen 2 / 1x headphone Puertos Traseros: 2x USB 2.0 / 2x USB 3.2 Gen 2 1x HDMI® 2.1 TMDS / 1x DisplayPort™ 1.4 / 1x Ethernet (RJ-45) Soporte VESA 16GB / 512GB / TVIDEO INTEL UHD GRAPHICS 730 / OS: ESHELL / WIRELESS / CHASIS: HX240A MONITOR: ACER 23,8” KA242Y COMPACT TOWER VERITON 2000 VX2720G-LD12 INTEL CORE i5 12400 PROCESADOR",
+      "precio": 1899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "16GB / 512GB / TVIDEO INTEL UHD — PROCESADOR",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "16GB / 512GB / TVIDEO INTEL UHD GRAPHICS 730 / MONITOR: ACER 23,8” KA242Y VERITON 2000 MINI VN2595GT-LD11 INTEL CORE i5 120U PROCESADOR",
+      "precio": 1979000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "+ TECLADO Y MOUSE ALAMBRICO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "Monitor puertos: HDMI / DisplayPort Puertos Frontales: 1x USB-C® 3.2 Gen 2 / 1x USB 3.2 Gen 2 / 1x Headphone Puertos Traseros: 2x USB 2.0 / 2x USB 3.2 Gen 2 / 1x HDMI® / 1x DisplayPort™ / 1x Ethernet (RJ-45) Soporte VESA: Sí + TECLADO Y MOUSE ALAMBRICO",
+      "precio": 699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "/ Conectividad: Conexión Con Cable USB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "MULTIFUNCIONAL L3210 IMPRIMIR, ESCANEAR, COPIAR Resolucion Escaner: 600 X 1200 DPI Resolucion Impresion Color: 5760 X 1440 DPI Resolución color hasta 4800 X 1200 DPI. / Conectividad: Conexión Con Cable USB",
+      "precio": 755000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "Dimensiones: 360 x 264 x 197 mm",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "MULTIFUNCIONAL LASERJET MFP M141W FUNCIONES: IMPRESIÓN, COPIA, ESCANEADO BLANCO Y NEGRO / Resolución: 600 x 600 ppp Tecnología de impresión: Laser/ soportes admitidos: Papel común, sobre, postal, etiqueta. Dimensiones: 360 x 264 x 197 mm",
+      "precio": 829000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "impresión, copiado y escaneo, ideal para el hogar — DCP-T730Dw",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "impresión, copiado y escaneo, ideal para el hogar o pequeñas oficinas. Ofrece velocidades de impresión de hasta 27 ppm en negro y 23 ppm en color en modo económico, con una resolución máxima de 6000 x 1200 dpi. Incluye un sistema de tinta de ultra alto rendimiento, con botellas que rinden hasta 15,000 páginas en negro y 5,000 por color. MULTIFUNCIONAL DCP-T730Dw",
+      "precio": 799000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "ULTIMAS 3 UNDS EN B/QUILLA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "Wifi INLÁMBRICA ECOTANK L3251 IMPRIME, COPIA Y ESCANEA / IMPRESIÓN INALÁMBRICA Alta velocidad de impresión y mejor calidad, Imprime hasta 4.500 páginas en negro, o bien 7.500 páginas en color. ULTIMAS 3 UNDS EN B/QUILLA IVA INCLUIDO",
+      "precio": 1199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "MULTIFUNCIONAL — CARTUCHOS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "MULTIFUNCIONAL L5590 ECOTANK IMPRIMIR, ESCANEAR, COPIAR Resolucion Escaner: 600 X 1200 DPI Resolucion Impresion Color: 4800 X 1200 DPI Hasta 50% más rápida sin sacrificar calidad / Conectividad: Conexión Cable USB / WIFI / Ethernet. CARTUCHOS",
+      "precio": 28000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "NEGRA / TRICOLOR",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "Nro 664 TINTAS NEGRA / TRICOLOR",
+      "precio": 45000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "Nro 675 TINTA — TRICOLOR",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "Nro 675 TINTA TRICOLOR",
+      "precio": 28000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "Nro 670 — MAGENTA.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "Nro 670 TINTAS INDIVIDUALES AMARILLO, AZUL, MAGENTA.",
+      "precio": 39000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "(1) BQ/UILLA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "descripcion": "M0H55AL Magenta Volumen de tinta: 70 ml. Rendimiento de páginas: 8000 BOTELLA TINTA HP (1) BQ/UILLA",
+      "precio": 729000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 20
+    },
+    {
+      "nombre": "Impresión, copiado y escaneo en un equipo compacto ideal — IMPRESORAS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "Impresión, copiado y escaneo en un equipo compacto ideal para hogar u oficina. Velocidad de hasta 27 ppm en negro y 11 ppm en color (modo Eco), con resolución máxima de 6000 × 1200 dpi. Sistema de tinta de ultra alto rendimiento con hasta 7.500 páginas en negro y 5.000 en color. Conectividad Wi-Fi doble banda y USB 2.0, impresión y escaneo móvil. Bandeja de 150 hojas y alimentación manual para diversos tamaños de papel. MULTIFUNCIONAL DCP-T430W Wifi Por la compra de cada 2 unidades de la impresora multifuncional DCP-T430W Brother, se obsequiará una rotuladora personal. Por la compra de cada 2 unidades de la impresora multifuncional L5590 EcoTank, se obsequiará un morral. PROMOCIÓN ESPECIAL Oferta válida hasta el 31 de marzo.¡Aprovecha esta oferta y llévate un beneficio adicional con tu compra! IMPRESORAS",
+      "precio": 1699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "14-DQ5039LA B0CN3LA#ABM INTEL CORE i5 1235U 1.3GHz INTEL UHD GRAPHICS 8GB / 14” HD / SSD 512GB FreeDOS / PLATEADO SIN UNIDAD QUEMADORA",
+      "precio": 1649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "INTEL CORE  i5-13420H — KCV5H",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "INTEL CORE i5-13420H 8GB / 14″ / SSD 512GB LINUX / IRON GRAY SIN UNIDAD QUEMADORA V14 G4 83A000CRLM INSPIRÓN 14 - 5440 KCV5H",
+      "precio": 1959000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "Windows 11 ProOS:",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "ICE BLUE Wireles-AC, Bluetooth INTEL CORE i5 – 1334U 1.3GHz 8GB / 14” FHD / SSD 512GB Windows 11 ProOS:",
+      "precio": 1529000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "Wireles-AC, Bluetooth",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "INSPIRÓN 3530 G6P3X INTEL CORE i5 – 1334U 1.3GHz 8GB / 15,6“ / SSD 512GB OS: UBUNTU / PLATINUM SILVER Wireles-AC, Bluetooth",
+      "precio": 1499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "15-FD0158LA — PORTÁTILES",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "15-FD0158LA INTEL CORE i5 1235U 8GB / 15.6\"HD / SSD 512GB LINUX / PLATA DOBLE RANURA DE MEMORIA SIN UNIDAD QUEMADORA Core i5 PORTÁTILES",
+      "precio": 1489000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "C27L7AT#ABM",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "240 G10 INTEL CORE i5-1334U 8GB / 14” HD / SSD 512GB / LINUX / GRAY SIN UNIDAD QUEMADORA C27L7AT#ABM",
+      "precio": 1329000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "Core i3",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "ASPIRE 3 A315-59-37Q9 INTEL CORE i3 1215U 3.3GHz INTEL UHD GRAPHICS 8GB / 15,6“ FHD / SSD 512GB OS: / SILVER ULTIMA UNIDAD EN CALI Core i3",
+      "precio": 1269000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "INTEL UHD GRAPHICS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "15-FD0130 8GB / 15.6\" FHD / SSD 512GB FreeDOS / SILVER SIN UNIDAD QUEMADORA INTEL CORE i3-1215U 3.3GHz INTEL UHD GRAPHICS",
+      "precio": 1329000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "FREE DOS / GRIS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "SIN UNIDAD QUEMADORA IDEAPAD SLIM 3 15IRU8 82X700FTLM INTEL CORE i3 1315U 8GB / 15.6” FHD / SSD 512GB FREE DOS / GRIS",
+      "precio": 2199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "ULTIMAS 3 UNDS EN B/QUILLA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p21_i05.jpg",
+      "descripcion": "VIVOBOOK X1504VA-E84556 16GB / 15.6” FHD / SSD 512GB TOUCH SCREEN / OS Keep / QUIET BLUE SIN UNIDAD QUEMADORA INTEL CORE™ i5-120U 1.3GHZ 90NB13Y1-M02BT0 ULTIMAS 3 UNDS EN B/QUILLA",
+      "precio": 1999000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 21
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "VIVOBOOK X1504VA-BQ4555 12GB / 15.6” FHD / SSD 512GB OS Keep / Cool Silver SIN UNIDAD QUEMADORA INTEL CORE™ i5-1334U 1.3GHZ MORRAL MOUSE 90NB10J2-M04A90 ULTIMAS 3 UNDS EN B/QUILLA AMD RYZEN™ 5 7520U 16GB / LED 14” / SSD 512GB LINUX / DORADO SIN UNIDAD QUEMADORA",
+      "precio": 1629000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "3",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "14-EM0009LA 5 3",
+      "precio": 1279000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "Go 15 — 90NB0ZR1-M035P0",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "Go 15 E1504FA-NJ1961 AMD RYZEN 3 7320U 8GB / 15.6” FHD / SSD 512GB LINUX / COOL SILVER SIN UNIDAD QUEMADORA 90NB0ZR1-M035P0",
+      "precio": 1499000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "BF9Z8AT#ABM",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "255 G10 AMD RYZEN 3 7320U 16GB / 15.6\" / SSD 512GB LINUX / GRAY MINERAL TECLADO NÚMERICO SIN UNIDAD QUEMADORA BF9Z8AT#ABM",
+      "precio": 1639000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "V14 G4 82YT00TKLM Puerto: (RJ-45) AMD RYZEN 5 7520U 2.8Ghz AMD RADEON GRAPHICS 16GB / 14″ FHD / SSD 512GB LINUX / GRIS ÁRTICO SIN UNIDAD QUEMADORA",
+      "precio": 1299000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "GO 15 E1504FA-BQ2676 AMD RYZEN 3 7320U 8GB / 15.6” / SSD 512GB / Keep OS / COOL SILVER SIN UNIDAD QUEMADORA 90NB0ZR1-M04BY0 8GB / 14” HD / SSD 512GB LINUX / GRAY MINERAL SIN UNIDAD QUEMADORA",
+      "precio": 1449000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "AMD RYZEN™ 5 7530U 2.0GHz",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "245 G10 81S91LT#ABM AMD RYZEN™ 5 7530U 2.0GHz",
+      "precio": 1279000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "GO 15 E1504FA-BQ2377 AMD RYZEN 3 7320U 8GB / 15.6” / SSD 512GB / Keep OS / COOL SILVER SIN UNIDAD QUEMADORA",
+      "precio": 1829000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "VIVOBOOK E1504FA-BQ2334 16GB / 15.6” FHD / SSD 512GB OS Keep / Cool Silver SIN UNIDAD QUEMADORA AMD RYZEN™ 5 7520U 2.8GHz MORRAL MOUSE 90NB0ZR1-M03WC0 AMD RYZEN™ 5 7520U 16GB / 15.6″ FHD / SSD 512GB FreeDos / Azul SIN UNIDAD QUEMADORA",
+      "precio": 1769000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "Video Integrado AMD Radeon Graphics",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p22_i02.jpg",
+      "descripcion": "15-FC0256LA B9TP9LA#ABM Video Integrado AMD Radeon Graphics",
+      "precio": 1539000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 22
+    },
+    {
+      "nombre": "INTEGRATED AMD RADEON 610M GRAPHICS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "descripcion": "16GB / 15.3” / SSD 512GB / Artic Grey SIN UNIDAD QUEMADORA IDEAPAD 15AMN8 82XQ00YQLM AMD RYZEN 3 7320U INTEGRATED AMD RADEON 610M GRAPHICS",
+      "precio": 2149000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 23
+    },
+    {
+      "nombre": "Core i7",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "descripcion": "INTEL CORE i7-1355U 8GB / 14″ HD / SSD 512GB NO OS / IRON GRAY SIN UNIDAD QUEMADORA V14 G4 83A000CQLM Core i7",
+      "precio": 2199000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 23
+    },
+    {
+      "nombre": "7",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "descripcion": "NO OS / LUNA GREY SIN UNIDAD QUEMADORA IDEAPAD SLIM 3 15IRH10 83K100BTLM INTEL CORE i7 13620H 2.4GHz 8GB / 15.3” WUXGA / SSD 1TB 7",
+      "precio": 1899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 23
+    },
+    {
+      "nombre": "SIN UNIDAD QUEMADORA",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "descripcion": "255 G10 B03E1LT#ABM AMD RYZEN 7 7730U 16GB / 15.6\" HD / SSD 512GB LINUX / PLATEADO SIN UNIDAD QUEMADORA",
+      "precio": 1899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 23
+    },
+    {
+      "nombre": "AMD RYZEN 7 5825U",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p23_i01.jpg",
+      "descripcion": "VIVOBOOK M1502-BQ925 90NB0X22-M01HH0 16GB / 15.6” / SSD 512GB Keep OS / COOL SILVER SIN UNIDAD QUEMADORA AMD RYZEN 7 5825U",
+      "precio": 2749000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 23
+    },
+    {
+      "nombre": "Tvideo Nvidia RTX 3050 6GB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "INSPIRÓN 9KP97 INTEL CORE i7 1335U 16GB / 15,6” FHD / SSD 512GB Licencia Kaspersky Plus + Wireles-AC / Bluetooth 5.0 / PLATEADO Windows 11 ProOS: PORTÁTILES GAMING SIN UNIDAD QUEMADORA 8GB / 15.9” FHD / SSD 512GB Freedos / Gris Tvideo Nvidia RTX 3050 6GB",
+      "precio": 2610000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "INTEL CORE  i5 12450HX",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "LOQ 15IAX9E INTEL CORE i5 12450HX",
+      "precio": 2899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "GRÁFICOS INTEL® UHD",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "GAMING ACER NITRO LITE NL16-71G-57G5 NH.D2AAL.001 SIN UNIDAD QUEMADORA Puerto: (RJ-45) 16GB DDR5 / 15,6“ FHD / SSD 512GB NONE / TIGERLILY RED / Tvideo NVIDIA GeFORCE RTX 3050 - 6G-GDDR6 / Licencia Digital, Kaspersky Premium INTEL® CORE™ i5 - 13420H 2.1GHz GRÁFICOS INTEL® UHD",
+      "precio": 2699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "Licencia Digital, Kaspersky Premium",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "GAMING VICTUS 15-FA0021LA A14LCLA#ABM SIN UNIDAD QUEMADORA 8GB / 15.6” FHD / SSD 512GB / Windows 11 Home / AZUL / GeForce RTX 3050 4GB / Licencia Digital, Kaspersky Premium INTEL CORE i5 12450H 2.0GHz SIN UNIDAD QUEMADORA 8GB / 15.6” FHD / SSD 512GB FREE DOS / COSMO GRAY Tvideo NVIDIA RTX 3050 DDR6 4GB Licencia Digital, Kaspersky Premium",
+      "precio": 2699000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "(RJ-45)",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "THIN A15 B13UC-3256XCO MORRAL INTEL CORE i5 13420H 2.1GHz Puerto: (RJ-45)",
+      "precio": 3049000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "AMD RYZEN™  7  7445HS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "GAMING ACER NITRO V 15 ANV15-42-R976 SIN UNIDAD QUEMADORA Puerto: (RJ-45) 16GB DDR5 / 15,6“ FHD / SSD 512GB PCIe NVMe / Obsidian black / Tvideo NVIDIA GeFORCE RTX 3050 - 6G-GDDR6 / Licencia Digital, Kaspersky Premium INTEL® CORE™ i5 - 13420H 2.1GHz GRÁFICOS INTEL® UHD AMD RYZEN™ 7 7445HS",
+      "precio": 2610000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "Licencia Digital, Kaspersky Premium",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p24_i11.jpg",
+      "descripcion": "GAMING VICTUS 15-FB3019LA SIN UNIDAD QUEMADORA 8GB / 15.6” FHD / SSD 512GB / Pantalla de 144 Hz LINUX / GRIS / Tvideo RTX 3050 6GB / AMD RYZEN 7 7445HS hasta 4.7GHz Puerto: (RJ-45) SIN UNIDAD QUEMADORA 8GB / 15.6” FHD / SSD 512GB FREE DOS / COSMO GRAY Tvideo NVIDIA RTX 3050 DDR6 4GB Licencia Digital, Kaspersky Premium",
+      "precio": 2899000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 24
+    },
+    {
+      "nombre": "THIN A15 B7UC-624XCO — 128GB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "THIN A15 B7UC-624XCO MORRAL AMD RYZEN 7 7735HS 3.2GHz Puerto: (RJ-45) 128GB",
+      "precio": 575000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "USB-AC53 NAN0 IVA INCLUIDO",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "GALAXY A16 Procesador: Octa-Core Pantalla: 6.7\" / RAM: 6GB Memoria interna: 128GB Cámara trasera: Triple 50MP + 5MP + 2 MP Cámara frontal: 13MPX OS: Android CELULARES ACCESORIOS ADAPTADOR USB WI-FI ASUS USB-AC53 NAN0 IVA INCLUIDO",
+      "precio": 29000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "256GB",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "256GB",
+      "precio": 679000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "Memoria: 8GB — C75",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "Memoria: 8GB Tamaño de pantalla: 6.72'' Resolución: 2400 x 1080 FHD AI Cámara AI de 50 MP Abertura: f/1.8 Lente: 5P Tamaño del sensor: 1/2.88” Cámara Frontal de 8 MP C75",
+      "precio": 289000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "128GB-RAM 4",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "128GB-RAM 4",
+      "precio": 335000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "Tamaño de pantalla: 6.7'' — TABLETS",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "Tamaño de pantalla: 6.7'' Tipo de Pantalla: LCD Resolucion Pantalla: HD+ Resolucion Camara Frontal 1: 5Mpx Resolucion Camara Posterior 1: 8Mpx NOTE 60 64GB-RAM 3 TABLETS",
+      "precio": 439000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "OS: Android",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "Procesador: Octa-Core Pantalla: 6.7\" / Memoria: 6GB Resolución: 720 x 1600 (HD+) Cámara Principal: 50.0 MP + 2.0 MP Cámara Frontal:8.0 MP OS: Android 128GB GALAXY A07 Procesador: Octa-Core Pantalla: 6.6” / Memoria RAM: 4GB Resolución: 1080 x 2408 (FHD+) Cámara principal (Múltiple): 48.0 MP + 5.0 MP + 2.0 MP Cámara frontal: 8.0 MP OS: Android",
+      "precio": 649000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "Doble Camara / Wifi + 4G / Luna Grey.",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "GALAXY A22 5G 128GB Tab ZADB0374CO +Folio Case + Tab Pen Pantalla 11″ IPS Display / Procesador Octa Core 2x A75, 128GB / Memoria 4GB / Android 14 / Doble Camara / Wifi + 4G / Luna Grey.",
+      "precio": 769000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "Camara / Wifi / Verde (seafoam green).",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "Tab TB305FU ZAF00124CO +Folio Case Pantalla 8,7” / Procesador Octa Core 2x A75 / 128GB / Memoria 4GB / Android / Doble Camara / Wifi / Verde (seafoam green).",
+      "precio": 489000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    },
+    {
+      "nombre": "Doble Camara / Wifi + 4G / Luna Grey",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p25_i04.jpg",
+      "descripcion": "Tab ZADB0122CO +Folio Case + Tab Pen Pantalla 11″ IPS Display / Procesador Octa Core 2x A75 / 128GB / Memoria 8GB / Android 14 / Doble Camara / Wifi + 4G / Luna Grey",
+      "precio": 860000,
+      "precio_es_complemento": false,
+      "pagina_pdf": 25
+    }
+  ]
+}
