@@ -39,8 +39,8 @@
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Local for stability) -->
+    <script src="{% static 'js/tailwind-cdn.js' %}"></script>
     <script>
         tailwind.config = {
             theme: {

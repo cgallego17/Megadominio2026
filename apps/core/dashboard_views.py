@@ -35,13 +35,35 @@ User = get_user_model()
 
 
 def dashboard_required(view_func):
-    """Decorador que verifica acceso al dashboard"""
+    """
+    Decorador que verifica acceso al dashboard.
+
+    - Si no está autenticado → redirige al login con ?next=
+    - Si está autenticado pero no es admin/advisor → 403
+    """
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            from django.conf import settings
+            from urllib.parse import urlencode
+            login_url = settings.LOGIN_URL
+            next_url = request.get_full_path()
+            return redirect(
+                f'{login_url}?{urlencode({"next": next_url})}'
+            )
         if not request.user.is_admin and not request.user.is_advisor:
+            import logging
+            logging.getLogger('security').warning(
+                'DASHBOARD_UNAUTHORIZED_ACCESS user="%s" ip=%s path=%s',
+                request.user.email,
+                request.META.get('HTTP_X_FORWARDED_FOR',
+                                 request.META.get('REMOTE_ADDR', '')),
+                request.path,
+            )
             return redirect('core:home')
         return view_func(request, *args, **kwargs)
     return wrapper
+
 
 
 def _get_next_number(prefix, model_class, number_field='number'):
