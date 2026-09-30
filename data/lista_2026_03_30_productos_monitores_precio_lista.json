@@ -6,7 +6,7 @@
   "margen_venta_sobre_compra_cop": 100000,
   "nota_precios": "precio_compra: valor según lista PDF. precio_venta: precio_compra + margen_venta_sobre_compra_cop.",
   "carpeta_imagenes_pdf": "data/pdf_assets/lista_30_de_marzo_de_2026",
-  "nota_imagenes": "imagen: ruta relativa al repo hacia la extracción PyMuPDF; se elige la imagen más pesada de la misma pagina_pdf que el texto del producto (varios productos en una página pueden compartir la misma foto: revisar manualmente). Las imágenes con transparencia se guardan compuestas sobre fondo blanco (Pillow). Sin --sin-imagenes se vuelcan todas las imágenes en carpeta_imagenes_pdf; ver imagenes_por_pagina.",
+  "nota_imagenes": "imagen: misma carpeta PyMuPDF; por página se elige el archivo cuyo índice iNN encaja con la posición vertical del precio ($…) y, si existe, de referencias de modelo/SKU en el PDF (search_for). Si no hay ancla, se usa la imagen más grande de la página. referencias_imagen lista candidatos usados. Transparencia → fondo blanco (Pillow). Ver imagenes_por_pagina.",
   "imagenes_por_pagina": {
     "01": [
       "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p01_i01.jpg"
@@ -423,79 +423,109 @@
   "productos": [
     {
       "nombre": "23.8” KA242Y",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i05.jpg",
       "descripcion": "23.8” KA242Y",
       "precio_compra": 519000,
       "precio_venta": 619000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "KA242Y"
+      ]
     },
     {
       "nombre": "sRGB 99%",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i06.jpg",
       "descripcion": "23.8” NITRO KG240Y Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Acer VisionCare Resolución: 1920 x 1080 FHD sRGB 99% 180Hz Frecuencia de actualización (MAX.) 1ms (VRB) Tiempo de respuesta",
       "precio_compra": 389000,
       "precio_venta": 489000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "KG240Y"
+      ]
     },
     {
       "nombre": "respuesta de 1 ms MPRT",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i07.jpg",
       "descripcion": "24,5” VA259HGA Con un panel IPS de 24,5 pulgadas y resolución Full HD (1920 x 1080), que ofrece un ángulo de visión de 178° y una calidad de imagen vívida. Su rápida frecuencia de actualización de 120 Hz con tecnología Adaptive-Sync y tiempo de respuesta de 1 ms MPRT 120Hz Frecuencia de actualización 1ms IPS",
       "precio_compra": 439000,
       "precio_venta": 539000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "VA259HGA"
+      ]
     },
     {
       "nombre": "250 cd/m² (Brillo)",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i06.jpg",
       "descripcion": "23,8” VG249QE5A Monitor para juegos Full HD (1920x1080) de 23,8 pulgadas - 60,45 cm con frecuencia de actualización de 146 Hz (OC). La tecnología ASUS Extreme Low Motion Blur Sync (ELMB Sync) permite que las tecnologías ELMB y de frecuencia de actualización variable funcionen simultáneamente. 146Hz Frecuencia de actualización 1ms MPRT IPS Pantalla: 27\" (68,6 cm) Resolución FHD Panel IPS Relación de aspecto 16:9 Superficie Antirreflejo 250 cd/m² (Brillo) Tecnología: AMD FreeSync 1ms Tiempo de respuesta",
       "precio_compra": 529000,
       "precio_venta": 629000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "VG249QE5A"
+      ]
     },
     {
       "nombre": "Altura",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i10.jpg",
       "descripcion": "Entradas de video: HDMI y DisplayPort (según versión/modelo) Diseño: Marcos delgados y estética moderna 144Hz Frecuencia de actualización (MAX.) 27” KA272 23,8” VG249QL3A Pivote Altura ajustable 1ms Tiempo de respuesta",
       "precio_compra": 599000,
       "precio_venta": 699000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "VG249QL3A",
+        "KA272"
+      ]
     },
     {
       "nombre": "Vesa: 100x100mm",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i10.jpg",
       "descripcion": "180Hz Frecuencia de actualización El monitor para juegos TUF Gaming VG249QL3A FHD de 23.8” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta. PIVOT AMD FreeSync Tipo de panel: IPS / 1920x1080 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) Vesa: 100x100mm 0.5ms Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
       "precio_compra": 749000,
       "precio_venta": 849000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "VG249QL3A"
+      ]
     },
     {
       "nombre": "Vesa: 100x100mm",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i11.jpg",
       "descripcion": "NITRO 27\" XV270 PIVOT AMD FreeSync Tipo de panel: IPS / 1920x1080 178°(H), 178°(V) 1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) Vesa: 100x100mm 0.5ms Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
       "precio_compra": 569000,
       "precio_venta": 669000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "NITRO 27\" XV270",
+        "XV270"
+      ]
     },
     {
       "nombre": "NITRO 23.8\" XV240Y",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i10.jpg",
       "descripcion": "NITRO 23.8\" XV240Y",
       "precio_compra": 675000,
       "precio_venta": 775000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "NITRO 23.8\" XV240Y",
+        "XV240Y"
+      ]
     },
     {
       "nombre": "sRGB 99%",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p05_i03.jpg",
       "descripcion": "27” NITRO KG270 Tipo de panel: IPS In-Plane-Switching Tecnología AMD Freesync Premium Acer VisionCare Resolución: 1920 x 1080 FHD sRGB 99% 180Hz Frecuencia de actualización (MAX.) 1ms (VRB) Tiempo de respuesta",
       "precio_compra": 569000,
       "precio_venta": 669000,
-      "pagina_pdf": 5
+      "pagina_pdf": 5,
+      "referencias_imagen": [
+        "KG270"
+      ]
     },
     {
       "nombre": "HDMIx2+DisplayPort",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i02.jpg",
       "descripcion": "ESCRITORIO GAMER UltraWide2K 3440x1440 Tipo de panel: VA 1ms VRB 178°(H), 178°(V) HDMIx2+DisplayPort 1ms VRB Tiempo de respuesta 200Hz Frecuencia de actualización (MAX.)",
       "precio_compra": 1479000,
       "precio_venta": 1579000,
@@ -503,43 +533,60 @@
     },
     {
       "nombre": "'HDMIx2+DisplayPort",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i02.jpg",
       "descripcion": "NITRO CURVO 34” ED340CU UM.CE0AA.004 2K 2560x1440 Tipo de panel: VA 1ms VRB 178°(H), 178°(V) 'HDMIx2+DisplayPort 1ms VRB Tiempo de respuesta 180Hz Frecuencia de actualización (MAX.)",
       "precio_compra": 1099000,
       "precio_venta": 1199000,
-      "pagina_pdf": 6
+      "pagina_pdf": 6,
+      "referencias_imagen": [
+        "NITRO CURVO 34” ED340CU UM",
+        "UM.CE0AA.004",
+        "ED340CU"
+      ]
     },
     {
       "nombre": "31.5\" XZ322QU",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i05.jpg",
       "descripcion": "NITRO CURVO 31.5\" XZ322QU 1ms Tiempo de respuesta",
       "precio_compra": 779000,
       "precio_venta": 879000,
-      "pagina_pdf": 6
+      "pagina_pdf": 6,
+      "referencias_imagen": [
+        "XZ322QU"
+      ]
     },
     {
       "nombre": "180Hz — ajustable",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i05.jpg",
       "descripcion": "180Hz Frecuencia de actualización El monitor para juegos TUF Gaming VG279QL3A FHD de 27” incorpora un panel Fast IPS para juegos a 180 Hz. Las tecnologías ASUS Extreme Low Motion Blur y AMD FreeSync™ Premium, compatible con G-SYNC, VESA AdaptiveSync permiten jugar con una suavidad absoluta. 27” VG279QL3A Pivote Altura ajustable",
       "precio_compra": 819000,
       "precio_venta": 919000,
-      "pagina_pdf": 6
+      "pagina_pdf": 6,
+      "referencias_imagen": [
+        "VG279QL3A"
+      ]
     },
     {
       "nombre": "+ Audio out",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i05.jpg",
       "descripcion": "1ms VRB Speakers: 2Wx2 AMD FreeSync™ Premium technology ipo de vanel: VA Ángulos de visión: 178°(H),178°(V) Resolución: 1920 x 1080 27” ED270 CURVO 240Hz CURVED 16:9 AMD FreeSync 178°(H),178°(V) '1xHDMI(v2.0) +1xHDMI(v2.0) + DisplayPort(v1.2a) + Audio out 0.5ms Tiempo de respuesta 180Hz Frecuencia de actualización (MAX.)",
       "precio_compra": 899000,
       "precio_venta": 999000,
-      "pagina_pdf": 6
+      "pagina_pdf": 6,
+      "referencias_imagen": [
+        "ED270"
+      ]
     },
     {
       "nombre": "Tipo de panel: IPS",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p06_i06.jpg",
       "descripcion": "NITRO 27” KGB271U 2K 2560x1440 Tipo de panel: IPS",
       "precio_compra": 929000,
       "precio_venta": 1029000,
-      "pagina_pdf": 6
+      "pagina_pdf": 6,
+      "referencias_imagen": [
+        "NITRO 27” KGB271U"
+      ]
     },
     {
       "nombre": "Fuente de poder: MSI MAG A750 BRONCE",
@@ -547,7 +594,14 @@
       "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162FSRM6 Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Board: MSI PRO B840M-B Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: MSI MAG A750 BRONCE",
       "precio_compra": 4049000,
       "precio_venta": 4149000,
-      "pagina_pdf": 9
+      "pagina_pdf": 9,
+      "referencias_imagen": [
+        "EQUIPO R87162FSRM6",
+        "R87162FSRM6",
+        "MP243LE14",
+        "B840M-B",
+        "M100A"
+      ]
     },
     {
       "nombre": "Fuente de poder: MSI MAG A750 BRONCE",
@@ -555,15 +609,29 @@
       "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162MR0 Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Board: MSI PRO B840M-B Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 5050 8G 2X Fuente de poder: MSI MAG A750 BRONCE",
       "precio_compra": 3869000,
       "precio_venta": 3969000,
-      "pagina_pdf": 9
+      "pagina_pdf": 9,
+      "referencias_imagen": [
+        "EQUIPO R87162MR0",
+        "MP243LE14",
+        "R87162MR0",
+        "B840M-B",
+        "M100A"
+      ]
     },
     {
       "nombre": "Monitor: MSI PRO — 5600GT5",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i04.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p10_i11.jpg",
       "descripcion": "Monitor: MSI PRO 24” MP243LE14 1ms / 144Hz EQUIPO R87162FSRM6W Chasis: MSI MAG FORGE M100A Procesador: AMD RYZEN 7 8700F 4.1GHZ Almacenamiento: SPATIUM M371 NVME M.2 500GB Combo: MSI FORGE GK100 OS: Linux Combo: Licencia Digital, Kaspersky Premium Memoria: ADATA XPG LANCER 16GB DDR5 RGB 6000MHZ Tvideo: MSI GEFORCE RTX 3050 6G Fuente de poder: MSI MAG A750 BRONCE Board: MSI PRO B850M-P WIFI TARJETA DE VIDEO EQUIPOS POWER GROUP CON 5600GT5",
       "precio_compra": 3849000,
       "precio_venta": 3949000,
-      "pagina_pdf": 10
+      "pagina_pdf": 10,
+      "referencias_imagen": [
+        "EQUIPO R87162FSRM6W",
+        "R87162FSRM6W",
+        "MP243LE14",
+        "B850M-P",
+        "M100A"
+      ]
     },
     {
       "nombre": "EQUIPOS POWER GROUP CON",
@@ -571,7 +639,10 @@
       "descripcion": "Monitor: ACER 23,8 KA242Y REFRIGERACION LIQUIDA MC240-BLACK 5600X / XT5 TARJETA DE VIDEO EQUIPOS POWER GROUP CON",
       "precio_compra": 3749000,
       "precio_venta": 3849000,
-      "pagina_pdf": 11
+      "pagina_pdf": 11,
+      "referencias_imagen": [
+        "KA242Y"
+      ]
     },
     {
       "nombre": "R7682S R7681S",
@@ -579,27 +650,39 @@
       "descripcion": "Monitor: ASUS 22” VP229HF ALMACENAMIENTO: HIKVISION 512GB M.2 PCIe ALMACENAMIENTO: HIKVISION 1TB M.2 PCIe (1) B/QUILLA - (1) CALI - (1) BOGOTÁ MEMORIA: ADATA XPG BLACK HUNTER 8GB DDR5 5200MHZ BOARD: ASUS PRIME B650M-A WIFI INCLUYE ANTENA AMD RYZEN 5 7600 3.80GHZ PROCESADOR R7682S R7681S",
       "precio_compra": 2409000,
       "precio_venta": 2509000,
-      "pagina_pdf": 13
+      "pagina_pdf": 13,
+      "referencias_imagen": [
+        "VP229HF",
+        "B650M-A",
+        "R7682S",
+        "R7681S"
+      ]
     },
     {
       "nombre": "22” VP229HF",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i01.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p14_i05.jpg",
       "descripcion": "Monitor: ASUS 22” VP229HF",
       "precio_compra": 2699000,
       "precio_venta": 2799000,
-      "pagina_pdf": 14
+      "pagina_pdf": 14,
+      "referencias_imagen": [
+        "VP229HF"
+      ]
     },
     {
       "nombre": "Monitor: ASUS — A-400E",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i06.jpg",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p15_i07.jpg",
       "descripcion": "Monitor: ASUS 22” VP229HF (1) B/QUILLA 1 conector 4 PINES CPU FAN 1 conector ARGB 3 PINES compatible AORUS A-400E",
       "precio_compra": 79000,
       "precio_venta": 179000,
-      "pagina_pdf": 15
+      "pagina_pdf": 15,
+      "referencias_imagen": [
+        "VP229HF"
+      ]
     },
     {
       "nombre": "AK2F1UT#ABA",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i01.jpg",
       "descripcion": "12LM000VLS + 63FCKARBLA_X 16GB / Windows 11 Pro PUERTOS: 1 TIPO C / 6 USB tipo A SuperSpeed / 1 CONECTOR DE AUDIO / 1 DISPLAY PORT / 1 HDMI / 1 VGA / 1 RJ-45 CPU Pro Mini 260 G9 B5JH9LT#ABM Monitor HP Series 3 Pro 322pe AK2F1UT#ABA",
       "precio_compra": 1939000,
       "precio_venta": 2039000,
@@ -607,19 +690,28 @@
     },
     {
       "nombre": "16GB   SSD 512GB — PROCESADOR",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i13.jpg",
       "descripcion": "16GB SSD 512GB Windows 11 Pro Monitor puertos: VGA / HDMI Puertos Frontales: 1x USB-C® 3.2 Gen 2 / 1x USB 3.2 Gen 2 / 1x headphone Puertos Traseros: 2x USB 2.0 / 2x USB 3.2 Gen 2 1x HDMI® 2.1 TMDS / 1x DisplayPort™ 1.4 / 1x Ethernet (RJ-45) Soporte VESA 16GB / 512GB / TVIDEO INTEL UHD GRAPHICS 730 / OS: ESHELL / WIRELESS / CHASIS: HX240A MONITOR: ACER 23,8” KA242Y COMPACT TOWER VERITON 2000 VX2720G-LD12 INTEL CORE i5 12400 PROCESADOR",
       "precio_compra": 1899000,
       "precio_venta": 1999000,
-      "pagina_pdf": 20
+      "pagina_pdf": 20,
+      "referencias_imagen": [
+        "VX2720G-LD12",
+        "KA242Y",
+        "HX240A"
+      ]
     },
     {
       "nombre": "16GB / 512GB / TVIDEO INTEL UHD — PROCESADOR",
-      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i18.png",
+      "imagen": "data/pdf_assets/lista_30_de_marzo_de_2026/lista_30_de_marzo_de_2026_p20_i13.jpg",
       "descripcion": "16GB / 512GB / TVIDEO INTEL UHD GRAPHICS 730 / MONITOR: ACER 23,8” KA242Y VERITON 2000 MINI VN2595GT-LD11 INTEL CORE i5 120U PROCESADOR",
       "precio_compra": 1979000,
       "precio_venta": 2079000,
-      "pagina_pdf": 20
+      "pagina_pdf": 20,
+      "referencias_imagen": [
+        "VN2595GT-LD11",
+        "KA242Y"
+      ]
     }
   ]
 }

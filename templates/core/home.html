@@ -251,19 +251,60 @@
         </div>
         {% if logos %}
         <style>
-            .sponsor-grid .sponsor-img { height: 40px; width: auto; object-fit: contain; opacity: .95; transition: opacity .2s ease; }
+            .sponsor-grid .sponsor-logo {
+                min-height: 72px;
+                min-width: 140px;
+                padding: 0.85rem 1.1rem;
+                border-radius: 0.85rem;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                transition: background .2s ease, border-color .2s ease, transform .2s ease;
+            }
+            .sponsor-grid .sponsor-logo:hover {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 255, 255, 0.18);
+                transform: translateY(-1px);
+            }
+            .sponsor-grid .sponsor-img {
+                height: 40px;
+                width: auto;
+                max-width: 150px;
+                object-fit: contain;
+                opacity: .95;
+                transition: opacity .2s ease;
+            }
             @media (min-width: 768px) { .sponsor-grid .sponsor-img { height: 48px; } }
-            @media (min-width: 1024px) { .sponsor-grid .sponsor-img { height: 56px; } }
+            @media (min-width: 1024px) { .sponsor-grid .sponsor-img { height: 56px; max-width: 170px; } }
             .sponsor-grid .sponsor-logo:hover .sponsor-img { opacity: 1; }
+            .sponsor-grid .sponsor-icon {
+                font-size: 1.75rem;
+                color: rgba(255, 255, 255, 0.9);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.55rem;
+            }
+            .sponsor-grid .sponsor-icon-label {
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                color: rgba(255, 255, 255, 0.85);
+                max-width: 9rem;
+                line-height: 1.2;
+            }
         </style>
-        <div class="sponsor-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-14 gap-y-10 justify-items-center items-center">
+        <div class="sponsor-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-6 justify-items-center items-center">
             {% for l in logos %}
             <div class="sponsor-logo flex items-center justify-center">
-                {% if l.url %}<a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.name }} (abre en nueva pestaña)">{% endif %}
+                {% if l.url %}<a href="{{ l.url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center" aria-label="{{ l.name }} (abre en nueva pestaña)">{% endif %}
                 {% if l.image %}
                     <img src="{{ l.image.url }}" alt="{{ l.name }}" class="sponsor-img" loading="lazy" decoding="async">
+                {% elif l.icon %}
+                    <span class="sponsor-icon" title="{{ l.name }}">
+                        <i class="fas {{ l.icon }}" aria-hidden="true"></i>
+                        <span class="sponsor-icon-label">{{ l.name }}</span>
+                    </span>
                 {% else %}
-                    <span class="text-white/80 font-semibold">{{ l.name }}</span>
+                    <span class="text-white/80 font-semibold text-sm">{{ l.name }}</span>
                 {% endif %}
                 {% if l.url %}</a>{% endif %}
             </div>

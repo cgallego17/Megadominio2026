@@ -154,6 +154,280 @@ def best_image_relpath_for_page(
         return str(best).replace("\\", "/")
 
 
+def _format_cop_colombian(n: int) -> str:
+    """519000 -> '519.000' (separador de miles como en el PDF colombiano)."""
+    s = str(n)
+    parts: list[str] = []
+    while s:
+        parts.append(s[-3:])
+        s = s[:-3]
+    return ".".join(reversed(parts))
+
+
+def reference_tokens_for_imagen(nombre: str, descripcion: str) -> list[str]:
+    """
+    Candidatos para buscar en el PDF (search_for) y anclar la foto al bloque del producto.
+    Orden: más específicos primero.
+    """
+    blob = f"{nombre or ''} {descripcion or ''}"
+    blob = blob.replace("´", "'").replace(""", '"').replace(""", '"')
+    seen: set[str] = set()
+    out: list[str] = []
+
+    def add(s: str) -> None:
+        s = re.sub(r"\s+", " ", s.strip())
+        if len(s) < 3:
+            return
+        key = s.upper()
+        if key in seen:
+            return
+        seen.add(key)
+        out.append(s)
+
+    patterns = (
+        r"UM\.CE0[A-Z0-9.]+",
+        r"\bEQUIPO\s+R\d+[A-Z0-9]*\b",
+        r"\bNITRO\s+CURVO\s+[^.\n]{6,55}",
+        r"\bNITRO\s+\d+[.,]?\d*[”\"']?\s*[A-Z]{1,5}\d[A-Za-z0-9\-]{0,14}\b",
+        r"\b((?:VG|VA|KA|KG|VP|ED|XZ|XV|MP)\d[A-Za-z0-9]{1,16})\b",
+        r"\b[A-Z]{1,2}\d{2,}[A-Z]{1,3}\d?[A-Z0-9#\-]{0,12}\b",  # SKUs tipo AK2F1UT#ABA
+    )
+    for pat in patterns:
+        for m in re.finditer(pat, blob, re.I):
+            add(m.group(0))
+    out.sort(key=len, reverse=True)
+    return out[:12]
+
+
+def _page_price_y_centers(page) -> list[tuple[int, float]]:
+    """Lista (precio_cop, y_centro) por cada $… detectado en la página."""
+    try:
+        import fitz
+    except ImportError:
+        return []
+    out: list[tuple[int, float]] = []
+    d = page.get_text("dict")
+    for b in d.get("blocks", []):
+        if b.get("type") != 0:
+            continue
+        for line in b.get("lines", []):
+            spans = line.get("spans", [])
+            if not spans:
+                continue
+            y0 = min(s["bbox"][1] for s in spans)
+            y1 = max(s["bbox"][3] for s in spans)
+            text = "".join(s.get("text", "") for s in spans)
+            for m in re.finditer(r"\$\s*(\d{1,3}(?:\.\d{3})+)", text, re.I):
+                val = parse_cop(m.group(1))
+                if val and val >= 1000:
+                    out.append((val, (y0 + y1) / 2))
+    return out
+
+
+def _page_image_slots(page) -> list[tuple[int, float, float, float]]:
+    """
+    Por imagen en orden de extracción (i01, i02, …):
+    (índice 1-based, y_centro, área, x_centro).
+    """
+    slots: list[tuple[int, float, float, float]] = []
+    try:
+        import fitz
+    except ImportError:
+        return slots
+    for img_i, img in enumerate(page.get_images(full=True)):
+        xref = img[0]
+        try:
+            rects = page.get_image_rects(xref)
+        except Exception:
+            rects = []
+        if not rects:
+            continue
+        r = rects[0]
+        area = abs(r.width * r.height)
+        yc = (r.y0 + r.y1) / 2
+        xc = (r.x0 + r.x1) / 2
+        slots.append((img_i + 1, yc, area, xc))
+    return slots
+
+
+def _point_from_refs_on_page(page, refs: list[str]) -> tuple[float, float] | None:
+    """(y_centro, x_centro) del primer texto que coincide con una referencia."""
+    try:
+        import fitz
+    except ImportError:
+        return None
+    flags = int(getattr(fitz, "TEXT_DEHYPHENATE", 0))
+    for ref in refs:
+        needle = ref.strip()
+        if len(needle) < 3:
+            continue
+        for variant in (needle, needle.upper(), needle.split()[0] if " " in needle else needle):
+            if len(variant) < 3:
+                continue
+            try:
+                rects = page.search_for(variant, flags=flags)
+            except Exception:
+                rects = []
+            if rects:
+                r = rects[0]
+                return ((r.y0 + r.y1) / 2, (r.x0 + r.x1) / 2)
+    return None
+
+
+def _y_from_cop_search_page(page, cop: int) -> list[float]:
+    needle = _format_cop_colombian(cop)
+    try:
+        rects = page.search_for(needle)
+    except Exception:
+        return []
+    return [(r.y0 + r.y1) / 2 for r in rects]
+
+
+def _anchor_for_imagen(
+    page, precio_cop: int, refs: list[str]
+) -> tuple[float | None, float | None]:
+    """
+    Ancla vertical (precio o referencia) y opcionalmente x de la referencia en el PDF.
+    Devuelve (anchor_y, ref_x o None).
+    """
+    price_hits = _page_price_y_centers(page)
+    matching = [y for v, y in price_hits if v == precio_cop]
+    ref_pt = _point_from_refs_on_page(page, refs)
+    ref_y = ref_pt[0] if ref_pt else None
+    ref_x = ref_pt[1] if ref_pt else None
+    anchor_y: float | None
+    if len(matching) == 1:
+        anchor_y = matching[0]
+    elif len(matching) > 1 and ref_y is not None:
+        anchor_y = min(matching, key=lambda y: abs(y - ref_y))
+    elif len(matching) > 1:
+        anchor_y = matching[0]
+    elif matching:
+        anchor_y = matching[0]
+    else:
+        search_ys = _y_from_cop_search_page(page, precio_cop)
+        if len(search_ys) == 1:
+            anchor_y = search_ys[0]
+        elif len(search_ys) > 1 and ref_y is not None:
+            anchor_y = min(search_ys, key=lambda y: abs(y - ref_y))
+        elif search_ys:
+            anchor_y = search_ys[0]
+        else:
+            anchor_y = ref_y
+    return (anchor_y, ref_x)
+
+
+def _pick_image_idx_for_anchor(
+    slots: list[tuple[int, float, float, float]],
+    anchor_y: float | None,
+    ref_x: float | None,
+) -> int | None:
+    if not slots:
+        return None
+    areas = sorted(s[2] for s in slots)
+    min_area = max(4000.0, areas[len(areas) // 5] if len(areas) >= 3 else areas[0] * 0.3)
+    filtered = [s for s in slots if s[2] >= min_area]
+    if not filtered:
+        filtered = list(slots)
+    if anchor_y is None:
+        return max(filtered, key=lambda s: s[2])[0]
+
+    def score(s: tuple[int, float, float, float]) -> float:
+        _, y, _, x = s
+        dy = abs(y - anchor_y)
+        if ref_x is not None:
+            dx = abs(x - ref_x)
+            return dy + dx * 0.15
+        return dy
+
+    above = [s for s in filtered if s[1] < anchor_y + 35]
+    pool = above if above else filtered
+    return min(pool, key=score)[0]
+
+
+def _relpath_for_page_image_idx(
+    pagina: int,
+    idx: int,
+    assets_dir: Path,
+    stem_slug: str,
+) -> str | None:
+    if not assets_dir.is_dir():
+        return None
+    prefix = f"{stem_slug}_p{pagina:02d}_i{idx:02d}."
+    for f in assets_dir.iterdir():
+        if f.is_file() and f.name.startswith(prefix):
+            try:
+                return str(f.relative_to(REPO_ROOT)).replace("\\", "/")
+            except ValueError:
+                return str(f).replace("\\", "/")
+    return None
+
+
+def best_image_relpath_spatial(
+    page,
+    pagina: int,
+    precio_cop: int,
+    nombre: str,
+    descripcion: str,
+    assets_dir: Path,
+    stem_slug: str,
+) -> str | None:
+    """
+    Elige imagen por página usando referencias (modelo/SKU) y posición del precio en el PDF.
+    Si no hay datos suficientes, cae en la imagen más grande de la página.
+    """
+    refs = reference_tokens_for_imagen(nombre, descripcion)
+    slots = _page_image_slots(page)
+    if not slots:
+        return best_image_relpath_for_page(pagina, assets_dir, stem_slug)
+    anchor_y, ref_x = _anchor_for_imagen(page, precio_cop, refs)
+    idx = _pick_image_idx_for_anchor(slots, anchor_y, ref_x)
+    if idx is None:
+        return best_image_relpath_for_page(pagina, assets_dir, stem_slug)
+    rel = _relpath_for_page_image_idx(pagina, idx, assets_dir, stem_slug)
+    return rel or best_image_relpath_for_page(pagina, assets_dir, stem_slug)
+
+
+def assign_product_images_spatial(
+    pdf_path: Path,
+    products: list[dict],
+    assets_dir: Path,
+    stem_slug: str,
+) -> None:
+    """Rellena p['imagen'] usando layout del PDF (referencia + precio)."""
+    try:
+        import fitz
+    except ImportError:
+        for p in products:
+            p["imagen"] = best_image_relpath_for_page(p.get("pagina_pdf"), assets_dir, stem_slug)
+        return
+    doc = fitz.open(pdf_path)
+    try:
+        for p in products:
+            pg = p.get("pagina_pdf")
+            if pg is None:
+                p["imagen"] = None
+                continue
+            if pg < 1 or pg > len(doc):
+                p["imagen"] = best_image_relpath_for_page(pg, assets_dir, stem_slug)
+                continue
+            page = doc[pg - 1]
+            p["imagen"] = best_image_relpath_spatial(
+                page,
+                pg,
+                int(p["precio"]),
+                p.get("nombre") or "",
+                p.get("descripcion") or "",
+                assets_dir,
+                stem_slug,
+            )
+            refs = reference_tokens_for_imagen(p.get("nombre") or "", p.get("descripcion") or "")
+            if refs:
+                p["referencias_imagen"] = refs[:8]
+    finally:
+        doc.close()
+
+
 def imagenes_manifest(assets_dir: Path, stem_slug: str) -> dict[str, list[str]]:
     """pagina str -> lista de rutas relativas al repo."""
     if not assets_dir.is_dir():
@@ -366,6 +640,8 @@ def filter_monitores_precio_lista(products: list[dict]) -> list[dict]:
         }
         if p.get("pagina_pdf") is not None:
             row["pagina_pdf"] = p["pagina_pdf"]
+        if p.get("referencias_imagen"):
+            row["referencias_imagen"] = p["referencias_imagen"]
         out.append(row)
     return out
 
@@ -388,12 +664,11 @@ def main() -> None:
 
     text = pdf_to_text(pdf_path)
     products = extract_products(text)
-    for p in products:
-        p["imagen"] = (
-            None
-            if sin_imagenes
-            else best_image_relpath_for_page(p.get("pagina_pdf"), assets_dir, stem_slug)
-        )
+    if sin_imagenes:
+        for p in products:
+            p["imagen"] = None
+    else:
+        assign_product_images_spatial(pdf_path, products, assets_dir, stem_slug)
 
     carpeta_rel = (
         None
@@ -405,11 +680,10 @@ def main() -> None:
         "total": len(products),
         "carpeta_imagenes_pdf": carpeta_rel,
         "nota_imagenes": (
-            "imagen: ruta relativa al repo hacia la extracción PyMuPDF; se elige la imagen más pesada "
-            "de la misma pagina_pdf que el texto del producto (varios productos en una página pueden "
-            "compartir la misma foto: revisar manualmente). Las imágenes con transparencia se guardan "
-            "compuestas sobre fondo blanco (Pillow). Sin --sin-imagenes se vuelcan todas las imágenes "
-            "en carpeta_imagenes_pdf; ver imagenes_por_pagina."
+            "imagen: misma carpeta PyMuPDF; por página se elige el archivo cuyo índice iNN encaja con la "
+            "posición vertical del precio ($…) y, si existe, de referencias de modelo/SKU en el PDF "
+            "(search_for). Si no hay ancla, se usa la imagen más grande de la página. referencias_imagen "
+            "lista candidatos usados. Transparencia → fondo blanco (Pillow). Ver imagenes_por_pagina."
             if not sin_imagenes
             else "Extracción de imágenes omitida (--sin-imagenes)."
         ),

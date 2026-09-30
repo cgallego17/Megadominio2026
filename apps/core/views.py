@@ -206,8 +206,11 @@ def privacy(request):
 
 def store(request):
     """
-    Página de la tienda
+    Página de la tienda (deshabilitada temporalmente).
     """
+    if not getattr(settings, 'STORE_ENABLED', False):
+        messages.info(request, 'La tienda estará disponible pronto.')
+        return redirect('core:home')
     products = Product.objects.filter(
         is_active=True
     ).select_related('category').order_by('-is_featured', '-created_at')
@@ -447,8 +450,11 @@ def plan_detail(request, slug):
 
 def product_detail(request, slug):
     """
-    Detalle de un producto de la tienda
+    Detalle de un producto de la tienda (deshabilitada temporalmente).
     """
+    if not getattr(settings, 'STORE_ENABLED', False):
+        messages.info(request, 'La tienda estará disponible pronto.')
+        return redirect('core:home')
     product = get_object_or_404(
         Product.objects.select_related('category'),
         slug=slug, is_active=True

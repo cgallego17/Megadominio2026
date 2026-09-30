@@ -142,10 +142,6 @@
                 <div class="hidden lg:flex items-center space-x-0.5">
                     <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
                     <a href="{% url 'core:services' %}" class="nav-link">Servicios</a>
-                    <a href="{% url 'core:store' %}" class="nav-link flex items-center gap-1.5">
-                        Tienda
-                        <span class="inline-flex items-center gap-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full leading-none animate-pulse"><i class="fas fa-fire text-[7px]"></i>HOT</span>
-                    </a>
                     <a href="{% url 'core:about' %}" class="nav-link">Nosotros</a>
                     <a href="{% url 'core:contact' %}" class="nav-link">Contacto</a>
                 </div>
@@ -229,11 +225,6 @@
             <a href="{% url 'core:services' %}" class="sidebar-link">
                 <i class="fas fa-briefcase w-6 text-center text-red-500"></i>
                 <span>Servicios</span>
-            </a>
-            <a href="{% url 'core:store' %}" class="sidebar-link">
-                <i class="fas fa-store w-6 text-center text-red-500"></i>
-                <span>Tienda</span>
-                <span class="flex items-center gap-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none ml-auto shadow-lg shadow-orange-500/40 animate-pulse"><i class="fas fa-fire text-[8px]"></i>HOT</span>
             </a>
             <a href="{% url 'core:about' %}" class="sidebar-link">
                 <i class="fas fa-users w-6 text-center text-red-500"></i>
@@ -514,8 +505,8 @@
                 <i class="fas fa-shopping-bag text-5xl text-red-500/30 block mb-4"></i>
                 <p class="text-gray-500 font-semibold mb-2">Tu carrito está vacío</p>
                 <p class="text-gray-600 text-sm mb-6">Agrega productos para comenzar</p>
-                <a href="/tienda/" class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300">
-                    <i class="fas fa-store"></i> Ir a la tienda
+                <a href="{% url 'core:services' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-all duration-300">
+                    <i class="fas fa-cogs"></i> Ver servicios
                 </a>
             </div>
         </div>
@@ -525,8 +516,8 @@
                 <span id="store-subtotal" class="text-white font-bold text-lg">0</span>
             </div>
             <p class="text-gray-600 text-xs mb-4">Envío calculado al finalizar</p>
-            <a href="/tienda/" class="block w-full py-3 text-center bg-gray-800 text-gray-300 font-semibold rounded-xl hover:bg-gray-700 transition-all duration-300 mb-2">
-                <i class="fas fa-store mr-2"></i>Ir a la tienda
+            <a href="{% url 'core:services' %}" class="block w-full py-3 text-center bg-gray-800 text-gray-300 font-semibold rounded-xl hover:bg-gray-700 transition-all duration-300 mb-2">
+                <i class="fas fa-cogs mr-2"></i>Ver servicios
             </a>
             <button id="store-checkout" class="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-xl hover:from-red-500 hover:to-red-600 transition-all duration-300 shadow-lg mb-2">
                 <i class="fas fa-credit-card mr-2"></i>Pagar ahora

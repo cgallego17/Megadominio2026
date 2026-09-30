@@ -14,7 +14,6 @@ class StaticViewSitemap(Sitemap):
             'core:services',
             'core:about',
             'core:contact',
-            'core:store',
             'core:quote_request',
         ]
 
@@ -52,6 +51,9 @@ class ProductSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
+        from django.conf import settings
+        if not getattr(settings, 'STORE_ENABLED', False):
+            return Product.objects.none()
         return Product.objects.filter(is_active=True)
 
     def lastmod(self, obj):

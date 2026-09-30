@@ -90,17 +90,6 @@
                     <i class="fas fa-comment-dots"></i> Testimonios (Home)
                 </a>
 
-                <p class="dash-section-title mt-4">Tienda</p>
-                <a href="{% url 'core:dashboard_products' %}" class="dash-link {% if '/dashboard/productos' in request.path and '/categorias' not in request.path %}active{% endif %}">
-                    <i class="fas fa-box-open"></i> Productos
-                </a>
-                <a href="{% url 'core:dashboard_product_categories' %}" class="dash-link {% if '/dashboard/productos/categorias' in request.path %}active{% endif %}">
-                    <i class="fas fa-tags"></i> Categorías
-                </a>
-                <a href="{% url 'core:dashboard_orders' %}" class="dash-link {% if '/dashboard/ordenes' in request.path %}active{% endif %}">
-                    <i class="fas fa-shopping-cart"></i> Órdenes
-                </a>
-
                 <p class="dash-section-title mt-4">Sistema</p>
                 <a href="{% url 'core:dashboard_users' %}" class="dash-link {% if '/dashboard/usuarios' in request.path %}active{% endif %}">
                     <i class="fas fa-user-shield"></i> Usuarios
